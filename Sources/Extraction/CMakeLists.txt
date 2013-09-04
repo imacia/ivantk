@@ -1,0 +1,54 @@
+SET( IVAN_EXTRACTION_SRCS
+  ivanBSplineVesselCenterlineInterpolator.h
+  ivanBSplineVesselCenterlineInterpolator.hxx
+  ivanCylindricalOffsetMedialnessVesselSectionFitCostFunction.h
+  ivanCylindricalOffsetMedialnessVesselSectionFitCostFunction.hxx
+  ivanFixedScaleHessianBasedVesselSectionEstimator.h  
+  ivanFixedScaleHessianBasedVesselSectionEstimator.hxx
+  ivanFixedScaleOOFBasedVesselSectionEstimator.h
+  ivanFixedScaleOOFBasedVesselSectionEstimator.hxx
+  ivanImageBasedVesselSectionEstimator.h
+  ivanImageBasedVesselSectionEstimator.hxx
+  ivanImageBasedVesselSectionFitCostFunction.h
+  ivanImageBasedVesselSectionFitCostFunction.hxx
+  ivanMaxIterationsVesselTrackerEndCondition.h  
+  ivanMultiscaleAdaptiveHessianBasedVesselSectionEstimator.h
+  ivanMultiscaleAdaptiveHessianBasedVesselSectionEstimator.hxx
+  ivanMultiscaleAdaptiveOOFBasedVesselSectionEstimator.h
+  ivanMultiscaleAdaptiveOOFBasedVesselSectionEstimator.hxx
+  ivanMultiscaleFromImageHessianBasedVesselSectionEstimator.h  
+  ivanMultiscaleFromImageHessianBasedVesselSectionEstimator.hxx
+  ivanMultiscaleFromRadiusHessianBasedVesselSectionEstimator.h
+  ivanMultiscaleFromRadiusHessianBasedVesselSectionEstimator.hxx
+  ivanMultiscaleHessianBasedVesselSectionEstimator.h  
+  ivanMultiscaleHessianBasedVesselSectionEstimator.hxx
+  ivanMultiscaleOOFBasedVesselSectionEstimator.h
+  ivanMultiscaleOOFBasedVesselSectionEstimator.hxx
+  ivanMultiscaleTensorBasedVesselSectionEstimator.h
+  ivanMultiscaleTensorBasedVesselSectionEstimator.hxx
+  ivanMultiscaleVesselSectionEstimator.h
+  ivanMultiscaleVesselSectionEstimator.hxx  
+  ivanOffsetMedialnessVesselSectionFitCostFunction.h
+  ivanOffsetMedialnessVesselSectionFitCostFunction.hxx  
+  ivanOptimizedVesselnessBasedSearchVesselTrackerFilter.h
+  ivanOptimizedVesselnessBasedSearchVesselTrackerFilter.hxx
+  ivanOptimizedVesselSectionEstimator.h
+  ivanOptimizedVesselSectionEstimator.h
+  ivanOptimizerIterationCommand.h  
+  ivanVesselnessBasedSearchVesselTrackerFilter.h
+  ivanVesselnessBasedSearchVesselTrackerFilter.hxx
+  ivanVesselnessBasedVesselTrackerEndCondition.h  
+  ivanVesselnessBasedVesselTrackerEndCondition.hxx
+  ivanVesselnessRidgeSearchVesselTrackerFilter.h
+  ivanVesselnessRidgeSearchVesselTrackerFilter.hxx
+  ivanVesselSectionEstimator.h
+  ivanVesselSectionEstimator.hxx
+  ivanVesselSectionFitCostFunction.h
+  ivanVesselTrackerEndCondition.h
+  ivanVesselTrackerFilter.h
+  ivanVesselTrackerFilter.hxx
+)
+
+ADD_LIBRARY( ivanExtraction ${IVAN_EXTRACTION_SRCS} )
+
+TARGET_LINK_LIBRARIES( ivanExtraction ${ITK_LIBRARIES} )

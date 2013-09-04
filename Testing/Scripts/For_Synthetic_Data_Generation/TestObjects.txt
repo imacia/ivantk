@@ -1,0 +1,5 @@
+SET TESTS_EXE_PATH=C:/SDKs/ITKVesselBin/Tests/Release/
+SET OBJECTS_EXE_PATH=C:/SDKs/ITKVesselBin/TestObjects/Release/
+SET OUTPUT_PATH=D:/VolumeData/VesselExperiments/TestObjects
+
+%OBJECTS_EXE_PATH%/Release/CurvedCircularGaussianTube.exe %OUTPUT_PATH%/CurvedGaussianTube_3_0.mhd 3.0 30.0 10.0

@@ -1,0 +1,87 @@
+// File: ivanFrangiVesselnessImageFunction.hxx
+// Author: Iván Macía (imacia@vicomtech.org)
+// Description: 
+// Date: 2010/07/06
+
+#ifndef __ivanFrangiVesselnessImageFunction_hxx
+#define __ivanFrangiVesselnessImageFunction_hxx
+
+#include "ivanFrangiVesselnessImageFunction.h"
+
+
+namespace ivan
+{
+  
+template <class TInputImage, class TOutput, class TCoordRep>
+FrangiVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
+::FrangiVesselnessImageFunction() :
+  m_Alpha1( 0.5 ),
+  m_Alpha2( 2.0 )
+{
+  
+}
+
+
+template <class TInputImage, class TOutput, class TCoordRep>
+FrangiVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
+::~FrangiVesselnessImageFunction()
+{
+  
+}
+
+
+/** Print self method */
+template <class TInputImage, class TOutput, class TCoordRep>
+void
+FrangiVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
+::PrintSelf( std::ostream& os, itk::Indent indent ) const
+{
+  Superclass::PrintSelf( os, indent );
+    
+  os << indent << "Alpha1: " << m_Alpha1 << std::endl;
+  os << indent << "Alpha2: " << m_Alpha2 << std::endl;
+}
+
+
+template <class TInputImage, class TOutput, class TCoordRep>
+typename FrangiVesselnessImageFunction<TInputImage,TOutput,TCoordRep>::OutputType
+FrangiVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
+::EvaluateVesselness( const HessianTensorType & hessian ) const
+{
+  typedef typename HessianTensorType::EigenValuesArrayType   EigenValuesArrayType;
+  EigenValuesArrayType   eigenValues;
+  
+  // Calculate eigenvalues of Hessian matrix at the current location
+  hessian.ComputeEigenValues( eigenValues );
+  
+  // normalizeValue <= 0 for bright line structures
+  double normalizeValue = vnl_math_min( -1.0 * eigenValues[1], -1.0 * eigenValues[0] );
+
+  // Similarity measure to a line structure
+  if( normalizeValue > 0 )
+  {
+    double lineMeasure;
+    if( eigenValues[2] <= 0 )
+    {
+      lineMeasure = 
+        vcl_exp( -0.5 * vnl_math_sqr( eigenValues[2] / ( m_Alpha1 * normalizeValue ) ) );
+    }
+    else
+    {
+      lineMeasure = 
+        vcl_exp( -0.5 * vnl_math_sqr( eigenValues[2] / ( m_Alpha2 * normalizeValue ) ) );
+    }
+    
+    lineMeasure *= normalizeValue;
+    
+    return lineMeasure;
+  }
+  else
+  {
+    return 0.0;
+  }  
+}
+
+} // end namespace ivan
+
+#endif

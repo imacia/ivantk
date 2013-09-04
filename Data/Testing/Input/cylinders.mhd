@@ -1,0 +1,10 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = False
+ElementSpacing = 1 1 1
+DimSize = 40 60 70
+Position = 0 0 0
+ElementNumberOfChannels = 1
+ElementType = MET_FLOAT
+ElementDataFile = cylinders.raw

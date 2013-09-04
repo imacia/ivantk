@@ -1,0 +1,73 @@
+#-----------------------------------------------------------------------------
+#
+# IVANConfig.cmake - IVAN CMake configuration file for external projects.
+#
+# This file is configured by IVAN and used to load IVAN's settings for an 
+# external project that uses IVAN. This is done in the following steps:
+# 1) Add the line FIND_PACKAGE(IVAN) to the project that uses IVAN.
+# 2) Check the cmake variable IVAN_FOUND and include IVAN_USE_FILE if true:
+#    IF(IVAN_FOUND)
+#	   INCLUDE(${IVAN_USE_FILE})
+#    ELSE(IVAN_FOUND)
+#      MESSAGE(FATAL_ERROR "IVAN library not found. Please set IVAN_DIR." )
+#    ENDIF(IVAN_FOUND)
+# 3) Set the path of the IVAN_DIR cache entry to the directory containing 
+#    IVANConfig.cmake. This is the binaries directory for the IVAN project. 
+#
+# The variables that are imported from the internal IVAN configuration
+# are listed below
+
+# The IVAN source tree.
+SET( IVAN_SOURCE_DIR "@IVAN_SOURCE_DIR@" )
+
+# The IVAN include file directories.
+SET( IVAN_INCLUDE_DIRS "@IVAN_INCLUDE_DIRS_CONFIG@" )
+
+# The IVAN library directories.
+SET( IVAN_LIBRARY_DIRS "@IVAN_LIBRARY_DIRS_CONFIG@" )
+
+# The C and C++ flags added by IVAN to the cmake-configured flags.
+SET( IVAN_REQUIRED_C_FLAGS "@IVAN_REQUIRED_C_FLAGS@" )
+SET( IVAN_REQUIRED_CXX_FLAGS "@IVAN_REQUIRED_CXX_FLAGS@" )
+SET( IVAN_REQUIRED_LINK_FLAGS "@IVAN_REQUIRED_LINK_FLAGS@")
+
+# The IVAN version number
+SET( IVAN_MAJOR_VERSION "@IVAN_MAJOR_VERSION@" )
+SET( IVAN_MINOR_VERSION "@IVAN_MINOR_VERSION@" )
+SET( IVAN_PATCH_VERSION "@IVAN_PATCH_VERSION@" )
+SET( IVAN_BUILD_VERSION "@IVAN_BUILD_VERSION@" )
+
+##
+SET( IVAN_SOURCE_DIR "@IVAN_SOURCE_DIR@" )
+SET( IVAN_BINARY_DIR "@IVAN_BINARY_DIR@" )
+
+# The location of the UseIVAN.cmake file.
+SET( IVAN_USE_FILE "@IVAN_USE_FILE@" )
+
+# The build settings file.
+SET( IVAN_BUILD_SETTINGS_FILE "@IVAN_BUILD_SETTINGS_FILE@" )
+
+# The library dependencies file.
+SET( IVAN_LIBRARY_DEPENDS_FILE "@IVAN_LIBRARY_DEPENDS_FILE@")
+
+
+# A list of all libraries for IVAN.  Those listed here should
+# automatically pull in their dependencies.
+# Define IVAN libraries
+
+SET( IVAN_COMMON_LIBRARY debug ivanCommond optimized ivanCommon )
+SET( IVAN_ITK_LIBRARY debug ivanITKd optimized ivanITK )
+SET( IVAN_MODELLING_LIBRARY debug ivanModellingd optimized ivanModelling )
+
+SET( IVAN_LIBRARIES
+  ${IVAN_COMMON_LIBRARY}
+  ${IVAN_ITK_LIBRARY}
+  ${IVAN_MODELLING_LIBRARY}
+)
+
+
+# The IVAN library dependencies.
+
+IF( NOT IVAN_NO_LIBRARY_DEPENDS )
+  INCLUDE( ${IVAN_LIBRARY_DEPENDS_FILE} )
+ENDIF( NOT IVAN_NO_LIBRARY_DEPENDS )

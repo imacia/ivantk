@@ -1,0 +1,9 @@
+Image-based Vascular Analysis Toolkit (IVAN)
+
+Copyright (c) 2012-2013, Iván Macía Oliver
+Vicomtech Foundation, San Sebastián - Donostia (Spain)
+University of the Basque Country, San Sebastián - Donostia (Spain)
+
+All rights reserved
+
+See LICENSE file for license details

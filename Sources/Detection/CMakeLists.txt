@@ -1,0 +1,52 @@
+SET( IVAN_DETECTION_SRCS
+  ivanCircularSectionFluxImageFunction.h
+  ivanCircularSectionFluxImageFunction.hxx
+  ivanDiscreteGradientGaussianImageFunction.h
+  ivanDiscreteGradientGaussianImageFunction.hxx
+  ivanFilterByEigenvaluesVesselnessImageFunction.h
+  ivanFilterByEigenvaluesVesselnessImageFunction.hxx
+  ivanFluxBasedVesselnessImageFunction.h
+  ivanFluxBasedVesselnessImageFunction.hxx
+  ivanFrangiVesselnessImageFunction.h
+  ivanFrangiVesselnessImageFunction.h.old
+  ivanFrangiVesselnessImageFunction.hxx
+  ivanFrangiVesselnessImageFunction.hxx.old
+  ivanHessianBasedVesselnessImageFunction.h
+  ivanHessianBasedVesselnessImageFunction.hxx
+  ivanHessianEigenValuesImageFunction.h
+  ivanHessianEigenValuesImageFunction.hxx
+  ivanHessianOnlyBasedVesselnessImageFunction.h  
+  ivanHessianOnlyBasedVesselnessImageFunction.hxx
+  ivanImageFunctionInitializerBase.h
+  ivanMultiscaleAnalysisImageFilter.h
+  ivanMultiscaleAnalysisImageFilter.hxx
+  ivanMultiscaleImageFunction.h
+  ivanMultiscaleImageFunction.hxx
+  ivanMultiscaleMedialnessImageFilter.h
+  ivanMultiscaleMedialnessImageFilter.hxx
+  ivanNonLinearSteerableFluxImageFunction.h
+  ivanNonLinearSteerableFluxImageFunction.hxx
+  ivanObjectnessMeasureImageFunction.h
+  ivanObjectnessMeasureImageFunction.hxx
+  ivanOffsetMedialnessImageFunction.h
+  ivanOffsetMedialnessImageFunction.hxx
+  ivanOffsetMedialnessImageFunctionInitializer.h
+  ivanOffsetMedialnessImageFunctionInitializer.hxx
+  ivanOptimallyOrientedFluxVesselnessImageFunctionInitializer.h
+  ivanOptimallyOrientedFluxVesselnessImageFunction.h
+  ivanOptimallyOrientedFluxVesselnessImageFunction.hxx
+  ivanOrientedFluxMatrixBasedVesselnessImageFunction.h
+  ivanOrientedFluxMatrixBasedVesselnessImageFunction.hxx
+  ivanOrientedFluxMatrixImageFunction.h
+  ivanPolarProfileVesselnessImageFunction.h
+  ivanPolarProfileVesselnessImageFunction.hxx
+  ivanSatoVesselnessImageFunction.h
+  ivanSatoVesselnessImageFunction.hxx
+  ivanScaleSpaceImageFunctionInitializer.h
+  ivanSphereGridBasedImageFunction.h
+  ivanSphereGridBasedImageFunction.hxx
+)
+
+ADD_LIBRARY( ivanDetection ${IVAN_DETECTION_SRCS} )
+
+TARGET_LINK_LIBRARIES( ivanDetection ${ITK_LIBRARIES} )

@@ -1,0 +1,112 @@
+// File: ivanFrangiVesselnessImageFunction.h
+// Author: Iván Macía (imacia@vicomtech.org)
+// Description: 
+// Date: 2010/07/06
+
+#ifndef __ivanFrangiVesselnessImageFunction_h
+#define __ivanFrangiVesselnessImageFunction_h
+
+#include "ivanHessianOnlyBasedVesselnessImageFunction.h"
+
+
+namespace ivan
+{
+  
+/**
+ * \class FrangiVesselnessImageFunction
+ * \brief Compute Frangi's vesselness measure in the form an image function.
+ *
+ * This class is templated over the input image type.
+ *
+ * The Initialize() method must be called after setting the parameters and before
+ * evaluating the function.
+ *
+ * \sa ImageFunction
+ */
+template <class TInputImage, class TOutput, class TCoordRep=double>
+class ITK_EXPORT FrangiVesselnessImageFunction :
+  public HessianOnlyBasedVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
+{
+public:
+
+  /**Standard "Self" typedef */
+  typedef FrangiVesselnessImageFunction
+    <TInputImage,TOutput,TCoordRep>            Self;
+  typedef HessianOnlyBasedVesselnessImageFunction
+    <TInputImage,TOutput,TCoordRep>            Superclass;
+
+  /** Smart pointer typedef support */
+  typedef itk::SmartPointer<Self>        Pointer;
+  typedef itk::SmartPointer<const Self>  ConstPointer;
+  
+  typedef TInputImage  InputImageType;
+  typedef TOutput      OutputType;
+  typedef TCoordRep    CoordRepType;
+  
+  typedef typename Superclass::InputPixelType        InputPixelType;
+  typedef typename Superclass::IndexType             IndexType;
+  typedef typename Superclass::ContinuousIndexType   ContinuousIndexType;
+  typedef typename Superclass::PointType             PointType;
+    
+  /** Types for Hessian function/matrix. */
+  typedef itk::DiscreteHessianGaussianImageFunction
+    <TInputImage,TCoordRep>                          HessianFunctionType;
+  typedef typename HessianFunctionType::Pointer      HessianFunctionPointer;
+  typedef typename HessianFunctionType::TensorType   HessianTensorType;
+    
+  /** Interpolation modes */
+  typedef typename Superclass::InterpolationModeType InterpolationModeType;
+
+public:
+
+  /** Method for creation through the object factory */
+  itkNewMacro(Self);
+
+  /** Run-time type information (and related methods) */
+  itkTypeMacro( FrangiVesselnessImageFunction, HessianOnlyBasedVesselnessImageFunction );
+  
+  itkSetMacro( Alpha1, double );
+  itkGetConstMacro( Alpha1, double );
+  
+  itkSetMacro( Alpha2, double );
+  itkGetConstMacro( Alpha2, double );
+  
+protected:
+
+  FrangiVesselnessImageFunction();
+  ~FrangiVesselnessImageFunction();
+  
+  /** Evaluate vesselness given Hessian. */
+  virtual OutputType EvaluateVesselness( const HessianTensorType & hessian ) const;
+  
+  void PrintSelf( std::ostream& os, itk::Indent indent ) const;
+
+private:
+  
+  FrangiVesselnessImageFunction( const Self& ); // purposely not implemented
+  void operator=( const Self& ); // purposely not implemented
+
+private:
+
+  double m_Alpha1;
+  double m_Alpha2;
+};
+
+} // namespace ivan
+
+// Define instantiation macro for this template.
+#define ITK_TEMPLATE_FrangiVesselnessImageFunction(_, EXPORT, x, y) namespace ivan { \
+  _(2(class EXPORT FrangiVesselnessImageFunction< ITK_TEMPLATE_2 x >)) \
+  namespace Templates { typedef FrangiVesselnessImageFunction< ITK_TEMPLATE_2 x > \
+                                                  FrangiVesselnessImageFunction##y; } \
+  }
+
+#if ITK_TEMPLATE_EXPLICIT
+# include "Templates/ivanFrangiVesselnessImageFunction+-.h"
+#endif
+
+#if ITK_TEMPLATE_TXX
+# include "ivanFrangiVesselnessImageFunction.hxx"
+#endif
+
+#endif

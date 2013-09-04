@@ -1,0 +1,24 @@
+#-----------------------------------------------------------------------------
+# This file sets up include directories, link directories, and
+# compiler settings for a project to use IVAN.  It should not be
+# included directly, but rather through the IVAN_USE_FILE setting
+# obtained from IVANConfig.cmake.
+#
+
+IF( IVAN_BUILD_SETTINGS_FILE )
+  INCLUDE( ${CMAKE_ROOT}/Modules/CMakeImportBuildSettings.cmake )
+  CMAKE_IMPORT_BUILD_SETTINGS( ${IVAN_BUILD_SETTINGS_FILE} )
+ENDIF(IVAN_BUILD_SETTINGS_FILE)
+
+# Add compiler flags needed to use IVAN.
+SET( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${IVAN_REQUIRED_C_FLAGS}" )
+SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${IVAN_REQUIRED_CXX_FLAGS}" )
+SET( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${IVAN_REQUIRED_LINK_FLAGS}" )
+SET( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${IVAN_REQUIRED_LINK_FLAGS}" )
+SET( CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${IVAN_REQUIRED_LINK_FLAGS}" )
+
+# Add include directories needed to use IVAN.
+INCLUDE_DIRECTORIES( BEFORE ${IVAN_INCLUDE_DIRS} )
+
+# Add link directories needed to use IVAN.
+LINK_DIRECTORIES( ${IVAN_LIBRARY_DIRS} )

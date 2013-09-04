@@ -1,0 +1,61 @@
+SET( IVAN_QUANTIFICATION_SRCS
+  ivanAneurysmModel.cxx
+  ivanAneurysmModel.h
+  ivanAorticAneurysmVesselSection.h
+  ivanAorticAneurysmVesselSection.hxx
+  ivanCircularVesselSection.h
+  ivanCircularVesselSection.hxx
+  ivanCollectNodesVisitor.h
+  ivanCollectNodesVisitor.hxx
+  ivanCompositeNode.cxx
+  ivanCompositeNode.h
+  ivanLinearPropertyInterpolator.h
+  ivanLinearVesselCenterlineInterpolator.h
+  ivanLinearVesselCenterlineInterpolator.hxx
+  ivanNullVesselSectionStruct.h
+  ivanRadialContour.h
+  ivanRadialContour.hxx
+  ivanSearchByIdNodeVisitor.cxx
+  ivanSearchByIdNodeVisitor.h
+  ivanStenosisModel.cxx
+  ivanStenosisModel.h
+  ivanUniformRadialContour.h
+  ivanUniformRadialContour.hxx
+  ivanVesselBifurcationNode.h
+  ivanVesselBifurcationNode.hxx
+  ivanVesselBranchNode.h
+  ivanVesselBranchNode.hxx
+  ivanVesselBranchNodeVisitor.h
+  ivanVesselCenterline.h
+  ivanVesselCenterline.hxx
+  ivanVesselCenterlineAlgorithm.h
+  ivanVesselCenterlineAlgorithmVisitor.h
+  ivanVesselCenterlineAlgorithmVisitor.hxx
+  ivanVesselCenterlineMetricsCalculator.h
+  ivanVesselCenterlineMetricsCalculator.hxx
+  ivanVesselCenterlineMetricsCalculatorVisitor.h  
+  ivanVesselCenterlineMetricsCalculatorVisitor.hxx
+  ivanVesselCenterlineSmoother.h
+  ivanVesselCenterlineSmoother.hxx
+  ivanVesselElementNode.h
+  ivanVesselElementNode.hxx
+  ivanVesselFeatureModel.cxx
+  ivanVesselFeatureModel.h
+  ivanVesselFeatureNode.cxx
+  ivanVesselFeatureNode.h
+  ivanVesselGraph.h
+  ivanVesselNode.cxx
+  ivanVesselNode.h
+  ivanVesselNodeVisitor.h
+  ivanVesselNodeVisitor.hxx
+  ivanVesselRegion.cxx
+  ivanVesselRegion.h
+  ivanVesselSection.h
+  ivanVesselSectionEstimator.h
+  ivanVesselSectionEstimator.hxx
+  ivanVesselSectionStruct.h
+)
+
+ADD_LIBRARY( ivanQuantification ${IVAN_QUANTIFICATION_SRCS} )
+
+TARGET_LINK_LIBRARIES( ivanQuantification ${ITK_LIBRARIES} )
