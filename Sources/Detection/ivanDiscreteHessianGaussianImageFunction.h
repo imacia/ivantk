@@ -30,11 +30,11 @@ SUCH DAMAGE.
 #ifndef __ivanDiscreteHessianGaussianImageFunction_h
 #define __ivanDiscreteHessianGaussianImageFunction_h
 
+#include "ivanMacros.h"
+#include "ivanGaussianDerivativeOperator.h"
 
 #include "itkNeighborhoodOperatorImageFunction.h"
 #include "itkSymmetricSecondRankTensor.h"
-
-#include "ivanGaussianDerivativeOperator.h"
 
 
 namespace ivan
@@ -59,18 +59,18 @@ namespace ivan
 template< class TInputImage, class TOutput = double >
 class ITK_EXPORT DiscreteHessianGaussianImageFunction:
   public itk::ImageFunction< TInputImage,
-  itk::SymmetricSecondRankTensor< TOutput, ::itk::GetImageDimension< TInputImage >::ImageDimension >,
-                        TOutput >
+  itk::SymmetricSecondRankTensor< TOutput, ITKImageDimensionMacro( TInputImage ) >, TOutput >
 {
 public:
 
   /**Standard "Self" typedef */
-  typedef DiscreteHessianGaussianImageFunction Self;
+  typedef DiscreteHessianGaussianImageFunction   Self;
 
   /** Standard "Superclass" typedef */
   typedef itk::ImageFunction< TInputImage,
-    itk::SymmetricSecondRankTensor< TOutput, ::itk::GetImageDimension< TInputImage >::ImageDimension >,
-                         TOutput > Superclass;
+    itk::SymmetricSecondRankTensor< TOutput, 
+    ITKImageDimensionMacro( TInputImage ) >,
+                         TOutput >               Superclass;
 
   /** Smart pointer typedef support */
   typedef itk::SmartPointer< Self >       Pointer;
@@ -80,7 +80,7 @@ public:
   itkNewMacro(Self);
 
   /** Run-time type information (and related methods) */
-  itkTypeMacro(DiscreteHessianGaussianImageFunction, ImageFunction);
+  itkTypeMacro( DiscreteHessianGaussianImageFunction, ImageFunction );
 
   /** Image dependent types */
   typedef typename Superclass::InputImageType      InputImageType;
@@ -96,21 +96,22 @@ public:
 
   /** Output type */
   typedef itk::SymmetricSecondRankTensor< TOutput,
-                                     ::itk::GetImageDimension< TInputImage >::ImageDimension >  TensorType;
-  typedef typename Superclass::OutputType OutputType;
+    ITKImageDimensionMacro( TInputImage ) >                         TensorType;
+  typedef typename Superclass::OutputType                           OutputType;
 
-  typedef itk::FixedArray< double, itkGetStaticConstMacro(ImageDimension2) > VarianceArrayType;
+  typedef itk::FixedArray< double, 
+    itkGetStaticConstMacro(ImageDimension2) >                       VarianceArrayType;
 
   typedef ivan::GaussianDerivativeOperator< TOutput,
-                                           itkGetStaticConstMacro(ImageDimension2) >
-  GaussianDerivativeOperatorType;
+    itkGetStaticConstMacro(ImageDimension2) >                       GaussianDerivativeOperatorType;
 
   /** Array to store gaussian derivative operators from zero to second order
     * (3*ImageDimension operators) */
   typedef itk::FixedArray< GaussianDerivativeOperatorType,
-                      3 *itkGetStaticConstMacro(ImageDimension2) >          GaussianDerivativeOperatorArrayType;
+    3 * itkGetStaticConstMacro(ImageDimension2) >                   GaussianDerivativeOperatorArrayType;
 
-  typedef itk::Neighborhood< TOutput, itkGetStaticConstMacro(ImageDimension2) > KernelType;
+  typedef itk::Neighborhood< TOutput, 
+    itkGetStaticConstMacro(ImageDimension2) >                       KernelType;
 
   /** Array to store precomputed N-dimensional kernels for the hessian
    * components  */
@@ -120,8 +121,8 @@ public:
   /** Image function that performs convolution with the neighborhood
    * operator  */
   typedef itk::NeighborhoodOperatorImageFunction
-  < InputImageType, TOutput >                           OperatorImageFunctionType;
-  typedef typename OperatorImageFunctionType::Pointer OperatorImageFunctionPointer;
+    < InputImageType, TOutput >                           OperatorImageFunctionType;
+  typedef typename OperatorImageFunctionType::Pointer     OperatorImageFunctionPointer;
 
   /** Interpolation modes */
   enum InterpolationModeType { NearestNeighbourInterpolation, LinearInterpolation };

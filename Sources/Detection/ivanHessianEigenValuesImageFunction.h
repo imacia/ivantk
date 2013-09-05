@@ -30,6 +30,7 @@ SUCH DAMAGE.
 #ifndef __ivanHessianEigenValuesImageFunction_h
 #define __ivanHessianEigenValuesImageFunction_h
 
+#include "ivanMacros.h"
 #include "ivanHessianOnlyBasedVesselnessImageFunction.h"
 
 #include "itkSymmetricSecondRankTensor.h"
@@ -56,7 +57,7 @@ template <class TInputImage, class TCoordRep=double>
 class ITK_EXPORT HessianEigenValuesImageFunction :
   public HessianOnlyBasedVesselnessImageFunction<TInputImage,
     typename itk::SymmetricSecondRankTensor
-    <TCoordRep,::itk::GetImageDimension<TInputImage>::ImageDimension>::EigenValuesArrayType, TCoordRep>
+    < TCoordRep, ITKImageDimensionMacro(TInputImage) >::EigenValuesArrayType, TCoordRep>
 {
 public:
 
@@ -65,8 +66,8 @@ public:
     <TInputImage,TCoordRep>                              Self;
   typedef HessianOnlyBasedVesselnessImageFunction
     <TInputImage, typename itk::SymmetricSecondRankTensor
-    <TCoordRep,::itk::GetImageDimension<TInputImage>
-    ::ImageDimension>::EigenValuesArrayType,TCoordRep>   Superclass;
+    <TCoordRep,ITKImageDimensionMacro(TInputImage)>::EigenValuesArrayType,
+    TCoordRep>                                           Superclass;
 
   /** Smart pointer typedef support */
   typedef itk::SmartPointer<Self>        Pointer;
@@ -76,8 +77,8 @@ public:
   typedef TCoordRep    CoordRepType;
   
   typedef typename itk::SymmetricSecondRankTensor
-    <TCoordRep,::itk::GetImageDimension<TInputImage>::ImageDimension>
-    ::EigenValuesArrayType               OutputType;
+    < TCoordRep, ITKImageDimensionMacro(TInputImage) >
+    ::EigenValuesArrayType                           OutputType;
   
   typedef typename Superclass::InputPixelType        InputPixelType;
   typedef typename Superclass::IndexType             IndexType;

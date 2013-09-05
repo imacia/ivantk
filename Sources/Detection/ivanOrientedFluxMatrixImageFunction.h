@@ -30,7 +30,7 @@ SUCH DAMAGE.
 #ifndef __ivanOrientedFluxMatrixImageFunction_h
 #define __ivanOrientedFluxMatrixImageFunction_h
 
-
+#include "ivanMacros.h"
 #include "ivanOrientedFluxMatrixBasedVesselnessImageFunction.h"
 
 #include "itkNumericTraitsTensorPixel.h"
@@ -56,8 +56,7 @@ namespace ivan
 template <class TInputImage, class TVectorField, class TCoordRep=double>
 class ITK_EXPORT OrientedFluxMatrixImageFunction :
   public OrientedFluxMatrixBasedVesselnessImageFunction<TInputImage, TVectorField,
-    itk::SymmetricSecondRankTensor<TCoordRep, ::itk::GetImageDimension
-    <TInputImage>::ImageDimension >, TCoordRep>
+    itk::SymmetricSecondRankTensor<TCoordRep, ITKImageDimensionMacro( TInputImage ) >, TCoordRep>
 {
 public:
 
@@ -65,8 +64,8 @@ public:
     <TInputImage,TVectorField,TCoordRep>                       Self;
   typedef OrientedFluxMatrixBasedVesselnessImageFunction
     <TInputImage,TVectorField,itk::SymmetricSecondRankTensor
-    <TCoordRep,::itk::GetImageDimension
-    <TInputImage>::ImageDimension >, TCoordRep>                Superclass;
+    <TCoordRep, ITKImageDimensionMacro( TInputImage ) >,
+    TCoordRep>                                                 Superclass;
   
   /** Smart pointer typedef support */
   typedef itk::SmartPointer<Self>            Pointer;

@@ -30,6 +30,8 @@ SUCH DAMAGE.
 #ifndef __ivanDiscreteGradientGaussianImageFunction_h
 #define __ivanDiscreteGradientGaussianImageFunction_h
 
+#include "ivanMacros.h"
+
 #include "itkNeighborhoodOperatorImageFunction.h"
 #include "itkImageFunction.h"
 #include "itkGaussianOperator.h"
@@ -61,16 +63,17 @@ namespace ivan
 template <class TInputImage, class TCoordRep=double>
 class ITK_EXPORT DiscreteGradientGaussianImageFunction :
   public itk::ImageFunction< TInputImage, itk::Vector<TCoordRep, 
-    ::itk::GetImageDimension<TInputImage>::ImageDimension>, TCoordRep >
+    ITKImageDimensionMacro( TInputImage ) >, TCoordRep >
 {
 public:
 
   /**Standard "Self" typedef */
-  typedef DiscreteGradientGaussianImageFunction   Self;
+  typedef DiscreteGradientGaussianImageFunction            Self;
 
   /** Standard "Superclass" typedef */
-  typedef itk::ImageFunction<TInputImage, itk::Vector<TCoordRep, 
-    ::itk::GetImageDimension<TInputImage>::ImageDimension>, TCoordRep>  Superclass;
+  typedef itk::ImageFunction<TInputImage, 
+    itk::Vector<TCoordRep,
+    ITKImageDimensionMacro( TInputImage ) >, TCoordRep>    Superclass;
 
   /** Smart pointer typedef support */
   typedef itk::SmartPointer<Self>        Pointer;

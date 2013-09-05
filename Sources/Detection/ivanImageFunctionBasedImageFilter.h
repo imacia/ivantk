@@ -63,8 +63,7 @@ public:
   typedef typename InputImageType::PixelType   InputImagePixelType;
   
   /** Image dimension = 3. */
-  itkStaticConstMacro(ImageDimension, unsigned int,
-                      ::itk::GetImageDimension<InputImageType>::ImageDimension);
+  itkStaticConstMacro( ImageDimension, unsigned int, ITKImageDimensionMacro( InputImageType ) );
                       
   /** Image Function type. */
   typedef TImageFunction			                   ImageFunctionType;

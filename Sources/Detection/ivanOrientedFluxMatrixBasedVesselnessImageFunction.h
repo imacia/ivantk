@@ -30,8 +30,9 @@ SUCH DAMAGE.
 #ifndef __ivanOrientedFluxMatrixBasedVesselnessImageFunction_h
 #define __ivanOrientedFluxMatrixBasedVesselnessImageFunction_h
 
-
+#include "ivanMacros.h"
 #include "ivanSphereGridBasedImageFunction.h"
+
 #include "itkSymmetricSecondRankTensor.h"
 
 
@@ -96,7 +97,7 @@ public:
   typedef typename VectorFieldType::OutputType       VectorType;
   
   typedef itk::SymmetricSecondRankTensor<TCoordRep,
-    ::itk::GetImageDimension<TInputImage>::ImageDimension >   FluxMatrixType;
+    ITKImageDimensionMacro( TInputImage ) >                   FluxMatrixType;
   typedef typename FluxMatrixType::EigenVectorsMatrixType     EigenVectorsMatrixType;
   typedef typename FluxMatrixType::EigenValuesArrayType       EigenValuesArrayType;
     
@@ -104,7 +105,7 @@ public:
   typedef FluxMatrixType                                      TensorType;
       
   typedef itk::Vector<CoordRepType,
-    ::itk::GetImageDimension<TInputImage>::ImageDimension>    NormalVectorType;
+    ITKImageDimensionMacro( TInputImage ) >                   NormalVectorType;
   
   typedef std::vector<NormalVectorType>                       NormalVectorContainerType;
   typedef std::vector<PointType>                              PointContainerType;
