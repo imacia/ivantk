@@ -14,6 +14,7 @@ SET( IVAN_COMMON_SRCS
   ivanImageFunctionToCostFunctionAdaptor.hxx
   ivanImageToVesselDataObjectFilter.h
   ivanImageToVesselDataObjectFilter.hxx
+  ivanMacros.h
   ivanVesselCommon.h
   ivanVesselDataObject.h
   ivanVesselDataObjectSource.h
