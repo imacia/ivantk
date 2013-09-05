@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,7 +23,7 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanCircularBarTubeGenerator.h
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Ivan Macia (imacia@vicomtech.org)
 // Description: creates a generic Gaussian tube of the given size, stddev and peak intensity value.
 //   Subclasses must define the shape of the tube.
 // Date: 2010/09/17
@@ -75,7 +75,7 @@ public:
     
   /** This is the tube/shape height in pixels. The image height is the tube height plus 
     * twice the (Z)offset. */
-  void SetHeight( unsigned long height )
+  void SetHeight( double height )
     { m_Height = height; }
   unsigned long GetHeight() const
     { return m_Height; }
@@ -160,5 +160,5 @@ CircularBarTubeGenerator<TPixel>::CircularBarTubeGenerator() :
 
 } // end namespace ivan
 
-#endif // __CircularBarTubeGenerator_h_
+#endif // __ivanCircularBarTubeGenerator_h_
 

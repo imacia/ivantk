@@ -28,7 +28,7 @@ SUCH DAMAGE.
 // Date: 2010/09/17
 
 
-#include "ivanCircularBarStraightTubeGenerator2.h"
+#include "ivanCircularBarStraightTubeGenerator.h"
 
 #include "itkImageFileWriter.h"
 
@@ -50,8 +50,8 @@ int main( int argc, char *argv[] )
   //typedef short    PixelType;
   typedef float PixelType;
 
-  typedef ivan::CircularBarStraightTubeGenerator2<PixelType>   TubeGeneratorType;
-  typedef TubeGeneratorType::ImageType                             TubeImageType;
+  typedef ivan::CircularBarStraightTubeGenerator<PixelType>   TubeGeneratorType;
+  typedef TubeGeneratorType::ImageType                        TubeImageType;
     
   TubeGeneratorType tubeGenerator;
 

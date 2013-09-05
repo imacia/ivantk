@@ -32,6 +32,7 @@ SUCH DAMAGE.
 #define __ivanCircularBarStraightTubeGenerator_h_
 
 #include "ivanCircularBarTubeGenerator.h"
+#include "itkVectorContainer.h"
 
 namespace ivan
 {
@@ -47,17 +48,30 @@ public:
   typedef TPixel                        PixelType;
   typedef itk::Image<PixelType,3>       ImageType;
   typedef typename ImageType::Pointer   ImagePointer;
+  typedef typename ImageType::PointType PointType;
+  typedef typename itk::Image<PixelType,2>::PointType SectionPointType;
   
   typedef typename Superclass::SectionSizeType   SectionSizeType;
+
+  typedef itk::VectorContainer<unsigned int,PointType>  CenterlineType;
+  typedef typename CenterlineType::Pointer              CenterlinePointer;
   
 public:
 
   CircularBarStraightTubeGenerator();
   ~CircularBarStraightTubeGenerator() {};
   
+  CenterlinePointer GetCenterline()
+  { return this->m_CenterlinePointer; }
+
+  SectionPointType GetCenter()
+  { return this->m_Center; }
+
   virtual ImagePointer Create();
 
-protected: 
+private:
+  CenterlinePointer                   m_CenterlinePointer;
+  SectionPointType                    m_Center;
   
 };
 
@@ -65,6 +79,7 @@ protected:
 template <class TPixel>
 CircularBarStraightTubeGenerator<TPixel>::CircularBarStraightTubeGenerator()
 {
+  m_CenterlinePointer = CenterlineType::New();
   
 }
 
@@ -78,7 +93,7 @@ CircularBarStraightTubeGenerator<TPixel>::Create()
   typename ImageType::SpacingType spacing;
   spacing[0] = this->m_ImageSpacing;
   spacing[1] = this->m_ImageSpacing;
-  spacing[2] = 1.0; // !!! CURRENTLY A FIXED VALUE
+  spacing[2] = this->m_ImageSpacing; // Before, it was fixed to 1.0
   
   tubeImage->SetSpacing( spacing );
   
@@ -86,11 +101,13 @@ CircularBarStraightTubeGenerator<TPixel>::Create()
   origin.Fill( 0.0 );
   
   tubeImage->SetOrigin( origin );
+
+  double imageSizeZ = vcl_floor( ( this->m_Height + 2*this->m_Offset ) / this->m_ImageSpacing );
   
   typename ImageType::RegionType::SizeType size;
   size[0] = this->m_SectionImageSize[0];
   size[1] = this->m_SectionImageSize[1];
-  size[2] = this->m_Height + 2*this->m_Offset;
+  size[2] = vcl_floor( imageSizeZ );
   
   typename ImageType::RegionType::IndexType index;
   index.Fill(0);
@@ -118,6 +135,11 @@ CircularBarStraightTubeGenerator<TPixel>::Create()
   sectionGenerator.SetMaxValue( this->m_MaxValue );
   
   typename SectionImageType::Pointer sectionImage = sectionGenerator.Create();
+
+  // Get center
+
+  this->m_Center[0] = sectionGenerator.GetCenter()[0];
+  this->m_Center[1] = sectionGenerator.GetCenter()[1];
   
   typedef itk::ImageRegionConstIterator<SectionImageType>  ConstIteratorType;
   typedef itk::ImageRegionIterator<ImageType>              IteratorType;
@@ -128,16 +150,36 @@ CircularBarStraightTubeGenerator<TPixel>::Create()
   size[2] = 1; // copy a single slice each time
   region.SetSize( size );
 
+  unsigned long firstSlice = vcl_floor( this->m_Offset / this->m_ImageSpacing );
+  unsigned long lastSlice = imageSizeZ - firstSlice ;
   
-  for( unsigned long z=this->m_Offset; z < (this->m_Height + this->m_Offset); ++z )
+  int i = 0;
+
+  ImageType::PointType centerlinePoint;
+  centerlinePoint[0] = this->m_Center[0];
+  centerlinePoint[1] = this->m_Center[1];
+
+  unsigned int numPoints = lastSlice - firstSlice ;
+
+  this->m_CenterlinePointer->resize( numPoints );
+
+  for( unsigned long z = firstSlice; z < lastSlice ; ++z )
   {
-    index[2] = z; // current slice
+    
+    index[2] = z; // current slice ( index units )
     region.SetIndex( index );
     
     outputIt = IteratorType( tubeImage, region );
     
     inputIt.GoToBegin();
     outputIt.GoToBegin();
+
+    // Create centerline
+
+    centerlinePoint[2] = origin[2] + index[2] * this->m_ImageSpacing; // Convert to physical units.
+
+    (*this->m_CenterlinePointer)[i] = centerlinePoint;
+    i++;
     
     while( !inputIt.IsAtEnd() )
     {
