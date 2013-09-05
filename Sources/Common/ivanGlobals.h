@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012-2013, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,7 +23,7 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanVesselGlobals.h
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Ivan Macia (imacia@vicomtech.org)
 // Description: global functions used in the library
 // Date: 2009/11/05
 
