@@ -64,14 +64,16 @@ ENDIF ()
 #-----------------------------------------------------------------------------
 # Find and use Qt libraries
 #
-SET( QT_USE_QTOPENGL 1 )
 
-FIND_PACKAGE( Qt REQUIRED )
-IF( QT_USE_FILE )
-  INCLUDE( ${QT_USE_FILE} )
-ELSE( QT_USE_FILE )
-  SET( QT_LIBRARIES  ${QT_QT_LIBRARY})
-ENDIF( QT_USE_FILE )
+# Might use it in the future for GUI demo applications
+#SET( QT_USE_QTOPENGL 1 )
+
+#FIND_PACKAGE( Qt REQUIRED )
+#IF( QT_USE_FILE )
+#  INCLUDE( ${QT_USE_FILE} )
+#ELSE( QT_USE_FILE )
+#  SET( QT_LIBRARIES  ${QT_QT_LIBRARY})
+#ENDIF( QT_USE_FILE )
 
 
 #-----------------------------------------------------------------------------
