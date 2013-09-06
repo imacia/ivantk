@@ -1,4 +1,146 @@
-ivan
-====
+The Image-based Vascular Analysis Toolkit (IVAN)
+================================================
 
-The Image-based Vascular Analysis Toolkit
+1.Introduction and Scope
+  ----------------------
+
+The Image-based Vascular Analysis Library (IVAN) is a set of cross-platform C++
+software libraries for 2D/3D vascular analysis in medical imaging developed using
+concepts of generic programming. It implements many of the vascular detection, ex-
+traction and modelling methods described in the PhD thesis 
+
+"Medical Image Analysis for the Detection Extraction and Modeling of Vascular Images"
+by Ivan Macia Oliver, supervised by Prof. Manuel Graña Romay
+Computational Intelligence Group, University of the Basque Country (2012)
+http://www.ehu.es/ccwintco/uploads/e/ef/Thesis_Ivan_Macia_Final.pdf
+
+The great number of existing approaches to vascular analysis, its increasing com-
+plexity and the absence of a unified framework makes difficult to compare the per-
+formance of the different methods in a meaningful and consistent way. Moreover,
+the implementation of such methods in an object-oriented design allows reusability
+of its constituent building-blocks, provides a better understanding of its algorithmic
+mechanisms, reveals important implementation details and improves reproducibility of
+experiments.
+
+The main motivation behind the development of IVAN was the lack of dedicated
+libraries for image-based analysis of vascular structures. Some of the existing open 
+source medical image analysis libraries, such as the Insight Toolkit (ITK), implement 
+a few popular vascular detection methods. IVAN may be considered an extension of ITK 
+dedicated specifically to vascular analysis, since it reuses and extends many of the 
+concepts and classes of this library. The Vascular Modeling Toolkit (VMTK) 
+(http://www.vmtk.org) is an open-source library dedicated to vascular analysis but it 
+is more oriented to computational geometry of vessels, generating detailed patient-specific 
+models that can be used for structural or computational fluid dynamics studies. 
+It provides a set of vascular segmentation methods, mainly based on level-set approaches,
+but it lacks some algorithms for image-based analysis of blood vessels, specially for 
+small vessels. At the same time of the development of this software, a similar toolkit 
+called TubeTk (http://www.tubetk.org) was developed, for the segmentation, registration
+and analysis of tubes and surfaces of images. The toolkit does not provide any 
+visualization or GUI functionalities, although it is compatible with libraries such as
+the Visualization Toolkit (http://www.vtk.org) (see example on the toolkit) and with
+different C++ GUI frameworks.
+
+This software pretends to be complementary and if possible compatible to the aforementioned 
+softwares. Currently, its main focus is on vascular detection, extraction and modelling, 
+trying to establish a framework in which different algorithm implementations can be 
+compared consistently. Moreover, it incorporates object oriented paradigms modeling 
+extraction schemes that allow to replace components in the extraction chain. Currently 
+this is being developed specifically for vessel tracking algorithms. Finally, it incorporates 
+a set of tools to develop synthetic tubular volumetric models that may be useful in 
+different experiments. Most of the current implementations of vascular detectors are local 
+point-based approaches, many of them kernel-based, that may not be effective computationally 
+for exploring large volumes. Instead they are designed for local extraction schemes (such 
+as vessel tracking) and for testing a sparse number of candidate points,  with the purpose 
+of comparing accuracy or robustness of different approaches. In the future it is expected 
+to incorporate both global approaches and faster implementations, such as GPU-based kernel 
+implementations.
+
+Regarding the scope of the library, it currently provides the following features:
+• A repository of vascular detection and extraction algorithms under a unified framework: 
+currently most of the methods are focused on centerline-based detection and extraction 
+approaches, with focus on medialness functions and vascular tracking algorithms.
+• An implementation of the Vessel Knowledge Representation model: it allows the 
+representation of vascular structures in a way that can be easily used to store the results 
+of the vascular extraction algorithms so this information can be readily used by the clinical 
+applications (see Chapter 3 of the thesis).
+• An implementation of the Generalized Vascular Tracking (GVT) Framework: it models vascular 
+tracking procedures in a set of different individual stages and components in which existing 
+methods can be accommodated in a flexible manner. Its object-oriented architecture allows 
+testing the influence of the individual components. Moreover, complex extraction schemes 
+can be generated by creating new components or extending existing ones, and by combining 
+different parts of existing methods in innovative ways.
+• A means of generating synthetic models of ideal shapes as volumetric images, such as the 
+cylinder, toroid or helix models described in Appendix A of the thesis, with different 
+cross-sections, shape and image parameters and noise levels.
+• A means of reproducing the experiments of the thesis, since they are incorporated as unit 
+tests and examples with configurable parameters.
+
+2. Requirements
+   ------------
+   
+The toolkit has been tested mainly on Windows with Visual Studio 2010 both in 32 and 64 bits. 
+However it uses a CMake-based (http://www.cmake.org) build system and the code is multiplatform. 
+It should work on most Linux and Mac platforms.
+   
+Requirements:
+- CMake 2.8 or higher 
+- A modern compatible compiler (the toolkit makes heavy use of C++ templates)
+- Insight Toolkit (4.0 or higher recommended)
+- Optional: Visualization Toolkit (5.0 or higher)
+   
+
+3. Installation
+   ------------
+   
+1) Download as zip file or clone repository from https://github.com/imacia/ivan.git
+2) The source directory for CMake should be the root directory of the toolkit.
+3) If not found automatically set the ITK_DIR CMake variable to point to your ITK binary dir.
+4) Optionally set the VTK_DIR to point to your VTK binary directory.
+
+
+4. Documentation
+   -------------
+   
+Reference documentation for the toolkit can be generated using Doxygen (http://www.doxygen.org).
+In this case, it is also recommended to install GraphViz (http://www.graphviz.org) in order to
+generate the class diagrams. 
+
+The documentation can be easily generated via CMake:
+1) Set DOXYGEN_EXECUTABLE to doxygen.exe
+2) Set DOXYGEN_DOT_EXECUTABLE to dot.exe from Graphviz
+3) Click Configure and then Generate
+4) A new project COMPILE_DOXYGEN is created. Build that project.
+5) The html documentation should be generated in IVAN_BINARY_DIR/Doxygen/html/index.html where
+   IVAN_BINARY_DIR is the binary dir of your choice in CMake.
+   
+
+5. Known Issues and Future Work
+   ----------------------------
+   
+I am not totally happy with the Modeling part. Currently this part has been completely refactored
+to store vessel information as a graph using Boost Graph Library (http://www.boost.org/libs/graph)
+which I use in other propietary applications. However this migration process is not 
+straightforward.
+
+Gaussian kernel implementations are currently slow. Especially Hessian implementation can be 
+further optimized. A GPU implementation could really speed up things.
+
+Currently there are no detectors for bifurcation on vessel tracking. There are interesting
+features but still working on increasing utility and robustness.
+
+
+6. Contact and Support
+   -------------------
+   
+Right now working on creating a mailing list/forum. In the meantime you may contact me at
+imacia ___ at ___ vicomtech.org
+   
+
+
+   
+
+
+
+
+
+
