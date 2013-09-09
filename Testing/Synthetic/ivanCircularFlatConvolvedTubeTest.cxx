@@ -22,13 +22,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanCircularFlatConvolvedTubeTest.cxx
+// File: ivanCircularBarConvolvedTubeTest.cxx
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
-// Description: creates a flat tube convolved with a Gaussian
+// Description: creates a tube with bar profile convolved with a Gaussian
 // Date: 2012/03/12
 
 
-#include "ivanCircularFlatTubeGenerator.h"
+#include "ivanCircularBarTubeGenerator.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkDiscreteGaussianImageFilter.h"
 
@@ -48,7 +48,7 @@ int main( int argc, char *argv[] )
 
   typedef short    PixelType;
   
-  typedef ivan::CircularFlatTubeGenerator<PixelType>   TubeGeneratorType;
+  typedef ivan::CircularBarTubeGenerator<PixelType>   TubeGeneratorType;
   typedef TubeGeneratorType::ImageType           TubeImageType;
     
   TubeGeneratorType tubeGenerator;

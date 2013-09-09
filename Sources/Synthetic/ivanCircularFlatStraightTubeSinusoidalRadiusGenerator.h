@@ -22,28 +22,28 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanCircularFlatStraightTubeSinuosidalRadiusGenerator.h
+// File: ivanCircularBarStraightTubeSinuosidalRadiusGenerator.h
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
-// Description: creates a flat straight tube of the given size, stddev and peak intensity value and with
-//   Sinuosidal radius following a sinusoid.
+// Description: creates a straight tube with bar profile of the given size, 
+// stddev and peak intensity value and with radius following a sinusoid.
 // Date: 2012/04/03
 
 
-#ifndef __ivanCircularFlatStraightTubeSinuosidalRadiusGenerator_h_
-#define __ivanCircularFlatStraightTubeSinuosidalRadiusGenerator_h_
+#ifndef __ivanCircularBarStraightTubeSinuosidalRadiusGenerator_h_
+#define __ivanCircularBarStraightTubeSinuosidalRadiusGenerator_h_
 
-#include "ivanCircularFlatTubeGenerator.h"
+#include "ivanCircularBarTubeGenerator.h"
 
 namespace ivan
 {
 
 template <class TPixel>
-class CircularFlatStraightTubeSinuosidalRadiusGenerator : public CircularFlatTubeGenerator<TPixel>
+class CircularBarStraightTubeSinuosidalRadiusGenerator : public CircularBarTubeGenerator<TPixel>
 {
 public:
 
-  typedef CircularFlatStraightTubeSinuosidalRadiusGenerator<TPixel>  Self;
-  typedef CircularFlatTubeGenerator<TPixel>                          Superclass;
+  typedef CircularBarStraightTubeSinuosidalRadiusGenerator<TPixel>  Self;
+  typedef CircularBarTubeGenerator<TPixel>                          Superclass;
 
   typedef TPixel                        PixelType;
   typedef itk::Image<PixelType,3>       ImageType;
@@ -53,8 +53,8 @@ public:
   
 public:
 
-  CircularFlatStraightTubeSinuosidalRadiusGenerator();
-  ~CircularFlatStraightTubeSinuosidalRadiusGenerator() {};
+  CircularBarStraightTubeSinuosidalRadiusGenerator();
+  ~CircularBarStraightTubeSinuosidalRadiusGenerator() {};
   
   virtual ImagePointer Create();
   
@@ -81,8 +81,8 @@ protected:
 
 
 template <class TPixel>
-CircularFlatStraightTubeSinuosidalRadiusGenerator<TPixel>
-::CircularFlatStraightTubeSinuosidalRadiusGenerator() :
+CircularBarStraightTubeSinuosidalRadiusGenerator<TPixel>
+::CircularBarStraightTubeSinuosidalRadiusGenerator() :
   m_MinRadius( 1.0 ),
   m_SemiPeriod( 20 )
 {
@@ -91,8 +91,8 @@ CircularFlatStraightTubeSinuosidalRadiusGenerator<TPixel>
 
 
 template <class TPixel>
-typename CircularFlatStraightTubeSinuosidalRadiusGenerator<TPixel>::ImagePointer
-CircularFlatStraightTubeSinuosidalRadiusGenerator<TPixel>::Create()
+typename CircularBarStraightTubeSinuosidalRadiusGenerator<TPixel>::ImagePointer
+CircularBarStraightTubeSinuosidalRadiusGenerator<TPixel>::Create()
 {
   ImagePointer tubeImage = ImageType::New();
   
@@ -125,9 +125,9 @@ CircularFlatStraightTubeSinuosidalRadiusGenerator<TPixel>::Create()
   tubeImage->Allocate();
   tubeImage->FillBuffer(0);
   
-  // Create Flat section
+  // Create Bar section
   
-  typedef CircularFlatSectionGenerator<TPixel>    SectionGeneratorType;
+  typedef CircularBarSectionGenerator<TPixel>    SectionGeneratorType;
   typedef typename SectionGeneratorType::ImageType    SectionImageType;
     
   SectionGeneratorType sectionGenerator;
@@ -190,5 +190,5 @@ CircularFlatStraightTubeSinuosidalRadiusGenerator<TPixel>::Create()
 
 } // end namespace ivan
 
-#endif // __ivanCircularFlatStraightTubeSinuosidalRadiusGenerator_h_
+#endif // __ivanCircularBarStraightTubeSinuosidalRadiusGenerator_h_
 

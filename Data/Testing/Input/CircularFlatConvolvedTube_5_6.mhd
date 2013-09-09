@@ -11,4 +11,4 @@ AnatomicalOrientation = RAI
 ElementSpacing = 1 1 1
 DimSize = 51 51 81
 ElementType = MET_SHORT
-ElementDataFile = CircularFlatConvolvedTube_5_6.zraw
+ElementDataFile = CircularBarConvolvedTube_5_6.zraw

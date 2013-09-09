@@ -5,9 +5,9 @@ exe_path_str = 'C:/SDKs/IVANBinaries/bin/Release/'
 #output_path_str = 'D:/VolumeData/VesselExperiments/'
 output_path_str = 'F:/VolumeData/VesselExperiments/'
 
-gaussian_tube_exe_str = exe_path_str + 'TestCircularFlatConvolvedTube.exe'
+gaussian_tube_exe_str = exe_path_str + 'TestCircularBarConvolvedTube.exe'
 noise_exe_str = exe_path_str + 'UtilityGaussianNoiseAdder.exe'
-gaussian_tube_output_str_root = output_path_str + 'TestObjects/New/' + 'CircularFlatConvolvedTube_'
+gaussian_tube_output_str_root = output_path_str + 'TestObjects/New/' + 'CircularBarConvolvedTube_'
 
 # We generate scales as sigma_i = sigma_0 * factor^i where factor is a number > 1.0
 

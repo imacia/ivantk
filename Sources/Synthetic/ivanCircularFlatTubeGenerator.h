@@ -22,16 +22,16 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanCircularFlatTubeGenerator.h
+// File: ivanCircularBarTubeGenerator.h
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: creates a Gaussian tube of the given size, stddev and peak intensity value
 // Date: 2010/09/17
 
 
-#ifndef __ivanCircularFlatTubeGenerator_h_
-#define __ivanCircularFlatTubeGenerator_h_
+#ifndef __ivanCircularBarTubeGenerator_h_
+#define __ivanCircularBarTubeGenerator_h_
 
-#include "ivanCircularFlatSectionGenerator.h"
+#include "ivanCircularBarSectionGenerator.h"
 
 #include "itkImageRegionIterator.h"
 
@@ -39,7 +39,7 @@ namespace ivan
 {
 
 template <class TPixel>
-class CircularFlatTubeGenerator
+class CircularBarTubeGenerator
 {
 public:
 
@@ -51,8 +51,8 @@ public:
 
 public:
 
-  CircularFlatTubeGenerator();
-  ~CircularFlatTubeGenerator() {};
+  CircularBarTubeGenerator();
+  ~CircularBarTubeGenerator() {};
   
   void SetSectionImageSize( unsigned long sizeX, unsigned long sizeY )
     { m_SectionImageSize[0] = sizeX; m_SectionImageSize[1] = sizeY; }
@@ -112,7 +112,7 @@ protected:
 
 
 template <class TPixel>
-CircularFlatTubeGenerator<TPixel>::CircularFlatTubeGenerator() :
+CircularBarTubeGenerator<TPixel>::CircularBarTubeGenerator() :
   m_Height( 100 ),
   m_ImageSpacing( 1.0 ),
   m_Radius( 2.0 ),
@@ -124,8 +124,8 @@ CircularFlatTubeGenerator<TPixel>::CircularFlatTubeGenerator() :
 
 
 template <class TPixel>
-typename CircularFlatTubeGenerator<TPixel>::ImagePointer
-CircularFlatTubeGenerator<TPixel>::Create()
+typename CircularBarTubeGenerator<TPixel>::ImagePointer
+CircularBarTubeGenerator<TPixel>::Create()
 {
   ImagePointer tubeImage = ImageType::New();
   
@@ -160,7 +160,7 @@ CircularFlatTubeGenerator<TPixel>::Create()
   
   // Crate Gaussian section
   
-  typedef CircularFlatSectionGenerator<TPixel>      SectionGeneratorType;
+  typedef CircularBarSectionGenerator<TPixel>      SectionGeneratorType;
   typedef typename SectionGeneratorType::ImageType  SectionImageType;
     
   SectionGeneratorType sectionGenerator;
@@ -202,5 +202,5 @@ CircularFlatTubeGenerator<TPixel>::Create()
 
 } // end namespace ivan
 
-#endif // __ivanCircularFlatTubeGenerator_h_
+#endif // __ivanCircularBarTubeGenerator_h_
 

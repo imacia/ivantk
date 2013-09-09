@@ -5,7 +5,7 @@ exe_path_str = 'C:/SDKs/IVANBinaries/bin/Release/'
 output_path_str = 'D:/VolumeData/VesselExperiments/'
 #output_path_str = 'F:/VolumeData/VesselExperiments/'
 
-flat_tube_exe_str = exe_path_str + 'TestCircularFlatConvolvedTubeSinusoidalRadius.exe'
+flat_tube_exe_str = exe_path_str + 'TestCircularBarConvolvedTubeSinusoidalRadius.exe'
 noise_exe_str = exe_path_str + 'UtilityGaussianNoiseAdder.exe'
 flat_tube_output_str_root = output_path_str + 'TestObjects/' + 'CircularGaussianTubeSin2Lobes_'
 

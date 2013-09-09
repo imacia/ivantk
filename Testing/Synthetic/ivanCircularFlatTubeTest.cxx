@@ -22,13 +22,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanCircularFlatTubeTest.cxx
+// File: ivanCircularBarTubeTest.cxx
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: creates a set of Gaussian tubes
 // Date: 2010/09/17
 
 
-#include "ivanCircularFlatTubeGenerator.h"
+#include "ivanCircularBarTubeGenerator.h"
 
 #include "itkImageFileWriter.h"
 
@@ -46,7 +46,7 @@ int main( int argc, char *argv[] )
 
   typedef short    PixelType;
   
-  typedef ivan::CircularFlatTubeGenerator<PixelType>   TubeGeneratorType;
+  typedef ivan::CircularBarTubeGenerator<PixelType>   TubeGeneratorType;
   typedef TubeGeneratorType::ImageType           TubeImageType;
     
   TubeGeneratorType tubeGenerator;

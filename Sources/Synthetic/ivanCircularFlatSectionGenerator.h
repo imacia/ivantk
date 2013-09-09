@@ -22,14 +22,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanCircularFlatSectionGenerator.h
+// File: ivanCircularBarSectionGenerator.h
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: creates a Gaussian image of the given size, stddev and peak intensity value
 // Date: 2010/09/17
 
 
-#ifndef __ivanCircularFlatSectionGenerator_h_
-#define __ivanCircularFlatSectionGenerator_h_
+#ifndef __ivanCircularBarSectionGenerator_h_
+#define __ivanCircularBarSectionGenerator_h_
 
 #include "itkImage.h"
 #include "itkImageRegionIteratorWithIndex.h"
@@ -39,7 +39,7 @@ namespace ivan
 {
 
 template <class TPixel>
-class CircularFlatSectionGenerator
+class CircularBarSectionGenerator
 {
 public:
 
@@ -51,8 +51,8 @@ public:
 
 public:
 
-  CircularFlatSectionGenerator();
-  ~CircularFlatSectionGenerator() {};
+  CircularBarSectionGenerator();
+  ~CircularBarSectionGenerator() {};
 
   void SetImageSize( unsigned long sizeX, unsigned long sizeY )
     { m_ImageSize[0] = sizeX; m_ImageSize[1] = sizeY; }
@@ -97,7 +97,7 @@ private:
 
 
 template <class TPixel>
-CircularFlatSectionGenerator<TPixel>::CircularFlatSectionGenerator() :
+CircularBarSectionGenerator<TPixel>::CircularBarSectionGenerator() :
   m_ImageSpacing( 1.0 ),
   m_Radius( 2.0 ),
   m_MaxValue( 255.0 )
@@ -107,8 +107,8 @@ CircularFlatSectionGenerator<TPixel>::CircularFlatSectionGenerator() :
 
 
 template <class TPixel>
-typename CircularFlatSectionGenerator<TPixel>::ImagePointer
-CircularFlatSectionGenerator<TPixel>::Create()
+typename CircularBarSectionGenerator<TPixel>::ImagePointer
+CircularBarSectionGenerator<TPixel>::Create()
 {
   ImagePointer sectionImage = ImageType::New();
   
@@ -180,4 +180,4 @@ CircularFlatSectionGenerator<TPixel>::Create()
 
 } // end namespace ivan
 
-#endif // __ivanCircularFlatSectionGenerator_h_
+#endif // __ivanCircularBarSectionGenerator_h_

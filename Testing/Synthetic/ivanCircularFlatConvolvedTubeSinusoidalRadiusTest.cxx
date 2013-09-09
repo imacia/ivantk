@@ -22,13 +22,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanCircularFlatConvolvedTubeSinusoidalRadiusTest.cxx
+// File: ivanCircularBarConvolvedTubeSinusoidalRadiusTest.cxx
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
-// Description: creates a flat tube convolved with a Gaussian and with radius varying following a sinusoidal function
+// Description: creates a tube with bar profile convolved with a Gaussian 
+// and with radius varying following a sinusoidal function
 // Date: 2012/04/03
 
 
-#include "ivanCircularFlatStraightTubeSinusoidalRadiusGenerator.h"
+#include "ivanCircularBarStraightTubeSinusoidalRadiusGenerator.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkDiscreteGaussianImageFilter.h"
 
@@ -48,7 +49,7 @@ int main( int argc, char *argv[] )
 
   typedef short    PixelType;
   
-  typedef ivan::CircularFlatStraightTubeSinuosidalRadiusGenerator<PixelType>   TubeGeneratorType;
+  typedef ivan::CircularBarStraightTubeSinuosidalRadiusGenerator<PixelType>   TubeGeneratorType;
   typedef TubeGeneratorType::ImageType                                         TubeImageType;
     
   TubeGeneratorType tubeGenerator;

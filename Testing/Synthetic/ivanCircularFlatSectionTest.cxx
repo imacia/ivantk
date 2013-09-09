@@ -22,13 +22,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanCircularFlatSectionTest.cxx
+// File: ivanCircularBarSectionTest.cxx
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: creates a Gaussian section of the specified size
 // Date: 2010/09/17
 
 
-#include "ivanCircularFlatSectionGenerator.h"
+#include "ivanCircularBarSectionGenerator.h"
 
 #include "itkImageFileWriter.h"
 
@@ -46,7 +46,7 @@ int main( int argc, char *argv[] )
 
   typedef short    PixelType;
   
-  typedef ivan::CircularFlatSectionGenerator<PixelType>   SectionGeneratorType;
+  typedef ivan::CircularBarSectionGenerator<PixelType>   SectionGeneratorType;
   typedef SectionGeneratorType::ImageType                 SectionImageType;
     
   SectionGeneratorType sectionGenerator;

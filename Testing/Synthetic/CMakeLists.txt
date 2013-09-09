@@ -27,36 +27,36 @@ TARGET_LINK_LIBRARIES( TestCircularGaussianTubeSinusoidalRadius
 
 #------------------------------------------------------------------------------------------------
 
-ADD_EXECUTABLE( TestCircularFlatConvolvedTubeSinusoidalRadius ivanCircularFlatConvolvedTubeSinusoidalRadiusTest.cxx )
+ADD_EXECUTABLE( TestCircularBarConvolvedTubeSinusoidalRadius ivanCircularBarConvolvedTubeSinusoidalRadiusTest.cxx )
 
-TARGET_LINK_LIBRARIES( TestCircularFlatConvolvedTubeSinusoidalRadius
+TARGET_LINK_LIBRARIES( TestCircularBarConvolvedTubeSinusoidalRadius
   ${ITK_LIBRARIES}
 )
 
 
 #------------------------------------------------------------------------------------------------
 
-ADD_EXECUTABLE( TestCircularFlatSection ivanCircularFlatSectionTest.cxx )
+ADD_EXECUTABLE( TestCircularBarSection ivanCircularBarSectionTest.cxx )
 
-TARGET_LINK_LIBRARIES( TestCircularFlatSection
+TARGET_LINK_LIBRARIES( TestCircularBarSection
   ${ITK_LIBRARIES}
 )
 
 
 #------------------------------------------------------------------------------------------------
 
-ADD_EXECUTABLE( TestCircularFlatTube ivanCircularFlatTubeTest.cxx )
+ADD_EXECUTABLE( TestCircularBarTube ivanCircularBarTubeTest.cxx )
 
-TARGET_LINK_LIBRARIES( TestCircularFlatTube
+TARGET_LINK_LIBRARIES( TestCircularBarTube
   ${ITK_LIBRARIES}
 )
 
 
 #------------------------------------------------------------------------------------------------
 
-ADD_EXECUTABLE( TestCircularFlatConvolvedTube ivanCircularFlatConvolvedTubeTest.cxx )
+ADD_EXECUTABLE( TestCircularBarConvolvedTube ivanCircularBarConvolvedTubeTest.cxx )
 
-TARGET_LINK_LIBRARIES( TestCircularFlatConvolvedTube
+TARGET_LINK_LIBRARIES( TestCircularBarConvolvedTube
   ${ITK_LIBRARIES}
 )
 
