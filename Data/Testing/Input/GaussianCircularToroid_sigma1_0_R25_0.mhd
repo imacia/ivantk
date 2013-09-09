@@ -10,4 +10,4 @@ AnatomicalOrientation = RAI
 ElementSpacing = 1 1 1
 DimSize = 29 59 9
 ElementType = MET_SHORT
-ElementDataFile = GaussianCircularToroid_sigma1_0_R25_0.raw
+ElementDataFile = CircularGaussianToroid_sigma1_0_R25_0.raw

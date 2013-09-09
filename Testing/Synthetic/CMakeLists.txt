@@ -90,22 +90,22 @@ TARGET_LINK_LIBRARIES( TestCurvedCircularGaussianTube2
 
 #------------------------------------------------------------------------------------------------
 
-ADD_EXECUTABLE( TestGaussianCircularToroid 
-  ivanGaussianCircularToroidTest.cxx
+ADD_EXECUTABLE( TestCircularGaussianToroid 
+  ivanCircularGaussianToroidTest.cxx
 )
 
-TARGET_LINK_LIBRARIES( TestGaussianCircularToroid
+TARGET_LINK_LIBRARIES( TestCircularGaussianToroid
   ${ITK_LIBRARIES}
 )
 
 
 #------------------------------------------------------------------------------------------------
 
-ADD_EXECUTABLE( TestGaussianCircularHelix 
-  ivanGaussianCircularHelixTest.cxx
+ADD_EXECUTABLE( TestCircularGaussianHelix 
+  ivanCircularGaussianHelixTest.cxx
 )
 
-TARGET_LINK_LIBRARIES( TestGaussianCircularHelix
+TARGET_LINK_LIBRARIES( TestCircularGaussianHelix
   ${ITK_LIBRARIES}
 )
 

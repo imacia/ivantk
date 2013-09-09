@@ -4,8 +4,8 @@ import math
 exe_path_str = 'C:/SDKs/IVANBinaries/bin/Release/'
 output_path_str = 'D:/VolumeData/VesselExperiments/'
 
-gaussian_tube_exe_str = exe_path_str + 'TestCircularGaussianCircularTube.exe'
-gaussian_tube_output_str_root = output_path_str + 'TestObjects/' + 'GaussianCircularTube_'
+gaussian_tube_exe_str = exe_path_str + 'TestCircularCircularGaussianTube.exe'
+gaussian_tube_output_str_root = output_path_str + 'TestObjects/' + 'CircularGaussianTube_'
 
 tubeScales = [1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 3.5, 4.0, 4.5, 5.0, 6.0, 7.0, 7.5, 8.0, 9.0, 10.0]
 #tubeSpacing = 0.3

@@ -1,1 +1,1 @@
-TestGaussianCircularToroid.exe GaussianCircularToroid_sigma3_0_R50_0.mhd 3.0 50.0 2 1.0 -45 45 255 0
+TestCircularGaussianToroid.exe CircularGaussianToroid_sigma3_0_R50_0.mhd 3.0 50.0 2 1.0 -45 45 255 0

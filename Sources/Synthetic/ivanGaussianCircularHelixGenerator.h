@@ -22,16 +22,16 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanGaussianCircularHelixGenerator.h
+// File: ivanCircularGaussianHelixGenerator.h
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: creates a circular helix with Gaussian section of the given size, stddev and peak intensity value
 // Date: 2010/08/24
 
 
-#ifndef __ivanGaussianCircularHelixGenerator_h_
-#define __ivanGaussianCircularHelixGenerator_h_
+#ifndef __ivanCircularGaussianHelixGenerator_h_
+#define __ivanCircularGaussianHelixGenerator_h_
 
-#include "ivanGaussianCircularToroidGenerator.h"
+#include "ivanCircularGaussianToroidGenerator.h"
 #include "ivanCircularHelixCenterlineGenerator.h"
 
 #include "itkGaussianSpatialFunction.h"
@@ -42,13 +42,13 @@ namespace ivan
 {
 
 template <class TPixel>
-class GaussianCircularHelixGenerator :
-  public GaussianCircularToroidGenerator<TPixel>
+class CircularGaussianHelixGenerator :
+  public CircularGaussianToroidGenerator<TPixel>
 {
 public:
   
-  typedef GaussianCircularHelixGenerator<TPixel>   Self;
-  typedef GaussianCircularToroidGenerator<TPixel>  Superclass;
+  typedef CircularGaussianHelixGenerator<TPixel>   Self;
+  typedef CircularGaussianToroidGenerator<TPixel>  Superclass;
 
   typedef TPixel                             PixelType;
   typedef itk::Image<PixelType,3>            ImageType;
@@ -63,8 +63,8 @@ public:
     
 public:
 
-  GaussianCircularHelixGenerator();
-  ~GaussianCircularHelixGenerator() {};
+  CircularGaussianHelixGenerator();
+  ~CircularGaussianHelixGenerator() {};
   
   void SetZeroAngleStartsAtBottom( bool atBottom )
     { m_ZeroAngleStartsAtBottom = atBottom; }
@@ -100,7 +100,7 @@ protected:
 
 
 template <class TPixel>
-GaussianCircularHelixGenerator<TPixel>::GaussianCircularHelixGenerator() :
+CircularGaussianHelixGenerator<TPixel>::CircularGaussianHelixGenerator() :
   m_UnitPitch( 100.0 ),
   m_ZeroAngleStartsAtBottom( true )
 {
@@ -110,7 +110,7 @@ GaussianCircularHelixGenerator<TPixel>::GaussianCircularHelixGenerator() :
 
 template <class TPixel>
 void
-GaussianCircularHelixGenerator<TPixel>::CreateCenterline()
+CircularGaussianHelixGenerator<TPixel>::CreateCenterline()
 {
   CircularHelixCenterlineGenerator<> generator;
   generator.SetDirection( this->m_Direction );
@@ -135,7 +135,7 @@ GaussianCircularHelixGenerator<TPixel>::CreateCenterline()
 
 
 template <class TPixel>
-void GaussianCircularHelixGenerator<TPixel>::ComputeCenter( const ImageType *image )
+void CircularGaussianHelixGenerator<TPixel>::ComputeCenter( const ImageType *image )
 {
   Superclass::ComputeCenter( image );
     
@@ -148,4 +148,4 @@ void GaussianCircularHelixGenerator<TPixel>::ComputeCenter( const ImageType *ima
 
 } // end namespace ivan
 
-#endif // __GaussianCircularHelixGenerator_h_
+#endif // __CircularGaussianHelixGenerator_h_

@@ -22,13 +22,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanGaussianCircularToroidTest.cxx
+// File: ivanCircularGaussianToroidTest.cxx
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: creates a toroid with Gaussian section
 // Date: 2010/06/16
 
 
-#include "ivanGaussianCircularToroidGenerator.h"
+#include "ivanCircularGaussianToroidGenerator.h"
 
 #include "itkImageFileWriter.h"
 
@@ -46,7 +46,7 @@ int main( int argc, char *argv[] )
 
   typedef short    PixelType;
   
-  typedef ivan::GaussianCircularToroidGenerator<PixelType>   ToroidGeneratorType;
+  typedef ivan::CircularGaussianToroidGenerator<PixelType>   ToroidGeneratorType;
   typedef ToroidGeneratorType::ImageType                     ToroidImageType;
     
   ToroidGeneratorType toroidGenerator;

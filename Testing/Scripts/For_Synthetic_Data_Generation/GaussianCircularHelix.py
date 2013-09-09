@@ -4,8 +4,8 @@ import math
 objects_exe_path_str = 'C:/SDKs/ITKVesselBin/TestObjects/Release/'
 output_path_str = 'D:/VolumeData/VesselExperiments/'
 
-gaussian_helix_exe_str = objects_exe_path_str + 'GaussianCircularHelix.exe'
-gaussian_helix_output_str_root = output_path_str + 'TestObjects/' + 'GaussianCircularHelix'
+gaussian_helix_exe_str = objects_exe_path_str + 'CircularGaussianHelix.exe'
+gaussian_helix_output_str_root = output_path_str + 'TestObjects/' + 'CircularGaussianHelix'
 
 #helixScales = [0.75, 1.0, 1.25, 1.5, 2.0, 3.0, 5.0, 7.5, 10.0]
 #helixRadii  = [1.0, 2.5, 5.0, 10.0, 25.0, 50.0, 100.0, 250.0]

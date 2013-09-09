@@ -22,14 +22,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanGaussianCircularToroidGenerator.h
+// File: ivanCircularGaussianToroidGenerator.h
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: creates a toroid with Gaussian section of the given size, stddev and peak intensity value
 // Date: 2010/10/01
 
 
-#ifndef __ivanGaussianCircularToroidGenerator_h_
-#define __ivanGaussianCircularToroidGenerator_h_
+#ifndef __ivanCircularGaussianToroidGenerator_h_
+#define __ivanCircularGaussianToroidGenerator_h_
 
 #include "ivanCenterlineBasedGaussianTubeGenerator.h"
 #include "ivanCircularCenterlineGenerator.h"
@@ -42,12 +42,12 @@ namespace ivan
 {
 
 template <class TPixel>
-class GaussianCircularToroidGenerator :
+class CircularGaussianToroidGenerator :
   public CenterlineBasedGaussianTubeGenerator<TPixel>
 {
 public:
   
-  typedef GaussianCircularToroidGenerator<TPixel>        Self;
+  typedef CircularGaussianToroidGenerator<TPixel>        Self;
   typedef CenterlineBasedGaussianTubeGenerator<TPixel>   Superclass;
 
   typedef TPixel                             PixelType;
@@ -76,8 +76,8 @@ public:
   
 public:
 
-  GaussianCircularToroidGenerator();
-  ~GaussianCircularToroidGenerator() {};
+  CircularGaussianToroidGenerator();
+  ~CircularGaussianToroidGenerator() {};
   
   void SetDirection( unsigned int direction )
     { 
@@ -205,7 +205,7 @@ protected:
 
 
 template <class TPixel>
-GaussianCircularToroidGenerator<TPixel>::GaussianCircularToroidGenerator() :
+CircularGaussianToroidGenerator<TPixel>::CircularGaussianToroidGenerator() :
   m_Direction(2),
   m_NumberOfPoints( 50 ),
   m_Radius( 100.0 ),
@@ -222,8 +222,8 @@ GaussianCircularToroidGenerator<TPixel>::GaussianCircularToroidGenerator() :
 
 
 template <class TPixel>
-typename GaussianCircularToroidGenerator<TPixel>::ImagePointer
-GaussianCircularToroidGenerator<TPixel>::CreateEmptyImage()
+typename CircularGaussianToroidGenerator<TPixel>::ImagePointer
+CircularGaussianToroidGenerator<TPixel>::CreateEmptyImage()
 {  
   ImagePointer tubeImage = ImageType::New();
   
@@ -314,8 +314,8 @@ GaussianCircularToroidGenerator<TPixel>::CreateEmptyImage()
 
 
 template <class TPixel>
-typename GaussianCircularToroidGenerator<TPixel>::ImagePointer
-GaussianCircularToroidGenerator<TPixel>::Create()
+typename CircularGaussianToroidGenerator<TPixel>::ImagePointer
+CircularGaussianToroidGenerator<TPixel>::Create()
 {
   ImagePointer image = this->CreateEmptyImage();
     
@@ -335,7 +335,7 @@ GaussianCircularToroidGenerator<TPixel>::Create()
 
 template <class TPixel>
 void
-GaussianCircularToroidGenerator<TPixel>::CreateCenterline()
+CircularGaussianToroidGenerator<TPixel>::CreateCenterline()
 {
   CircularCenterlineGenerator<> generator;
   generator.SetDirection( this->m_Direction );
@@ -359,7 +359,7 @@ GaussianCircularToroidGenerator<TPixel>::CreateCenterline()
 
 
 template <class TPixel>
-void GaussianCircularToroidGenerator<TPixel>::ComputeImageArea()
+void CircularGaussianToroidGenerator<TPixel>::ComputeImageArea()
 {
   // We can reduce the x and y dimensions of the image if the angles don't cover 360�
   // For simplicity and in order to keep the center of the toroid inside the image we will consider
@@ -417,7 +417,7 @@ void GaussianCircularToroidGenerator<TPixel>::ComputeImageArea()
 
 
 template <class TPixel>
-void GaussianCircularToroidGenerator<TPixel>::ComputeAngleInterval()
+void CircularGaussianToroidGenerator<TPixel>::ComputeAngleInterval()
 {
   if( this->m_StartAngle > this->m_EndAngle )
   {
@@ -431,7 +431,7 @@ void GaussianCircularToroidGenerator<TPixel>::ComputeAngleInterval()
 
 
 template <class TPixel>
-void GaussianCircularToroidGenerator<TPixel>::ComputeCenter( const ImageType *image )
+void CircularGaussianToroidGenerator<TPixel>::ComputeCenter( const ImageType *image )
 {
   // Compute the factors with respect to the image dimensions (already calculated)
   double xfactor, yfactor;

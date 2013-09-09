@@ -11,4 +11,4 @@ AnatomicalOrientation = RAI
 ElementSpacing = 1 1 1
 DimSize = 125 125 653
 ElementType = MET_SHORT
-ElementDataFile = GaussianCircularHelix_sigma3_0_R50_0_H50_0.zraw
+ElementDataFile = CircularGaussianHelix_sigma3_0_R50_0_H50_0.zraw
