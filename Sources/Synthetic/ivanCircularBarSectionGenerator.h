@@ -66,32 +66,14 @@ public:
   double GetImageSpacing() const
     { return m_ImageSpacing; }
   
-  void SetTubeRadius( double tubeRadius )
-    { m_TubeRadius = tubeRadius; }
-  double GetTubeRadius() const
-    { return m_TubeRadius; }
+  void SetRadius( double tubeRadius )
+    { m_Radius = tubeRadius; }
+  double GetRadius() const
+    { return m_Radius; }
 
   PointType GetCenter(  )
     { return m_Center; }
     
-  // void SetRescale( bool rescale )
-    // { m_Rescale = rescale; }
-  // void RescaleOn()
-    // { this->SetRescale( true ); }
-  // void RescaleOff()
-    // { this->SetRescale( false ); }
-  // bool GetRescale() const
-    // { return m_Rescale; }
-    
-  // void SetNormalize( bool normalize )
-    // { m_Normalize = normalize; }
-  // void NormalizeOn()
-    // { this->SetNormalize( true ); }
-  // void NormalizeOff()
-    // { this->SetNormalize( false ); }
-  // bool GetNormalize() const
-    // { return m_Normalize; }
-
   void SetMaxValue( PixelType value )
     { m_MaxValue = value; }
   PixelType GetMaxValue() const
@@ -108,20 +90,13 @@ private:
   double          m_ImageSpacing;
   
   /** Standard deviation of the Gaussian in both directions. */
-  double          m_TubeRadius;
-  
-  // /** Normalize by dividing by sqrt(2*pi)*sigma. This is useful for theoretical studies. If normalization
-    // * is applied then rescaling does not take effect. */
-  // bool            m_Normalize;
-  
-  // /** Rescale to desired max value. */
-  // bool            m_Rescale;
+  double          m_Radius;
   
   /** Maximum intensity value under rescaling. Default value is 255. */
   PixelType       m_MaxValue;
 
   /** Center of the section. */
-  PointType  m_Center;
+  PointType       m_Center;
 };
 
 
@@ -129,9 +104,7 @@ template <class TPixel>
 CircularBarSectionGenerator<TPixel>::CircularBarSectionGenerator() :
   m_ImageSpacing( 1.0 ),
   m_ImageSize( 50 ),
-  m_TubeRadius( 2.0 ),
-  //m_Normalize( true ),
-  //m_Rescale( true ),
+  m_Radius( 2.0 ),
   m_MaxValue( 255.0 )
 {
   m_Center.Fill( 0 );
@@ -166,14 +139,6 @@ CircularBarSectionGenerator<TPixel>::Create()
   sectionImage->Allocate();
   sectionImage->FillBuffer(0);
   
-  // Set the central pixel to 1 (pulse)
-  RealImageType::IndexType centralIndex;
-  centralIndex.Fill( ( this->m_ImageSize - 1 ) / 2 );
-  
-  double centerValue = 1.0;
-  
-  sectionImage->SetPixel( centralIndex, 1 );
-
   // Taking into account the aliasing
   typedef itk::ImageRegionIterator<ImageType>   IteratorType;
   
@@ -188,7 +153,7 @@ CircularBarSectionGenerator<TPixel>::Create()
   
   double squaredDist;
   double diff;
-  double squaredTubeRadius = this->GetTubeRadius() * this->GetTubeRadius();
+  double squaredRadius = this->GetRadius() * this->GetRadius();
   
   while( !it.IsAtEnd() )
   {
@@ -201,13 +166,13 @@ CircularBarSectionGenerator<TPixel>::Create()
       
     // Perform some aliasing when the distance exceeds the radius only by a quantity smaller than the spacing
       
-    diff = sqrt( squaredDist ) - this->GetTubeRadius();
+    diff = sqrt( squaredDist ) - this->GetRadius();
           
     if( diff > 0.0 && diff < this->GetImageSpacing() )
     {
       it.Set( this->GetMaxValue() * ( this->m_ImageSpacing - diff ) / this->GetImageSpacing() );
     }
-    else if( squaredDist <= squaredTubeRadius )
+    else if( squaredDist <= squaredRadius )
     {
       it.Set( this->GetMaxValue() );
     }
@@ -215,33 +180,7 @@ CircularBarSectionGenerator<TPixel>::Create()
     ++it; 
   }
       
-  // The section image should be filled!!! // MA
-
-  //typedef itk::ImageRegionIteratorWithIndex< RealImageType > RealImageIteratorType ; // The “WithIndex” family of iterators was designed for algorithms that use both the value and the location of image pixels in calculations
-  //RealImageIteratorType it ( sectionImage, region ) ; 
-
-  //it.GoToBegin();
-
-  //while( !it.IsAtEnd() )
-  //{
-  //  const RealImageIteratorType::IndexType & atIndex = it.GetIndex();
-  //       
-  //  if( (  atIndex[0]  - centralIndex[0] ) * (  atIndex[0] - centralIndex[0] ) + ( atIndex[1] - centralIndex[1] ) * ( atIndex[1] - centralIndex[1] ) 
-  //    <= this->GetTubeRadius() * this->GetTubeRadius() )
-  //  {
-  //    it.Set( this->GetMaxValue() );
-  //  }
-  //  else
-  //  {
-  //    it.Set( 0 );
-  //  }
-
-  //  ++it;
-  //}
-    
   return sectionImage;
-    
- 
 }
 
 } // end namespace ivan

@@ -87,6 +87,7 @@ public:
   unsigned int GetDirection() const 
     { return this->m_Direction; }
     
+  /** Set/Get the toroid radius. This is the toroid centerline radius. */
   void SetRadius( double radius )
     { 
       this->m_Radius = radius;
@@ -172,8 +173,11 @@ protected:
   /** Direction normal to the centerline. 0 = X, 1 = Y, 2 = Z */
   unsigned int     m_Direction;
   
-  /** Radius of the circle. */
+  /** Radius of the centerline. */
   double           m_Radius;
+  
+  /** Radius of the toroid tube. */
+  double           m_TubeRadius;
   
   /** Set the number of points that determines the sampling distance between centerline points. */
   unsigned long    m_NumberOfPoints;
@@ -209,6 +213,7 @@ CircularBarToroidGenerator<TPixel>::CircularBarToroidGenerator() :
   m_Direction(2),
   m_NumberOfPoints( 50 ),
   m_Radius( 100.0 ),
+  m_TubeRadius( 5.0 ),
   m_StartAngle(0),
   m_EndAngle( 2.0 * vnl_math::pi ),
   m_AngleInterval( 2.0 * vnl_math::pi ),
@@ -242,9 +247,9 @@ CircularBarToroidGenerator<TPixel>::CreateEmptyImage()
   unsigned int circleXDir = ( this->m_Direction + 1 ) % 3;
   unsigned int circleYDir = ( this->m_Direction + 2 ) % 3;
   
-  double imageWidthX = this->GetTotalWidth() + 2.0 * this->m_Offset;
+  double imageWidthX = this->GetTotalWidth() + 2.0 * this->m_ZOffset;
   double imageWidthY = imageWidthX;
-  double imageHeight = this->GetTotalHeight() + 2.0 * this->m_Offset;
+  double imageHeight = this->GetTotalHeight() + 2.0 * this->m_ZOffset;
   
   if( this->m_AlwaysImageAreaFullCircle )
     this->m_ImageArea = FullCircle;

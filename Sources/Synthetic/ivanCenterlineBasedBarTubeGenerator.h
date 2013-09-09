@@ -147,11 +147,11 @@ CenterlineBasedBarTubeGenerator<TPixel>::CreateEmptyImage()
   
   tubeImage->SetOrigin( origin );
   
-  double totalHeight = this->m_Height + 2.0 * this->m_Offset;
+  double totalHeight = this->m_Height + 2.0 * this->m_ZOffset;
   
   typename ImageType::RegionType::SizeType size;
-  size[0] = this->m_SectionImageSize[0];
-  size[1] = this->m_SectionImageSize[1];
+  size[0] = this->m_SectionImageSize;
+  size[1] = this->m_SectionImageSize;
   size[2] = (unsigned long) floor( ( totalHeight / this->m_ImageSpacing ) + 0.5 );
   
   typename ImageType::RegionType::IndexType index;

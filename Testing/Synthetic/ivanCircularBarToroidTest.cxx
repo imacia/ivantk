@@ -63,7 +63,7 @@ int main( int argc, char *argv[] )
   toroidGenerator.SetDirection( atoi( argv[4] ) );
   toroidGenerator.SetImageSpacing( atof( argv[5] ) );
 
-  toroidGenerator.SetOffset( 5 );
+  toroidGenerator.SetZOffset( 5 );
 
   if( argc > 6 )
     toroidGenerator.SetStartAngle( vnl_math::pi * atof( argv[6] ) / 180.0 );

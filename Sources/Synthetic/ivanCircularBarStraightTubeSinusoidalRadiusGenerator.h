@@ -49,8 +49,6 @@ public:
   typedef itk::Image<PixelType,3>       ImageType;
   typedef typename ImageType::Pointer   ImagePointer;
   
-  typedef typename Superclass::SectionSizeType   SectionSizeType;
-  
 public:
 
   CircularBarStraightTubeSinuosidalRadiusGenerator();
@@ -69,7 +67,7 @@ public:
     { return this->m_SemiPeriod; }
  
   void SetMaxRadius( double maxRadius )
-    { this->SetRadius( maxRadius ); }
+    { this->SetTubeRadius( maxRadius ); }
   double GetMaxRadius() const 
     { return this->GetSigma(); }
 
@@ -109,8 +107,8 @@ CircularBarStraightTubeSinuosidalRadiusGenerator<TPixel>::Create()
   tubeImage->SetOrigin( origin );
   
   typename ImageType::RegionType::SizeType size;
-  size[0] = this->m_SectionImageSize[0];
-  size[1] = this->m_SectionImageSize[1];
+  size[0] = this->m_SectionImageSize;
+  size[1] = this->m_SectionImageSize;
   size[2] = this->m_Height;
   
   typename ImageType::RegionType::IndexType index;
@@ -131,7 +129,7 @@ CircularBarStraightTubeSinuosidalRadiusGenerator<TPixel>::Create()
   typedef typename SectionGeneratorType::ImageType    SectionImageType;
     
   SectionGeneratorType sectionGenerator;
-  sectionGenerator.SetImageSize( this->m_SectionImageSize[0] ); // !!!
+  sectionGenerator.SetImageSize( this->m_SectionImageSize );
   sectionGenerator.SetImageSpacing( this->m_ImageSpacing );
   //sectionGenerator.SetSigma( this->m_Sigma );
   sectionGenerator.SetMaxValue( this->m_MaxValue );
@@ -144,13 +142,13 @@ CircularBarStraightTubeSinuosidalRadiusGenerator<TPixel>::Create()
   size[2] = 1; // copy a single slice each time
   region.SetSize( size );
   
-  double maxRadius = this->m_Radius;
+  double maxRadius = this->m_TubeRadius;
   double minRadius = this->m_MinRadius;
   
   if( maxRadius < minRadius )
   {
     maxRadius = this->m_MinRadius;
-    minRadius = this->m_Radius; 
+    minRadius = this->m_TubeRadius; 
   }
   
   for( unsigned long z=0; z < this->m_Height; ++z )

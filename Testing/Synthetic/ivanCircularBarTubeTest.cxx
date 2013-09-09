@@ -50,7 +50,7 @@ int main( int argc, char *argv[] )
   typedef TubeGeneratorType::ImageType           TubeImageType;
     
   TubeGeneratorType tubeGenerator;
-  tubeGenerator.SetRadius( atof( argv[2] ) );
+  tubeGenerator.SetTubeRadius( atof( argv[2] ) );
   tubeGenerator.SetHeight( atof( argv[3] ) );
   
   if( argc > 4 )

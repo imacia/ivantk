@@ -47,18 +47,14 @@ public:
   typedef itk::Image<PixelType,3>       ImageType;
   typedef typename ImageType::Pointer   ImagePointer;
   
-  typedef itk::FixedArray<unsigned long,2>   SectionSizeType;
-
 public:
 
   CircularBarTubeGenerator();
   ~CircularBarTubeGenerator() {};
   
-  void SetSectionImageSize( unsigned long sizeX, unsigned long sizeY )
-    { m_SectionImageSize[0] = sizeX; m_SectionImageSize[1] = sizeY; }
   void SetSectionImageSize( unsigned long size )
-    { m_SectionImageSize[0] = size; m_SectionImageSize[1] = size; }
-  const SectionSizeType & GetSectionImageSize() const
+    { m_SectionImageSize = size; }
+  unsigned long GetSectionImageSize() const
     { return m_SectionImageSize; }
   
   void SetHeight( unsigned long height )
@@ -71,10 +67,11 @@ public:
   double GetImageSpacing() const
     { return m_ImageSpacing; }
 
-  void SetRadius( double radius )
-    { m_Radius = radius; }
+  /** Set the tube radius. */
+  void SetTubeRadius( double radius )
+    { m_TubeRadius = radius; }
   double GetRadius() const
-    { return m_Radius; }
+    { return m_TubeRadius; }
 
   /** Add an offset in the Z-direction so we don't cut the tube at the Z boundaries. */
   void SetZOffset( double offset )
@@ -92,7 +89,7 @@ public:
 protected: 
   
   /** Image size for the section (same for width and depth). */
-  SectionSizeType  m_SectionImageSize;
+  unsigned long    m_SectionImageSize;
   
   /** Tube length in pixels. */
   unsigned long    m_Height;
@@ -100,8 +97,9 @@ protected:
   /** Image spacing. */
   double           m_ImageSpacing;
   
-  /** Radius of the tube section. */
-  double           m_Radius;
+  /** Radius of the tube section. WARNING: do not rename this to m_Radius since
+    * it will conflict with subclasses that need to define more than one radius. */
+  double           m_TubeRadius;
   
   /** Offset used so we don't cut the tube at the Z boundaries. */
   double           m_ZOffset;
@@ -113,13 +111,14 @@ protected:
 
 template <class TPixel>
 CircularBarTubeGenerator<TPixel>::CircularBarTubeGenerator() :
+  m_SectionImageSize( 50 ),
   m_Height( 100 ),
-  m_ImageSpacing( 1.0 ),
-  m_Radius( 2.0 ),
+  m_ImageSpacing( 1.0 ),  
+  m_TubeRadius( 2.0 ),
   m_ZOffset( 0.0 ),
   m_MaxValue( 255.0 )
 {
-  m_SectionImageSize.Fill( 50 );
+  
 }
 
 
@@ -142,8 +141,8 @@ CircularBarTubeGenerator<TPixel>::Create()
   double totalHeight = this->m_Height + 2.0 * this->m_ZOffset;
   
   typename ImageType::RegionType::SizeType size;
-  size[0] = this->m_SectionImageSize[0];
-  size[1] = this->m_SectionImageSize[1];
+  size[0] = this->m_SectionImageSize;
+  size[1] = this->m_SectionImageSize;
   size[2] = (unsigned long) floor( ( totalHeight / this->m_ImageSpacing ) + 0.5 );
   
   typename ImageType::RegionType::IndexType index;
@@ -165,7 +164,7 @@ CircularBarTubeGenerator<TPixel>::Create()
     
   SectionGeneratorType sectionGenerator;
   sectionGenerator.SetImageSize( this->m_SectionImageSize );
-  sectionGenerator.SetRadius( this->m_Radius );
+  sectionGenerator.SetRadius( this->m_TubeRadius );
   sectionGenerator.SetMaxValue( this->m_MaxValue );
   
   typename SectionImageType::Pointer sectionImage = sectionGenerator.Create();

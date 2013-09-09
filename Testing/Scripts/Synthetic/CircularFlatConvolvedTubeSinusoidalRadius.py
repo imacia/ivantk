@@ -5,9 +5,9 @@ exe_path_str = 'C:/SDKs/IVANBinaries/bin/Release/'
 output_path_str = 'D:/VolumeData/VesselExperiments/'
 #output_path_str = 'F:/VolumeData/VesselExperiments/'
 
-flat_tube_exe_str = exe_path_str + 'TestCircularBarConvolvedTubeSinusoidalRadius.exe'
+bar_tube_exe_str = exe_path_str + 'TestCircularBarConvolvedTubeSinusoidalRadius.exe'
 noise_exe_str = exe_path_str + 'UtilityGaussianNoiseAdder.exe'
-flat_tube_output_str_root = output_path_str + 'TestObjects/' + 'CircularGaussianTubeSin2Lobes_'
+bar_tube_output_str_root = output_path_str + 'TestObjects/' + 'CircularGaussianTubeSin2Lobes_'
 
 # We generate scales as sigma_i = sigma_0 * factor^i where factor is a number > 1.0
 numScales = 6
@@ -32,24 +32,24 @@ for i in range( len( minRadii ) ):
   tubeRadiusMinModf = math.modf( minRadii[i] )
   tubeRadiusMaxModf = math.modf( maxRadii[i] )
   
-  flat_tube_output_str = flat_tube_output_str_root + \
+  bar_tube_output_str = bar_tube_output_str_root + \
     str( int( tubeRadiusMinModf[1] ) ) + '_' + str( int( tubeRadiusMinModf[0] * 100.0 ) ) + \
     '-' + str( int( tubeRadiusMaxModf[1] ) ) + '_' + str( int( tubeRadiusMaxModf[0] * 100.0 ) ) + '.mhd'
     
-  print flat_tube_exe_str, flat_tube_output_str, str( minRadii[i] ), str( maxRadii[i] ), str( tubeHeight ), str( numLobes ), str( convSigma ), \
+  print bar_tube_exe_str, bar_tube_output_str, str( minRadii[i] ), str( maxRadii[i] ), str( tubeHeight ), str( numLobes ), str( convSigma ), \
   str( maxValue ), str( tubeSpacing )
   
-  subprocess.call( [ flat_tube_exe_str, flat_tube_output_str, str( minRadii[i] ), str( maxRadii[i] ), str( tubeHeight ), str( numLobes ), \
+  subprocess.call( [ bar_tube_exe_str, bar_tube_output_str, str( minRadii[i] ), str( maxRadii[i] ), str( tubeHeight ), str( numLobes ), \
   str( convSigma ), str( maxValue ), str( tubeSpacing ) ] )
 
   # Now create noisy versions
     
   for k in range ( 0, len( noise_levels ) ):
       
-    flat_tube_output_noise_str = flat_tube_output_str_root + \
+    bar_tube_output_noise_str = bar_tube_output_str_root + \
     str( int( tubeRadiusMinModf[1] ) ) + '_' + str( int( tubeRadiusMinModf[0] * 100.0 ) ) + \
     '-' + str( int( tubeRadiusMaxModf[1] ) ) + '_' + str( int( tubeRadiusMaxModf[0] * 100.0 ) ) + \
     '_noise' + str( noise_levels[k] ) + '.mhd'
     
-    print noise_exe_str, flat_tube_output_str, flat_tube_output_noise_str, str( noise_levels[k] ), str( maxValue )
-    subprocess.call( [ noise_exe_str, flat_tube_output_str, flat_tube_output_noise_str, str( noise_levels[k] ), str( maxValue ) ] )
+    print noise_exe_str, bar_tube_output_str, bar_tube_output_noise_str, str( noise_levels[k] ), str( maxValue )
+    subprocess.call( [ noise_exe_str, bar_tube_output_str, bar_tube_output_noise_str, str( noise_levels[k] ), str( maxValue ) ] )

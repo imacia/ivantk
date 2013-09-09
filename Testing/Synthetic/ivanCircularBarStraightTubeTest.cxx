@@ -78,14 +78,14 @@ int main( int argc, char *argv[] )
 
   if( sectionImageSize == 0 )
   {
-    sectionImageSize = tubeGenerator.GetTubeRadius() * 10.0 / tubeGenerator.GetImageSpacing();
+    sectionImageSize = tubeGenerator.GetRadius() * 10.0 / tubeGenerator.GetImageSpacing();
     if( sectionImageSize % 2 == 0 )
       sectionImageSize += 1;
   }
 
   tubeGenerator.SetSectionImageSize( sectionImageSize );
 
-  tubeGenerator.SetOffset( 5 );
+  tubeGenerator.SetZOffset( 5 );
      
   TubeImageType::Pointer tubeImage;
   

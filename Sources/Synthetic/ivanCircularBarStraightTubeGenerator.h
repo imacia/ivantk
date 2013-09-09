@@ -49,9 +49,7 @@ public:
   typedef itk::Image<PixelType,3>       ImageType;
   typedef typename ImageType::Pointer   ImagePointer;
   typedef typename ImageType::PointType PointType;
-  typedef typename itk::Image<PixelType,2>::PointType SectionPointType;
-  
-  typedef typename Superclass::SectionSizeType   SectionSizeType;
+  typedef typename itk::Image<PixelType,2>::PointType   SectionPointType;
 
   typedef itk::VectorContainer<unsigned int,PointType>  CenterlineType;
   typedef typename CenterlineType::Pointer              CenterlinePointer;
@@ -102,11 +100,11 @@ CircularBarStraightTubeGenerator<TPixel>::Create()
   
   tubeImage->SetOrigin( origin );
 
-  double imageSizeZ = vcl_floor( ( this->m_Height + 2*this->m_Offset ) / this->m_ImageSpacing );
+  double imageSizeZ = vcl_floor( ( this->m_Height + 2*this->m_ZOffset ) / this->m_ImageSpacing );
   
   typename ImageType::RegionType::SizeType size;
-  size[0] = this->m_SectionImageSize[0];
-  size[1] = this->m_SectionImageSize[1];
+  size[0] = this->m_SectionImageSize;
+  size[1] = this->m_SectionImageSize;
   size[2] = vcl_floor( imageSizeZ );
   
   typename ImageType::RegionType::IndexType index;
@@ -127,11 +125,9 @@ CircularBarStraightTubeGenerator<TPixel>::Create()
   typedef typename SectionGeneratorType::ImageType    SectionImageType;
     
   SectionGeneratorType sectionGenerator;
-  sectionGenerator.SetImageSize( this->m_SectionImageSize[0] ); // !!!
+  sectionGenerator.SetImageSize( this->m_SectionImageSize );
   sectionGenerator.SetImageSpacing( this->m_ImageSpacing );
-  sectionGenerator.SetTubeRadius( this->m_TubeRadius );
-  // sectionGenerator.SetNormalize( this->m_Normalize );
-  // sectionGenerator.SetRescale( this->m_Rescale );
+  sectionGenerator.SetRadius( this->m_TubeRadius );
   sectionGenerator.SetMaxValue( this->m_MaxValue );
   
   typename SectionImageType::Pointer sectionImage = sectionGenerator.Create();
@@ -150,7 +146,7 @@ CircularBarStraightTubeGenerator<TPixel>::Create()
   size[2] = 1; // copy a single slice each time
   region.SetSize( size );
 
-  unsigned long firstSlice = vcl_floor( this->m_Offset / this->m_ImageSpacing );
+  unsigned long firstSlice = vcl_floor( this->m_ZOffset / this->m_ImageSpacing );
   unsigned long lastSlice = imageSizeZ - firstSlice ;
   
   int i = 0;
