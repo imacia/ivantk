@@ -57,12 +57,12 @@ SET( IVAN_LIBRARY_DEPENDS_FILE "@IVAN_LIBRARY_DEPENDS_FILE@")
 
 SET( IVAN_COMMON_LIBRARY debug ivanCommond optimized ivanCommon )
 SET( IVAN_ITK_LIBRARY debug ivanITKd optimized ivanITK )
-SET( IVAN_MODELLING_LIBRARY debug ivanModellingd optimized ivanModelling )
+SET( IVAN_MODELING_LIBRARY debug ivanModelingd optimized ivanModeling )
 
 SET( IVAN_LIBRARIES
   ${IVAN_COMMON_LIBRARY}
   ${IVAN_ITK_LIBRARY}
-  ${IVAN_MODELLING_LIBRARY}
+  ${IVAN_MODELING_LIBRARY}
 )
 
 

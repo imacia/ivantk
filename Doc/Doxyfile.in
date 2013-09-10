@@ -578,7 +578,7 @@ INPUT                  = "@CMAKE_SOURCE_DIR@/Sources/Common" \
                          "@CMAKE_SOURCE_DIR@/Sources/Extraction" \
                          "@CMAKE_SOURCE_DIR@/Sources/IO" \
                          "@CMAKE_SOURCE_DIR@/Sources/ITK" \
-                         "@CMAKE_SOURCE_DIR@/Sources/Modelling" \
+                         "@CMAKE_SOURCE_DIR@/Sources/Modeling" \
                          "@CMAKE_SOURCE_DIR@/Sources/Quantification" \
                          "@CMAKE_SOURCE_DIR@/Sources/Synthetic"
 

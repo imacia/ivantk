@@ -16,7 +16,7 @@ SET( IVAN_INCLUDE_DIRS_BUILD_TREE
   ${IVAN_SOURCE_DIR}/Sources/Experimental
   ${IVAN_SOURCE_DIR}/Sources/Extraction
   ${IVAN_SOURCE_DIR}/Sources/ITK
-  ${IVAN_SOURCE_DIR}/Sources/Modelling
+  ${IVAN_SOURCE_DIR}/Sources/Modeling
   ${IVAN_SOURCE_DIR}/Sources/Quantification
   ${IVAN_SOURCE_DIR}/Sources/Synthetic
 )
@@ -42,7 +42,7 @@ SET( IVAN_INCLUDE_DIRS_INSTALL_TREE
   ${IVAN_INSTALL_INCLUDE_DIR}/Experimental
   ${IVAN_INSTALL_INCLUDE_DIR}/Extraction
   ${IVAN_INSTALL_INCLUDE_DIR}/ITK
-  ${IVAN_INSTALL_INCLUDE_DIR}/Modelling
+  ${IVAN_INSTALL_INCLUDE_DIR}/Modeling
   ${IVAN_INSTALL_INCLUDE_DIR}/Quantification
   ${IVAN_INSTALL_INCLUDE_DIR}/Synthetic
 )

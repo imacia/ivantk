@@ -5,7 +5,7 @@ SUBDIRS(
 #  Extraction
   ITK
 #  IO
-  Modelling
+  Modeling
 #  Quantification
 #  Synthetic
 )

@@ -4,7 +4,7 @@
 SET( IVAN_TEST_LINK_LIBRARIES
   ivanCommon
   ivanITK
-  ivanModelling
+  ivanModeling
 )
 
 SET( IVAN_TEST_DATA_DIR
@@ -15,7 +15,7 @@ SUBDIRS(
   Detection
   Extraction
   ITK
-  Modelling
+  Modeling
   Synthetic
 )
  

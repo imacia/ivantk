@@ -1,4 +1,4 @@
-SET( IVAN_MODELLING_SRCS
+SET( IVAN_MODELING_SRCS
   ivanAneurysmModel.cxx
   ivanAneurysmModel.h
   ivanAorticAneurysmVesselSection.h
@@ -54,6 +54,6 @@ SET( IVAN_MODELLING_SRCS
   ivanVesselSectionStruct.h
 )
 
-ADD_LIBRARY( ivanModelling ${IVAN_MODELLING_SRCS} )
+ADD_LIBRARY( ivanModeling ${IVAN_MODELING_SRCS} )
 
-TARGET_LINK_LIBRARIES( ivanModelling ${ITK_LIBRARIES} )
+TARGET_LINK_LIBRARIES( ivanModeling ${ITK_LIBRARIES} )
