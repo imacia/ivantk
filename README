@@ -83,13 +83,24 @@ However it uses a CMake-based (http://www.cmake.org) build system and the code i
 It should work on most Linux and Mac platforms.
    
 Requirements:
-- CMake 2.8 or higher 
+
+- CMake 2.8 or higher (http://www.cmake.org)
 - A modern compatible compiler (the toolkit makes heavy use of C++ templates)
-- Insight Toolkit (4.0 or higher recommended)
-- Optional: Visualization Toolkit (5.0 or higher)
+- Insight Toolkit (4.0 or higher recommended) (http://www.itk.org)
+- Optional: Visualization Toolkit (5.0 or higher) (http://www.vtk.org)
    
 
-3. Installation
+3. Links
+   -----
+   
+- Project page: https://sourceforge.net/projects/ivantk/
+- Source code: https://github.com/imacia/ivan
+- Git repository: https://github.com/imacia/ivan.git
+- Mailing list URL: https://lists.sourceforge.net/lists/listinfo/ivantk-users
+- Mailing list: ivantk-users@lists.sourceforge.net
+   
+
+4. Installation
    ------------
    
 1) Download as zip file or clone repository from https://github.com/imacia/ivan.git
@@ -98,7 +109,8 @@ Requirements:
 4) Optionally set the VTK_DIR to point to your VTK binary directory.
 
 
-4. Documentation
+
+5. Documentation
    -------------
    
 Reference documentation for the toolkit can be generated using Doxygen (http://www.doxygen.org).
@@ -113,8 +125,8 @@ The documentation can be easily generated via CMake:
 5) The html documentation should be generated in IVAN_BINARY_DIR/Doxygen/html/index.html where
    IVAN_BINARY_DIR is the binary dir of your choice in CMake.
    
-
-5. Known Issues and Future Work
+   
+6. Known Issues and Future Work
    ----------------------------
    
 I am not totally happy with the Modeling part. Currently this part has been completely refactored
@@ -129,11 +141,7 @@ Currently there are no detectors for bifurcation on vessel tracking. There are i
 features but still working on increasing utility and robustness.
 
 
-6. Contact and Support
-   -------------------
-   
-Right now working on creating a mailing list/forum. In the meantime you may contact me at
-imacia ___ at ___ vicomtech.org
+
    
 
 
