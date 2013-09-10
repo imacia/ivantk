@@ -1,10 +1,10 @@
-The Image-based Vascular Analysis Toolkit (IVAN)
-================================================
+The Image-based Vascular Analysis Toolkit (IvanTk)
+==================================================
 
 1.Introduction and Scope
   ----------------------
 
-The Image-based Vascular Analysis Library (IVAN) is a set of cross-platform C++
+The Image-based Vascular Analysis Library (IvanTk) is a set of cross-platform C++
 software libraries for 2D/3D vascular analysis in medical imaging developed using
 concepts of generic programming. It implements many of the vascular detection, ex-
 traction and modelling methods described in the PhD thesis 
@@ -22,10 +22,10 @@ of its constituent building-blocks, provides a better understanding of its algor
 mechanisms, reveals important implementation details and improves reproducibility of
 experiments.
 
-The main motivation behind the development of IVAN was the lack of dedicated
+The main motivation behind the development of IvanTk was the lack of dedicated
 libraries for image-based analysis of vascular structures. Some of the existing open 
 source medical image analysis libraries, such as the Insight Toolkit (ITK), implement 
-a few popular vascular detection methods. IVAN may be considered an extension of ITK 
+a few popular vascular detection methods. IvanTk may be considered an extension of ITK 
 dedicated specifically to vascular analysis, since it reuses and extends many of the 
 concepts and classes of this library. The Vascular Modeling Toolkit (VMTK) 
 (http://www.vmtk.org) is an open-source library dedicated to vascular analysis but it 
