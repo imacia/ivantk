@@ -22,13 +22,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanFilterByEigenvaluesVesselnessImageFunction.h
+// File: ivanFilterByEigenValuesVesselnessImageFunction.h
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: 
 // Date: 2010/08/16
 
-#ifndef __ivanFilterByEigenvaluesVesselnessImageFunction_h
-#define __ivanFilterByEigenvaluesVesselnessImageFunction_h
+#ifndef __ivanFilterByEigenValuesVesselnessImageFunction_h
+#define __ivanFilterByEigenValuesVesselnessImageFunction_h
 
 #include "ivanHessianOnlyBasedVesselnessImageFunction.h"
 
@@ -45,7 +45,7 @@ namespace ivan
  * with the first eigenvalue in the array being the smallest. If there are negative
  * eigenvalues this would be the most non-negative. 
  *
- * \sa FilterByEigenvaluesVesselnessImageFunction
+ * \sa FilterByEigenValuesVesselnessImageFunction
  * 
  */ 
 template<class TCoordRep=double>
@@ -70,7 +70,7 @@ public:
 
 
 /**
- * \class FilterByEigenvaluesVesselnessImageFunction
+ * \class FilterByEigenValuesVesselnessImageFunction
  * \brief Image function that produces a non-zero response depending on a function of Hessian-matrix eigenvalues.
  *
  * This class produces a non-zero response depending on the result of a function of Hessian-matrix 
@@ -88,13 +88,13 @@ public:
  */
 template <class TInputImage, class TOutput, class TCoordRep=double,
   class TFunctor = FilterByTwoNegativeEigenValuesFunctor<TCoordRep> >
-class ITK_EXPORT FilterByEigenvaluesVesselnessImageFunction :
+class ITK_EXPORT FilterByEigenValuesVesselnessImageFunction :
   public HessianOnlyBasedVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
 {
 public:
 
   /**Standard "Self" typedef */
-  typedef FilterByEigenvaluesVesselnessImageFunction
+  typedef FilterByEigenValuesVesselnessImageFunction
     <TInputImage,TOutput,TCoordRep>            Self;
   typedef HessianOnlyBasedVesselnessImageFunction
     <TInputImage,TOutput,TCoordRep>            Superclass;
@@ -128,7 +128,7 @@ public:
   itkNewMacro(Self);
 
   /** Run-time type information (and related methods) */
-  itkTypeMacro( FilterByEigenvaluesVesselnessImageFunction, HessianOnlyBasedVesselnessImageFunction );
+  itkTypeMacro( FilterByEigenValuesVesselnessImageFunction, HessianOnlyBasedVesselnessImageFunction );
   
   itkSetMacro( OutputValue, TCoordRep );
   itkGetConstMacro( OutputValue, TCoordRep );
@@ -165,8 +165,8 @@ public:
   
 protected:
 
-  FilterByEigenvaluesVesselnessImageFunction();
-  ~FilterByEigenvaluesVesselnessImageFunction();
+  FilterByEigenValuesVesselnessImageFunction();
+  ~FilterByEigenValuesVesselnessImageFunction();
   
   /** Evaluate vesselness given Hessian. */
   virtual OutputType EvaluateVesselness( const HessianTensorType & hessian ) const;
@@ -175,7 +175,7 @@ protected:
 
 private:
   
-  FilterByEigenvaluesVesselnessImageFunction( const Self& ); // purposely not implemented
+  FilterByEigenValuesVesselnessImageFunction( const Self& ); // purposely not implemented
   void operator=( const Self& ); // purposely not implemented
 
 private:
@@ -187,18 +187,18 @@ private:
 } // namespace ivan
 
 // Define instantiation macro for this template.
-#define ITK_TEMPLATE_FilterByEigenvaluesVesselnessImageFunction(_, EXPORT, x, y) namespace ivan { \
-  _(2(class EXPORT FilterByEigenvaluesVesselnessImageFunction< ITK_TEMPLATE_2 x >)) \
-  namespace Templates { typedef FilterByEigenvaluesVesselnessImageFunction< ITK_TEMPLATE_2 x > \
-                                                  FilterByEigenvaluesVesselnessImageFunction##y; } \
+#define ITK_TEMPLATE_FilterByEigenValuesVesselnessImageFunction(_, EXPORT, x, y) namespace ivan { \
+  _(2(class EXPORT FilterByEigenValuesVesselnessImageFunction< ITK_TEMPLATE_2 x >)) \
+  namespace Templates { typedef FilterByEigenValuesVesselnessImageFunction< ITK_TEMPLATE_2 x > \
+                                                  FilterByEigenValuesVesselnessImageFunction##y; } \
   }
 
 #if ITK_TEMPLATE_EXPLICIT
-# include "Templates/ivanFilterByEigenvaluesVesselnessImageFunction+-.h"
+# include "Templates/ivanFilterByEigenValuesVesselnessImageFunction+-.h"
 #endif
 
 #if ITK_TEMPLATE_TXX
-# include "ivanFilterByEigenvaluesVesselnessImageFunction.hxx"
+# include "ivanFilterByEigenValuesVesselnessImageFunction.hxx"
 #endif
 
 #endif

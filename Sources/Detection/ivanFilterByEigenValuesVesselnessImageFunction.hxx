@@ -22,23 +22,23 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanFilterByEigenvaluesVesselnessImageFunction.hxx
+// File: ivanFilterByEigenValuesVesselnessImageFunction.hxx
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: 
 // Date: 2010/08/16
 
-#ifndef __ivanFilterByEigenvaluesVesselnessImageFunction_hxx
-#define __ivanFilterByEigenvaluesVesselnessImageFunction_hxx
+#ifndef __ivanFilterByEigenValuesVesselnessImageFunction_hxx
+#define __ivanFilterByEigenValuesVesselnessImageFunction_hxx
 
-#include "ivanFilterByEigenvaluesVesselnessImageFunction.h"
+#include "ivanFilterByEigenValuesVesselnessImageFunction.h"
 
 
 namespace ivan
 {
   
 template <class TInputImage, class TOutput, class TFunctor, class TCoordRep>
-FilterByEigenvaluesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>
-::FilterByEigenvaluesVesselnessImageFunction() :
+FilterByEigenValuesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>
+::FilterByEigenValuesVesselnessImageFunction() :
   m_OutputValue( 255.0 )
 {
 
@@ -46,8 +46,8 @@ FilterByEigenvaluesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRe
 
 
 template <class TInputImage, class TOutput, class TFunctor, class TCoordRep>
-FilterByEigenvaluesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>
-::~FilterByEigenvaluesVesselnessImageFunction()
+FilterByEigenValuesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>
+::~FilterByEigenValuesVesselnessImageFunction()
 {
   
 }
@@ -56,7 +56,7 @@ FilterByEigenvaluesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRe
 /** Print self method */
 template <class TInputImage, class TOutput, class TFunctor, class TCoordRep>
 void
-FilterByEigenvaluesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>
+FilterByEigenValuesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>
 ::PrintSelf( std::ostream& os, itk::Indent indent ) const
 {
   Superclass::PrintSelf( os, indent );
@@ -66,8 +66,8 @@ FilterByEigenvaluesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRe
 
 
 template <class TInputImage, class TOutput, class TFunctor, class TCoordRep>
-typename FilterByEigenvaluesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>::OutputType
-FilterByEigenvaluesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>
+typename FilterByEigenValuesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>::OutputType
+FilterByEigenValuesVesselnessImageFunction<TInputImage,TOutput,TFunctor,TCoordRep>
 ::EvaluateVesselness( const HessianTensorType & hessian ) const
 {
   typedef typename HessianTensorType::EigenValuesArrayType   EigenValuesArrayType;

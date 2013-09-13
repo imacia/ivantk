@@ -72,17 +72,17 @@ ADD_TEST( TestOffsetMedialnessImageFunction ${EXECUTABLE_OUTPUT_PATH}/TestOffset
   
 #------------------------------------------------------------------------------------------------
 
-ADD_EXECUTABLE( TestFilterByEigenvaluesVesselnessImageFunction
-  ivanFilterByEigenvaluesVesselnessImageFunctionTest.cxx
+ADD_EXECUTABLE( TestFilterByEigenValuesVesselnessImageFunction
+  ivanFilterByEigenValuesVesselnessImageFunctionTest.cxx
 )
 
-TARGET_LINK_LIBRARIES( TestFilterByEigenvaluesVesselnessImageFunction
+TARGET_LINK_LIBRARIES( TestFilterByEigenValuesVesselnessImageFunction
   ${ITK_LIBRARIES}
   ${IVAN_TEST_LINK_LIBRARIES}
 )
 
-ADD_TEST( TestFilterByEigenvaluesVesselnessImageFunction 
-  ${EXECUTABLE_OUTPUT_PATH}/TestFilterByEigenvaluesVesselnessImageFunction
+ADD_TEST( TestFilterByEigenValuesVesselnessImageFunction 
+  ${EXECUTABLE_OUTPUT_PATH}/TestFilterByEigenValuesVesselnessImageFunction
   ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
 
 

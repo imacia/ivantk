@@ -125,8 +125,8 @@ public:
   itkGetMacro( RadiusFactor, double );
   
   /** Flag for activating eigenvalue filtering. */
-	void SetFilterByEigenvalues( bool filterByEigenvalues );
-  itkBooleanMacro( FilterByEigenvalues );
+	void SetFilterByEigenValues( bool filterByEigenValues );
+  itkBooleanMacro( FilterByEigenValues );
   
   /** Get the normals image. This is the normal of the section estimated as the third eigenvalue. */
 	VectorImageType* GetOutputNormals()
@@ -174,7 +174,7 @@ private:
   double    m_RadiusFactor;
   
   /** Flag for filtering pixels by eigenvalue. */
-  bool      m_FilterByEigenvalues;
+  bool      m_FilterByEigenValues;
   
   /** Eigenanalysis calculator. */
   EigenAnalysisType  m_EigenAnalysis;

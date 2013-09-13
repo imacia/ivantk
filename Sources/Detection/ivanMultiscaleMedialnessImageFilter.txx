@@ -22,7 +22,7 @@ namespace ivan
 template <class TInputImage, class TOutputImage, class TScalePixel, class TMaskImage>
 MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 ::MultiscaleMedialnessImageFilter() :
-  m_FilterByEigenvalues(false),
+  m_FilterByEigenValues(false),
   m_RadiusFactor(1.7320508) // = sqrt(3.0)
 {
   this->m_DoNotComputeZeroPixels = true; // this filter is computationally quite expensive
@@ -64,9 +64,9 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 template <class TInputImage, class TOutputImage, class TScalePixel, class TMaskImage>
 void 
 MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
-::SetFilterByEigenvalues( bool filterByEigenvalues )
+::SetFilterByEigenValues( bool filterByEigenValues )
 {
-  m_FilterByEigenvalues = filterByEigenvalues;
+  m_FilterByEigenValues = filterByEigenValues;
   this->Modified();
 }
 
@@ -90,8 +90,8 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   os << indent << "RadiusFactor: "
      << static_cast<typename NumericTraits<double>::PrintType>(m_RadiusFactor)
      << std::endl; 
-  os << indent << "FilterByEigenvalues: "
-     << static_cast<typename NumericTraits<bool>::PrintType>(m_FilterByEigenvalues)
+  os << indent << "FilterByEigenValues: "
+     << static_cast<typename NumericTraits<bool>::PrintType>(m_FilterByEigenValues)
      << std::endl;
  
 }
@@ -302,7 +302,7 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 
         // Do not process those pixels whose first two eigenvalues are not negative
         
-        if( m_FilterByEigenvalues )
+        if( m_FilterByEigenValues )
         {
           if( eigenValues[0] >= 0.0f || eigenValues[1] >= 0.0f )
             continue;
@@ -583,7 +583,7 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 
         // Do not process those pixels whose first two eigenvalues are not negative
         
-        if( m_FilterByEigenvalues )
+        if( m_FilterByEigenValues )
         {
           if( eigenValues[0] >= 0.0f || eigenValues[1] >= 0.0f )
             continue;

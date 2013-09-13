@@ -3,8 +3,8 @@ SET( IVAN_DETECTION_SRCS
   ivanCircularSectionFluxImageFunction.hxx
   ivanDiscreteGradientGaussianImageFunction.h
   ivanDiscreteGradientGaussianImageFunction.hxx
-  ivanFilterByEigenvaluesVesselnessImageFunction.h
-  ivanFilterByEigenvaluesVesselnessImageFunction.hxx
+  ivanFilterByEigenValuesVesselnessImageFunction.h
+  ivanFilterByEigenValuesVesselnessImageFunction.hxx
   ivanFluxBasedVesselnessImageFunction.h
   ivanFluxBasedVesselnessImageFunction.hxx
   ivanFrangiVesselnessImageFunction.h

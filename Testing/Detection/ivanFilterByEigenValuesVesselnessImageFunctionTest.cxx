@@ -22,12 +22,12 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ==========================================================================*/
-// File: ivanFilterByEigenvaluesImageFunctionTest.cxx
+// File: ivanFilterByEigenValuesImageFunctionTest.cxx
 // Author: Iv�n Mac�a (imacia@vicomtech.org)
 // Description: tests Frangi's vesselness measure in the form of an image function.
 // Date: 2010/08/16
 
-#include "ivanFilterByEigenvaluesVesselnessImageFunction.h"
+#include "ivanFilterByEigenValuesVesselnessImageFunction.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"
@@ -76,7 +76,7 @@ int main( int argc, const char *argv[] )
     
   // Create the image function
   
-  typedef ivan::FilterByEigenvaluesVesselnessImageFunction<ImageType,short>   VesselnessFunctionType;
+  typedef ivan::FilterByEigenValuesVesselnessImageFunction<ImageType,short>   VesselnessFunctionType;
   
   VesselnessFunctionType::Pointer vesselness = VesselnessFunctionType::New();
   vesselness->SetInputImage( reader->GetOutput() );
@@ -106,7 +106,7 @@ int main( int argc, const char *argv[] )
   typedef itk::ImageFileWriter<ImageType>  WriterType;
   WriterType::Pointer writer = WriterType::New();
   writer->SetInput( output );
-  writer->SetFileName( "FilterByEigenvaluesVesselness.mhd" );
+  writer->SetFileName( "FilterByEigenValuesVesselness.mhd" );
 
   try
   {
