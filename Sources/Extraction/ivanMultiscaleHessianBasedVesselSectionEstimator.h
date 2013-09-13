@@ -60,7 +60,7 @@ template <class TImage, class TCenterline,
   class TMetricsCalculator = VesselSectionMetricsCalculator<TCenterline> >
 class ITK_EXPORT MultiscaleHessianBasedVesselSectionEstimator : 
   public MultiscaleTensorBasedVesselSectionEstimator<TImage,
-    ivan::DiscreteHessianGaussianImageFunction<TImage>,TCenterline,TMetricsCalculator>
+    DiscreteHessianGaussianImageFunction<TImage>,TCenterline,TMetricsCalculator>
 {
 
 public:
@@ -69,7 +69,7 @@ public:
   typedef MultiscaleHessianBasedVesselSectionEstimator
     <TImage, TCenterline, TMetricsCalculator>             Self;
   typedef MultiscaleTensorBasedVesselSectionEstimator<TImage,
-      ivan::DiscreteHessianGaussianImageFunction<TImage>,
+      DiscreteHessianGaussianImageFunction<TImage>,
       TCenterline,TMetricsCalculator>                     Superclass;
   typedef itk::SmartPointer<Self>                         Pointer;
   typedef itk::SmartPointer<const Self>                   ConstPointer;

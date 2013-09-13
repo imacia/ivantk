@@ -96,7 +96,7 @@ MultiscaleAdaptiveOOFBasedVesselSectionEstimator<TImage,TMetricFunction,TVectorF
     {
       double scale = previousSection->GetScale(); 
       // imacia: I dont know why but need to create the variable or VS2008 compiler complains on next line
-      ScaleVectorType::iterator it = std::lower_bound
+      typename ScaleVectorType::iterator it = std::lower_bound
         ( this->m_Scales.begin(), this->m_Scales.end(), scale );
       if( it == this->m_Scales.begin() )
         currentScale = *( this->m_Scales.begin() );

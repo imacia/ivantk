@@ -62,23 +62,22 @@ public:
   typedef itk::SmartPointer<const Self>  ConstPointer;
   
   /** Typedefs for image types. */
-  typedef TInputImage		InputImageType;
-  typedef TOutputImage  OutputImageType;
-  typedef TMaskImage		MaskImageType;
+  typedef TInputImage		                                InputImageType;
+  typedef TOutputImage                                  OutputImageType;
+  typedef TMaskImage	                                 	MaskImageType;
  
-  typedef TScalePixel		ScalePixelType;
-  typedef typename OutputImageType::PixelType		      OutputImagePixelType;
-  typedef typename Superclass::TensorScalePixelType		TensorScalePixelType;
+  typedef TScalePixel	                                	ScalePixelType;
+  typedef typename OutputImageType::PixelType		        OutputImagePixelType;
+  typedef typename Superclass::TensorScalePixelType	  	TensorScalePixelType;
   
-  typedef typename Superclass::ScaleContainerType	    ScaleContainerType;
+  typedef typename Superclass::ScaleContainerType	      ScaleContainerType;
 
 	/** Scale image types. */
-	typedef typename Superclass::ScaleImageType					ScaleImageType;
-	typedef typename Superclass::TensorScaleImageType		TensorScaleImageType;
+	typedef typename Superclass::ScaleImageType				  	ScaleImageType;
+	typedef typename Superclass::TensorScaleImageType	  	TensorScaleImageType;
   
   /** Image dimension = 3. */
-  itkStaticConstMacro(ImageDimension, unsigned int,
-                      ::itk::GetImageDimension<InputImageType>::ImageDimension);
+  itkStaticConstMacro( ImageDimension, unsigned int, InputImageType::ImageDimension);
   
   /** Image type for section normal. */
   typedef itk::Vector<TScalePixel,ImageDimension>     VectorPixelType;
@@ -130,7 +129,7 @@ public:
   
   /** Get the normals image. This is the normal of the section estimated as the third eigenvalue. */
 	VectorImageType* GetOutputNormals()
-		{ return dynamic_cast< VectorImageType* >( this->ProcessObject::GetOutput(2) );	}
+		{ return dynamic_cast< VectorImageType* >( this->itk::ProcessObject::GetOutput(2) );	}
   
 
 protected:
@@ -150,8 +149,7 @@ protected:
   virtual void GenerateDataAtScale( const ScalePixelType currentScale );
   
   /** Called by GenerateData to generate data for the current scale using the provided mask. 
-    * Overriden to speed-up computations using the provided mask. 
-    */
+    * Overriden to speed-up computations using the provided mask.*/
   virtual void GenerateDataUsingMaskAtScale( const ScalePixelType currentScale );
   
   
@@ -189,7 +187,7 @@ private:
 } // end namespace ivan
   
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "ivanMultiscaleMedialnessImageFilter.txx"
+#include "ivanMultiscaleMedialnessImageFilter.hxx"
 #endif
   
 #endif

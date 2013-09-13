@@ -23,7 +23,7 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanCircularGaussianSectionGenerator.h
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Iván Macía (imacia@vicomtech.org)
 // Description: creates a Gaussian image of the given size, stddev and peak intensity value
 // Date: 2010/09/17
 
@@ -241,7 +241,7 @@ CircularGaussianSectionGenerator<TPixel>::Create()
 
     typedef itk::RescaleIntensityImageFilter<RealImageType, ImageType>  RescaleFilterType;
     
-    RescaleFilterType::Pointer rescaler = RescaleFilterType::New();
+    typename RescaleFilterType::Pointer rescaler = RescaleFilterType::New();
     rescaler->SetInput( gaussianOutput );
     rescaler->SetOutputMinimum( 0 );
     rescaler->SetOutputMaximum( this->m_MaxValue );
@@ -264,7 +264,7 @@ CircularGaussianSectionGenerator<TPixel>::Create()
     // !!! BE CAREFUL. FLOAT PIXEL TYPES SHOULD BE USED ON OUTPUT FOR THIS
     typedef itk::DiscreteGaussianImageFilter<RealImageType,ImageType>  GaussianFilterType;
     
-    GaussianFilterType::Pointer gaussian = GaussianFilterType::New();
+    typename GaussianFilterType::Pointer gaussian = GaussianFilterType::New();
     gaussian->SetInput( pulseImage );
     gaussian->SetVariance( this->m_Sigma * this->m_Sigma );
 

@@ -150,7 +150,7 @@ GaussianBallGenerator<TPixel>::Create()
 
   typedef itk::RescaleIntensityImageFilter<RealImageType, ImageType>  RescaleFilterType;
   
-  RescaleFilterType::Pointer rescaler = RescaleFilterType::New();
+  typename RescaleFilterType::Pointer rescaler = RescaleFilterType::New();
   rescaler->SetInput( gaussianSource->GetOutput() );
   rescaler->SetOutputMinimum( 0 );
   rescaler->SetOutputMaximum( this->m_MaxValue );

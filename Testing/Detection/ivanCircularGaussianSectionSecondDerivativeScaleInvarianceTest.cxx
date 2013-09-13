@@ -35,6 +35,8 @@ SUCH DAMAGE.
 #include "itkExtractImageFilter.h"
 #include "itkNeighborhoodOperatorImageFilter.h"
 
+#include <fstream>
+
 
 int main( int argc, char *argv[] )
 {

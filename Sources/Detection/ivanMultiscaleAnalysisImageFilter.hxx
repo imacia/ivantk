@@ -1,4 +1,4 @@
-// File : itkMultiscaleAnalysisImageFilter.txx
+// File : itkMultiscaleAnalysisImageFilter.hxx
 // Author : Iván Macía (imacia@vicomtech.org)
 // Description : base class for multiscale analysis filters
 
@@ -23,8 +23,8 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 	m_DoNotComputeZeroPixels(false)
 {
 	typename ScaleImageType::Pointer scalesOutput = ScaleImageType::New();
-	this->ProcessObject::SetNumberOfRequiredOutputs(2);
-	this->ProcessObject::SetNthOutput(1, scalesOutput.GetPointer());
+	this->itk::ProcessObject::SetNumberOfRequiredOutputs(2);
+	this->itk::ProcessObject::SetNthOutput(1, scalesOutput.GetPointer());
 }
 
 
@@ -88,7 +88,7 @@ const TMaskImage*
 MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 ::GetMaskImage() const 
 {
-  return (static_cast<const TMaskImage*>(this->ProcessObject::GetInput(1)));
+  return ( static_cast<const TMaskImage*>( this->itk::ProcessObject::GetInput(1) ) );
 }
 
 
@@ -131,9 +131,9 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 	ScalePixelType minimum = itk::NumericTraits<ScalePixelType>::max();
 	
 	typename ScaleContainerType::const_iterator it;
-	it = m_Scales.begin();
+	it = this->m_Scales.begin();
 	
-	while( it != m_Scales.end() )
+	while( it != this->m_Scales.end() )
 	{
 		if( (*it) < minimum )
 		  minimum = (*it);
@@ -153,9 +153,9 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 	ScalePixelType maximum = itk::NumericTraits<ScalePixelType>::min();
 	
 	typename ScaleContainerType::const_iterator it;
-	it = m_Scales.begin();
+	it = this->m_Scales.begin();
 	
-	while( it != m_Scales.end() )
+	while( it != this->m_Scales.end() )
 	{
 		if( (*it) > maximum )
 		  maximum = (*it);
@@ -183,7 +183,7 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 	
 	for( unsigned int i=0; i<numberOfScales; ++i )
 	{
-		m_Scales.push_back( currentScale );
+		this->m_Scales.push_back( currentScale );
 		currentScale += scaleIncrement;
 	}
 	
@@ -196,7 +196,7 @@ void
 MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 ::AddScale( const ScalePixelType newScale )
 {
-	m_Scales.push_back( newScale );
+	this->m_Scales.push_back( newScale );
 	this->Modified();
 }
     
@@ -206,7 +206,7 @@ void
 MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 ::ClearScales()
 {
-	m_Scales.clear();
+	this->m_Scales.clear();
 }   
  
 
@@ -219,7 +219,7 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 	
 	while( it != scales.end() )
 	{
-		m_Scales.push_back( *it );
+		this->m_Scales.push_back( *it );
 		++it;		
 	}
 
@@ -234,14 +234,14 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 {
   Superclass::PrintSelf( os, indent );
 
-  os << "ScalesModified" << m_ScalesModified << std::endl;
-	os << "NormalizeAcrossScale: " << m_NormalizeAcrossScale << std::endl;
-	os << "DoNotComputeZeroPixels: " << m_DoNotComputeZeroPixels << std::endl;
+  os << "ScalesModified" << this->m_ScalesModified << std::endl;
+	os << "NormalizeAcrossScale: " << this->m_NormalizeAcrossScale << std::endl;
+	os << "DoNotComputeZeroPixels: " << this->m_DoNotComputeZeroPixels << std::endl;
 	
-	for( int i=0; i<m_Scales.size(); ++ i )
+	for( int i=0; i < this->m_Scales.size(); ++ i )
 	{
   	os << indent << "Scale " << i << ": "
-  	   << static_cast<typename NumericTraits<ScalePixelType>::PrintType>(m_Scales[i])
+  	   << static_cast<typename itk::NumericTraits<ScalePixelType>::PrintType>( this->m_Scales[i] )
        << std::endl;
  	}
   
@@ -263,7 +263,7 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   typename InputImageType::Pointer image = const_cast<InputImageType *>( this->GetInput() );
   image->SetRequestedRegion( this->GetInput()->GetLargestPossibleRegion() );
 
-	typename MaskImageType::Pointer maskImage = dynamic_cast<TMaskImage*>(this->ProcessObject::GetInput(1));
+	typename MaskImageType::Pointer maskImage = dynamic_cast<TMaskImage*>( this->itk::ProcessObject::GetInput(1) );
 	if( maskImage )
 		maskImage->SetRequestedRegion( this->GetInput()->GetLargestPossibleRegion() );
 
@@ -296,13 +296,13 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   // This is called instead of allocate outputs which does not work well here
 
 	typename OutputImageType::Pointer outputPtr = this->GetOutput(0);
-  outputPtr->SetBufferedRegion(outputPtr->GetRequestedRegion());
+  outputPtr->SetBufferedRegion( outputPtr->GetRequestedRegion() );
   outputPtr->Allocate();
 	outputPtr->FillBuffer( itk::NumericTraits<typename OutputImageType::PixelType>::Zero );
 	
 	typename ScaleImageType::Pointer scalesPtr = dynamic_cast< ScaleImageType * >
-		( this->ProcessObject::GetOutput(1) );
-	scalesPtr->SetBufferedRegion(scalesPtr->GetRequestedRegion());
+		( this->itk::ProcessObject::GetOutput(1) );
+	scalesPtr->SetBufferedRegion( scalesPtr->GetRequestedRegion() );
   scalesPtr->Allocate();
 	scalesPtr->FillBuffer( itk::NumericTraits<ScalePixelType>::Zero );
 
@@ -316,7 +316,7 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 {
   itkDebugMacro(<<"Actually executing");
 
-	if( !m_Scales.size() )
+	if( !this->m_Scales.size() )
 	{
 		itkWarningMacro(<<"No scales set. Aborting execution");
 		return;
@@ -329,7 +329,7 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 	
 	typename MaskImageType::ConstPointer mask = this->GetMaskImage();
 	
-	if( !mask && m_DoNotComputeZeroPixels )
+	if( !mask && this->m_DoNotComputeZeroPixels )
 	{
 		this->GenerateZeroPixelsMask();
 		mask = this->GetMaskImage();
@@ -338,9 +338,10 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 	   	
  	typename ScaleContainerType::const_iterator it = m_Scales.begin();
 	
-	while( it != m_Scales.end() )
+	while( it != this->m_Scales.end() )
 	{
 		this->UpdateScaleFiltersAtScale( *it );
+
 		if (!mask)
 			this->GenerateDataAtScale( *it );
 		else
@@ -358,21 +359,21 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 {
 	typename InputImageType::ConstPointer inputPtr  = this->GetInput();
 	
-	m_ZeroPixelsMaskImage = MaskImageType::New();
-	m_ZeroPixelsMaskImage->SetRegions( inputPtr->GetRequestedRegion() );
-	m_ZeroPixelsMaskImage->SetOrigin( inputPtr->GetOrigin() );
-	m_ZeroPixelsMaskImage->SetSpacing( inputPtr->GetSpacing() );
-	m_ZeroPixelsMaskImage->SetDirection( inputPtr->GetDirection() );
-	m_ZeroPixelsMaskImage->Allocate();
+	this->m_ZeroPixelsMaskImage = MaskImageType::New();
+	this->m_ZeroPixelsMaskImage->SetRegions( inputPtr->GetRequestedRegion() );
+	this->m_ZeroPixelsMaskImage->SetOrigin( inputPtr->GetOrigin() );
+	this->m_ZeroPixelsMaskImage->SetSpacing( inputPtr->GetSpacing() );
+	this->m_ZeroPixelsMaskImage->SetDirection( inputPtr->GetDirection() );
+	this->m_ZeroPixelsMaskImage->Allocate();
 	
 	// Initialize the mask with ones
 	m_ZeroPixelsMaskImage->FillBuffer( itk::NumericTraits<typename MaskImageType::PixelType>::One );
 	
-	typedef ImageRegionConstIterator<InputImageType> 		ConstIteratorType;
-	typedef ImageRegionIterator<MaskImageType> 					IteratorType;
+	typedef itk::ImageRegionConstIterator<InputImageType> 		ConstIteratorType;
+	typedef itk::ImageRegionIterator<MaskImageType> 					IteratorType;
 	
 	ConstIteratorType it( inputPtr, inputPtr->GetRequestedRegion() );
-	IteratorType out( m_ZeroPixelsMaskImage, inputPtr->GetRequestedRegion() );
+	IteratorType out( this->m_ZeroPixelsMaskImage, inputPtr->GetRequestedRegion() );
 	
 	// If a pixel has zero value set it to zero in the mask too
 	for( it.GoToBegin(), out.GoToBegin(); !it.IsAtEnd(); ++it, ++out )
@@ -405,31 +406,32 @@ MultiscaleAnalysisImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 {
   itkDebugMacro(<<"Updating scale filters at scale" << currentScale);
 
-  if( m_GradientMagnitudeGaussian.IsNotNull() )
+  if( this->m_GradientMagnitudeGaussian.IsNotNull() )
   {
-  	m_GradientMagnitudeGaussian->SetSigma( currentScale );
-  	m_GradientMagnitudeGaussian->Update();
+  	this->m_GradientMagnitudeGaussian->SetSigma( currentScale );
+  	this->m_GradientMagnitudeGaussian->Update();
   }
   	
-  if( m_GradientGaussian.IsNotNull() )
+  if( this->m_GradientGaussian.IsNotNull() )
   {
-  	m_GradientGaussian->SetSigma( currentScale );
-  	m_GradientGaussian->Update();
+  	this->m_GradientGaussian->SetSigma( currentScale );
+  	this->m_GradientGaussian->Update();
   }
 	
-	if( m_HessianGaussian.IsNotNull() )
+	if( this->m_HessianGaussian.IsNotNull() )
 	{
-  	m_HessianGaussian->SetSigma( currentScale );
-  	m_HessianGaussian->Update();
+  	this->m_HessianGaussian->SetSigma( currentScale );
+  	this->m_HessianGaussian->Update();
   }
   
-  if( m_LaplacianGaussian.IsNotNull() )
+  if( this->m_LaplacianGaussian.IsNotNull() )
   {
-  	m_LaplacianGaussian->SetSigma( currentScale );
-  	m_LaplacianGaussian->Update();
+  	this->m_LaplacianGaussian->SetSigma( currentScale );
+  	this->m_LaplacianGaussian->Update();
   }  
 }
 
 } // end namespace ivan
 
 #endif
+

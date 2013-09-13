@@ -23,7 +23,7 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanDiscreteHessianGaussianImageFunction.h
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Iván Macía (imacia@vicomtech.org)
 // Description: Modified version of itkDiscreteHessianGaussianImageFunction, with support for gamma-normalized derivatives
 // Date: 2010/05/19
 
@@ -86,12 +86,12 @@ public:
   typedef typename Superclass::InputImageType      InputImageType;
   typedef typename Superclass::InputPixelType      InputPixelType;
   typedef typename Superclass::IndexType           IndexType;
-//  typedef typename Superclass::IndexValueType      IndexValueType;
+  typedef typename Superclass::IndexValueType      IndexValueType;
   typedef typename Superclass::ContinuousIndexType ContinuousIndexType;
   typedef typename Superclass::PointType           PointType;
 
   /** Dimension of the underlying image */
-  itkStaticConstMacro(ImageDimension2, unsigned int,
+  itkStaticConstMacro(ImageDimension, unsigned int,
                       InputImageType::ImageDimension);
 
   /** Output type */
@@ -100,23 +100,23 @@ public:
   typedef typename Superclass::OutputType                           OutputType;
 
   typedef itk::FixedArray< double, 
-    itkGetStaticConstMacro(ImageDimension2) >                       VarianceArrayType;
+    itkGetStaticConstMacro(ImageDimension) >                       VarianceArrayType;
 
   typedef ivan::GaussianDerivativeOperator< TOutput,
-    itkGetStaticConstMacro(ImageDimension2) >                       GaussianDerivativeOperatorType;
+    itkGetStaticConstMacro(ImageDimension) >                       GaussianDerivativeOperatorType;
 
   /** Array to store gaussian derivative operators from zero to second order
     * (3*ImageDimension operators) */
   typedef itk::FixedArray< GaussianDerivativeOperatorType,
-    3 * itkGetStaticConstMacro(ImageDimension2) >                   GaussianDerivativeOperatorArrayType;
+    3 * itkGetStaticConstMacro(ImageDimension) >                   GaussianDerivativeOperatorArrayType;
 
   typedef itk::Neighborhood< TOutput, 
-    itkGetStaticConstMacro(ImageDimension2) >                       KernelType;
+    itkGetStaticConstMacro(ImageDimension) >                       KernelType;
 
   /** Array to store precomputed N-dimensional kernels for the hessian
    * components  */
-  typedef itk::FixedArray< KernelType, itkGetStaticConstMacro(ImageDimension2)
-                      * ( itkGetStaticConstMacro(ImageDimension2) + 1 ) / 2 >      KernelArrayType;
+  typedef itk::FixedArray< KernelType, itkGetStaticConstMacro(ImageDimension)
+                      * ( itkGetStaticConstMacro(ImageDimension) + 1 ) / 2 >      KernelArrayType;
 
   /** Image function that performs convolution with the neighborhood
    * operator  */

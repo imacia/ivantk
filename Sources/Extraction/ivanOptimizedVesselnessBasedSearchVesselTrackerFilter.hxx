@@ -96,7 +96,7 @@ OptimizedVesselnessBasedSearchVesselTrackerFilter<TInputImage,TOutputVessel,TVes
 	// Set the new center point for the section      
 	typename SectionType::CenterPointType centerPoint;
 	
-	for( unsigned int i=0; i<InputImageDimension; ++i )
+	for( unsigned int i=0; i<InputImageType::ImageDimension; ++i )
 	{
 	  // Update current point (not previous!)
 	  this->m_CurrentPoint[i] = this->m_CurrentPoint[i] + 

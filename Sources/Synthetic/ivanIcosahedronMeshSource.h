@@ -48,11 +48,10 @@ class ITK_EXPORT IcosahedronMeshSource : public PlatonicSolidMeshSource<TPixel>
 public:
   
   /** Standard typedefs. */
-  typedef IcosahedronMeshSource            Self;
-  typedef PlatonicSolidMeshSource
-    <TPixel>                        Superclass;
-  typedef itk::SmartPointer<Self>        Pointer;
-  typedef itk::SmartPointer<const Self>  ConstPointer;
+  typedef IcosahedronMeshSource              Self;
+  typedef PlatonicSolidMeshSource<TPixel>    Superclass;
+  typedef itk::SmartPointer<Self>            Pointer;
+  typedef itk::SmartPointer<const Self>      ConstPointer;
   
   /** Hold on to the type information specified by the template parameters. */
   typedef typename Superclass::OutputMeshType   OutputMeshType;

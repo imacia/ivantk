@@ -95,11 +95,11 @@ DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
   unsigned int maxRadius = 0;
 
   for ( unsigned int direction = 0; direction <
-        itkGetStaticConstMacro(ImageDimension2); direction++ )
+        itkGetStaticConstMacro(ImageDimension); direction++ )
     {
     for ( unsigned int order = 0; order <= 2; ++order )
       {
-      idx = itkGetStaticConstMacro(ImageDimension2) * order + direction;
+      idx = itkGetStaticConstMacro(ImageDimension) * order + direction;
       m_OperatorArray[idx].SetDirection(direction);
       m_OperatorArray[idx].SetMaximumKernelWidth(m_MaximumKernelWidth);
       m_OperatorArray[idx].SetMaximumError(m_MaximumError);
@@ -125,7 +125,7 @@ DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
       m_OperatorArray[idx].CreateDirectional();
 
       // Check for maximum radius
-      for ( unsigned int i = 0; i < itkGetStaticConstMacro(ImageDimension2); ++i )
+      for ( unsigned int i = 0; i < itkGetStaticConstMacro(ImageDimension); ++i )
         {
         if ( m_OperatorArray[idx].GetRadius()[i] > maxRadius )
           {
@@ -139,7 +139,7 @@ DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
   // have to perform N convolutions for each point we calculate but
   // only one.
 
-  typedef itk::Image< TOutput, itkGetStaticConstMacro(ImageDimension2) > KernelImageType;
+  typedef itk::Image< TOutput, itkGetStaticConstMacro(ImageDimension) > KernelImageType;
   typename KernelImageType::Pointer kernelImage = KernelImageType::New();
 
   typedef typename KernelImageType::RegionType RegionType;
@@ -171,7 +171,7 @@ DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
   typename NeighborhoodFilterType::Pointer convolutionFilter = NeighborhoodFilterType::New();
 
   // Array that stores the current order for each direction
-  typedef itk::FixedArray< unsigned int, itkGetStaticConstMacro(ImageDimension2) > OrderArrayType;
+  typedef itk::FixedArray< unsigned int, itkGetStaticConstMacro(ImageDimension) > OrderArrayType;
   OrderArrayType orderArray;
 
   // Precalculate compound derivative kernels (n-dimensional)
@@ -181,9 +181,9 @@ DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
   unsigned int opidx; // current operator index in m_OperatorArray
   unsigned int kernelidx = 0;
 
-  for ( unsigned int i = 0; i < itkGetStaticConstMacro(ImageDimension2); ++i )
+  for ( unsigned int i = 0; i < itkGetStaticConstMacro(ImageDimension); ++i )
     {
-    for ( unsigned int j = i; j < itkGetStaticConstMacro(ImageDimension2); ++j )
+    for ( unsigned int j = i; j < itkGetStaticConstMacro(ImageDimension); ++j )
       {
       orderArray.Fill(0);
       ++orderArray[i];
@@ -193,9 +193,9 @@ DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
       kernelImage->FillBuffer(itk::NumericTraits< TOutput >::Zero);
       kernelImage->SetPixel(centerIndex, itk::NumericTraits< TOutput >::One);
 
-      for ( unsigned int direction = 0; direction < itkGetStaticConstMacro(ImageDimension2); ++direction )
+      for ( unsigned int direction = 0; direction < itkGetStaticConstMacro(ImageDimension); ++direction )
         {
-        opidx = itkGetStaticConstMacro(ImageDimension2) * orderArray[direction] + direction;
+        opidx = itkGetStaticConstMacro(ImageDimension) * orderArray[direction] + direction;
         convolutionFilter->SetInput(kernelImage);
         convolutionFilter->SetOperator(m_OperatorArray[opidx]);
         convolutionFilter->Update();
@@ -264,6 +264,18 @@ typename DiscreteHessianGaussianImageFunction< TInputImage, TOutput >::OutputTyp
 DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
 ::EvaluateAtContinuousIndex(const ContinuousIndexType & cindex) const
 {
+  // TODO: we should think on resuing code latest code of itk::LinearInterpolateImageFunction for this
+
+  typedef unsigned int NumberOfNeighborsType;
+
+  unsigned int  dim; // index over dimension
+  NumberOfNeighborsType neighbors = 1 << ImageDimension;
+
+  // Compute base index = closet index below point
+  // Compute distance from point to base index
+  IndexType baseIndex;
+  double    distance[ImageDimension];
+
   if ( m_InterpolationMode == NearestNeighbourInterpolation )
     {
     IndexType index;
@@ -271,18 +283,8 @@ DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
     return this->EvaluateAtIndex(index);
     }
   else
-    {
-    typedef unsigned int NumberOfNeighborsType;
-
-    unsigned int  dim; // index over dimension
-    NumberOfNeighborsType neighbors = 1 << ImageDimension2;
-
-    // Compute base index = closet index below point
-    // Compute distance from point to base index
-    IndexType baseIndex;
-    double    distance[ImageDimension2];
-    
-    for ( dim = 0; dim < ImageDimension2; dim++ )
+    {    
+    for ( dim = 0; dim < ImageDimension; dim++ )
       {
       baseIndex[dim] = static_cast<IndexValueType>( vcl_floor( cindex[dim] ) );
       distance[dim] = cindex[dim] - static_cast< double >( baseIndex[dim] );
@@ -302,7 +304,7 @@ DiscreteHessianGaussianImageFunction< TInputImage, TOutput >
       IndexType    neighIndex;
 
       // get neighbor index and overlap fraction
-      for ( dim = 0; dim < ImageDimension2; dim++ )
+      for ( dim = 0; dim < ImageDimension; dim++ )
         {
         if ( upper & 1 )
           {

@@ -304,7 +304,7 @@ int main( int argc, const char *argv[] )
 
   ImageType::Pointer image = reader->GetOutput();
 
-  VesselTrackerType::ImagePointType startingPoint;
+  VesselTrackerType::InputImagePointType startingPoint;
   startingPoint[0] = image->GetOrigin()[0] + image->GetSpacing()[0] * index[0];
   startingPoint[1] = image->GetOrigin()[1] + ( image->GetLargestPossibleRegion().GetSize()[1]
     - 1 - index[1] ) * image->GetSpacing()[1];

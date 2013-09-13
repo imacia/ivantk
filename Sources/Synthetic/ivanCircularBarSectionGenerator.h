@@ -32,6 +32,7 @@ SUCH DAMAGE.
 #define __ivanCircularBarSectionGenerator_h_
 
 #include "itkImage.h"
+#include "itkImageRegionIterator.h"
 #include "itkImageRegionIteratorWithIndex.h"
 //#include "itkDiscreteBarImageFilter.h"
 //#include "itkRescaleIntensityImageFilter.h"
@@ -119,19 +120,19 @@ CircularBarSectionGenerator<TPixel>::Create()
   //typedef double   RealPixelType;
   typedef itk::Image<TPixel, 2>              RealImageType;
 
-  RealImageType::Pointer sectionImage = RealImageType::New();
+  typename RealImageType::Pointer sectionImage = RealImageType::New();
     
-  RealImageType::SpacingType spacing;
+  typename RealImageType::SpacingType spacing;
   spacing.Fill( this->m_ImageSpacing );
   sectionImage->SetSpacing( spacing );
   
-  RealImageType::RegionType region;
+  typename RealImageType::RegionType region;
     
-  RealImageType::RegionType::SizeType size;    
+  typename RealImageType::RegionType::SizeType size;    
   size.Fill( this->m_ImageSize );
   region.SetSize( size );
   
-  RealImageType::RegionType::IndexType index;    
+  typename RealImageType::RegionType::IndexType index;    
   index.Fill(0);
   region.SetIndex( index );
   
@@ -145,8 +146,8 @@ CircularBarSectionGenerator<TPixel>::Create()
   IteratorType it( sectionImage, sectionImage->GetRequestedRegion() );
   it.GoToBegin();
   
-  ImageType::IndexType currentIndex;
-  ImageType::PointType currentPoint;
+  typename ImageType::IndexType currentIndex;
+  typename ImageType::PointType currentPoint;
   
   this->m_Center[0] = ( size[0] - 1 ) * spacing[0] / 2.0;
   this->m_Center[1] = ( size[1] - 1 ) * spacing[1] / 2.0;

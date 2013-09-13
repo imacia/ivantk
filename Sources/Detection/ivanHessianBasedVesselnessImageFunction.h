@@ -97,6 +97,10 @@ public:
   typedef typename HessianFunctionType::InterpolationModeType 
     InterpolationModeType;
 
+  /** Dimension of the underlying image */
+  itkStaticConstMacro(ImageDimension, unsigned int,
+                      InputImageType::ImageDimension);
+
 public:
 
   /** Method for creation through the object factory */

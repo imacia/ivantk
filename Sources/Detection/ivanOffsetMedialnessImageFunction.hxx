@@ -362,7 +362,7 @@ OffsetMedialnessImageFunction<TInputImage,TOutput,TCoordRep>
       {
         // Project the gradient into the radial direction, that is, compute the dot product of both vectors
                
-        GradientFunctionType::OutputType gradient = this->m_GradientFunction->Evaluate( currentCirclePoint );
+        typename GradientFunctionType::OutputType gradient = this->m_GradientFunction->Evaluate( currentCirclePoint );
                
         radialMedialness[i] = 0.0; 
         

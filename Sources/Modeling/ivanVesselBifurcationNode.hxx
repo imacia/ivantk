@@ -53,15 +53,31 @@ VesselBifurcationNode<TCenterline>::~VesselBifurcationNode()
 
 
 template <class TCenterline>
+typename VesselBifurcationNode<TCenterline>::BranchNodeType * 
+VesselBifurcationNode<TCenterline>::GetParentBranch()
+{ 
+  return dynamic_cast<BranchNodeType*>( this->GetParent() );
+}
+
+
+template <class TCenterline>
+const typename VesselBifurcationNode<TCenterline>::BranchNodeType * 
+VesselBifurcationNode<TCenterline>::GetParentBranch() const
+{
+  return dynamic_cast<BranchNodeType*>( this->GetParent() );
+}
+
+
+template <class TCenterline>
 std::vector<typename VesselBifurcationNode<TCenterline>::BranchNodeType*>
 VesselBifurcationNode<TCenterline>::GetChildBranches()
 {
-  std::vector<VesselBranchNode*> branches;
-  VesselBranchNode *current;
+  std::vector<BranchNodeType*> branches;
+  BranchNodeType *current;
   
   for( unsigned int i=0; i<this->GetNumberOfChildren(); ++i )
   {
-    if( ( current = dynamic_cast<VesselBranchNode*>( this->m_Children[i] ) ) )
+    if( ( current = dynamic_cast<BranchNodeType*>( this->m_Children[i] ) ) )
       branches.push_back( current );
   }
   
@@ -73,12 +89,12 @@ template <class TCenterline>
 std::vector<typename VesselBifurcationNode<TCenterline>::BranchNodeType*>
 VesselBifurcationNode<TCenterline>::GetChildBranches() const
 {
-  std::vector<VesselBranchNode*> branches;
-  VesselBranchNode *current;
+  std::vector<BranchNodeType*> branches;
+  BranchNodeType *current;
   
   for( unsigned int i=0; i<this->GetNumberOfChildren(); ++i )
   {
-    if( ( current = dynamic_cast<VesselBranchNode*>( this->m_Children[i] ) ) )
+    if( ( current = dynamic_cast<BranchNodeType*>( this->m_Children[i] ) ) )
       branches.push_back( current );
   }
   
@@ -98,3 +114,4 @@ void VesselBifurcationNode<TCenterline>::PrintSelf
 } // end namespace ivan
 
 #endif // __ivanVesselBifurcationNode_hxx
+

@@ -67,21 +67,23 @@ public:
   typedef itk::SmartPointer<Self>                            Pointer;
   typedef itk::SmartPointer<const Self>                      ConstPointer;
   
-  typedef typename Superclass::MeasureType    MeasureType;
+  typedef typename Superclass::ParametersType                ParametersType;
+  typedef typename Superclass::MeasureType                   MeasureType;
+  typedef typename Superclass::DerivativeType                DerivativeType;
   
   /** Image related typedefs. */
-  typedef TImage                              ImageType;
-  typedef typename ImageType::Pointer         ImagePointer;
+  typedef TImage                                             ImageType;
+  typedef typename ImageType::Pointer                        ImagePointer;
     
-  typedef typename ImageType::PointType       PointType;
+  typedef typename ImageType::PointType                      PointType;
       
   /** Image function related typedefs. */
-  typedef typename Superclass::ImageFunctionType     ImageFunctionType;
-  typedef typename Superclass::ImageFunctionPointer  ImageFunctionPointer;
+  typedef typename Superclass::ImageFunctionType             ImageFunctionType;
+  typedef typename Superclass::ImageFunctionPointer          ImageFunctionPointer;
   
-  typedef itk::Vector<double, ImageType::ImageDimension>  VectorType;
+  typedef itk::Vector<double, ImageType::ImageDimension>     VectorType;
   typedef itk::Matrix<double, ImageType::ImageDimension, 
-    ImageType::ImageDimension-1>                          BaseMatrixType;
+    ImageType::ImageDimension-1>                             BaseMatrixType;
   
 public:
 

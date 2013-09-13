@@ -53,17 +53,19 @@ class ITK_EXPORT ImageFunctionToCostFunctionAdaptor : public itk::SingleValuedCo
 public:
   /** Standard class typedefs. */
   typedef ImageFunctionToCostFunctionAdaptor<TImage>  Self;
-  typedef itk::SingleValuedCostFunction       Superclass;
-  typedef itk::SmartPointer<Self>             Pointer;
-  typedef itk::SmartPointer<const Self>       ConstPointer;
+  typedef itk::SingleValuedCostFunction               Superclass;
+  typedef itk::SmartPointer<Self>                     Pointer;
+  typedef itk::SmartPointer<const Self>               ConstPointer;
   
-  typedef typename Superclass::MeasureType    MeasureType;
+  typedef typename Superclass::ParametersType         ParametersType;
+  typedef typename Superclass::MeasureType            MeasureType;
+  typedef typename Superclass::DerivativeType         DerivativeType;
   
   /** Image related typedefs. */
-  typedef TImage                              ImageType;
-  typedef typename ImageType::Pointer         ImagePointer;
+  typedef TImage                                      ImageType;
+  typedef typename ImageType::Pointer                 ImagePointer;
     
-  typedef typename ImageType::PointType       PointType;
+  typedef typename ImageType::PointType               PointType;
     
   /** Image function related typedefs. */
   typedef itk::ImageFunction<ImageType,MeasureType,MeasureType>  ImageFunctionType;

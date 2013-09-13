@@ -92,7 +92,7 @@ MultiscaleTensorBasedVesselSectionEstimator<TImage,TScaledImageFunction,TCenterl
   if( this->m_SectionRange[0] == 0 && this->m_SectionRange[1] == 0 )
     this->m_SectionRange[1] = this->GetCenterline()->size() - 1;
   
-  for( unsigned int i = this->m_SectionRange[0]; i <= m_SectionRange[1]; ++i )
+  for( unsigned int i = this->m_SectionRange[0]; i <= this->m_SectionRange[1]; ++i )
   {
     std::cout << "Calculating section " << i+1 << " out of " << 
       ( this->m_SectionRange[1] - this->m_SectionRange[0] + 1 ) << " ... " << std::endl;
@@ -156,7 +156,7 @@ MultiscaleTensorBasedVesselSectionEstimator<TImage,TScaledImageFunction,TCenterl
 {
   assert( this->m_ScaledImageFunctionContainer.size() && this->m_Scales.size() == this->m_ScaledImageFunctionContainer.size() );
   
-  if( m_ScaledImageFunctionContainer.size() == 1 )
+  if( this->m_ScaledImageFunctionContainer.size() == 1 )
   {
     // We cannot interpolate
     tensor = this->m_ScaledImageFunctionContainer[0]->Evaluate( center );
@@ -176,7 +176,7 @@ MultiscaleTensorBasedVesselSectionEstimator<TImage,TScaledImageFunction,TCenterl
   {
     unsigned int idx = 0;
     
-    while( m_Scales[idx+1] < scale )
+    while( this->m_Scales[idx+1] < scale )
       ++idx;
       
     // Try not to interpolate if sigma is within some tolerance of our discrete set of scales

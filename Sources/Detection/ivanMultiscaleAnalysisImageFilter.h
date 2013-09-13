@@ -66,23 +66,22 @@ public:
   typedef TOutputImage  OutputImageType;
 
 	/** Image dimension = 3. */
-  itkStaticConstMacro(ImageDimension, unsigned int,
-                      ::itk::GetImageDimension<InputImageType>::ImageDimension);
+  itkStaticConstMacro( ImageDimension, unsigned int, InputImageType::ImageDimension );
                       
   /** Mask image types. */
   typedef TMaskImage			MaskImageType;
  
  	/** Scale pixel types. */
-  typedef TScalePixel		ScalePixelType;
-  typedef std::vector<ScalePixelType>	 ScaleContainerType;
-  typedef itk::Vector< ScalePixelType, ImageDimension >    VectorScalePixelType;
+  typedef TScalePixel		                                    ScalePixelType;
+  typedef std::vector<ScalePixelType>	                       ScaleContainerType;
+  typedef itk::Vector< ScalePixelType, ImageDimension >      VectorScalePixelType;
   typedef itk::SymmetricSecondRankTensor< ScalePixelType, 
-		ImageDimension >																	     TensorScalePixelType;
+		ImageDimension >																	       TensorScalePixelType;
 
 	/** Scale image types. */
-	typedef itk::Image<ScalePixelType,ImageDimension>				ScaleImageType;
-	typedef itk::Image<VectorScalePixelType,ImageDimension>	VectorScaleImageType;
-	typedef itk::Image<TensorScalePixelType,ImageDimension>	TensorScaleImageType;
+	typedef itk::Image<ScalePixelType,ImageDimension>				   ScaleImageType;
+	typedef itk::Image<VectorScalePixelType,ImageDimension>    VectorScaleImageType;
+	typedef itk::Image<TensorScalePixelType,ImageDimension>    TensorScaleImageType;
   
   /** Scale filters. */
   typedef itk::GradientMagnitudeRecursiveGaussianImageFilter
@@ -116,7 +115,7 @@ public:
   /** Get the scales image. This is the scale at which each pixel value of the output was calculated. */
 	ScaleImageType* GetOutputScales()
 		{
-			return dynamic_cast< ScaleImageType * >( this->ProcessObject::GetOutput(1) );	
+			return dynamic_cast< ScaleImageType * >( this->itk::ProcessObject::GetOutput(1) );	
 		}
 
   /** Define which normalization factor will be used for the Gaussian */
@@ -235,7 +234,7 @@ protected:
 } // end namespace ivan
   
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "ivanMultiscaleAnalysisImageFilter.txx"
+#include "ivanMultiscaleAnalysisImageFilter.hxx"
 #endif
   
 #endif

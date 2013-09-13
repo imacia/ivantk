@@ -41,6 +41,7 @@ SUCH DAMAGE.
 #include "itkNeighborhoodIterator.h"
 #include "itkImageFileWriter.h"
 
+
 namespace ivan
 {
 
@@ -192,11 +193,11 @@ CurvedCircularGaussianTubeGenerator<TPixel>::Create()
   
   typename GaussianBallImageType::Pointer ballImage = ballGenerator.Create();
   
-  typedef itk::ImageFileWriter<GaussianBallImageType> WriterType;
-  WriterType::Pointer writer = WriterType::New();
+  /*typedef itk::ImageFileWriter<GaussianBallImageType> WriterType;
+  typename WriterType::Pointer writer = WriterType::New();
   writer->SetInput( ballImage );
   writer->SetFileName( "ballImage.mhd" );
-  writer->Update();
+  writer->Update();*/
   
   typedef itk::ImageRegionConstIterator<GaussianBallImageType>  ConstIteratorType;
   typedef itk::ImageRegionIterator<ImageType>                   IteratorType;
@@ -261,12 +262,12 @@ CurvedCircularGaussianTubeGenerator<TPixel>
   if( radius % 2 == 0 )
     radius += 1;
     
-  NeighborhoodIteratorType::RadiusType ballRadius;
+  typename NeighborhoodIteratorType::RadiusType ballRadius;
   ballRadius.Fill( gaussianBall->GetLargestPossibleRegion().GetSize()[0] / 2 );
     
   ConstIteratorType it( gaussianBall, gaussianBall->GetRequestedRegion() );
   NeighborhoodIteratorType neighIt( ballRadius, destImage, destImage->GetRequestedRegion() );
-  NeighborhoodIteratorType::Iterator internalIt; 
+  typename NeighborhoodIteratorType::Iterator internalIt; 
   
   if( destImage->TransformPhysicalPointToIndex( ballCenter, ballIndex ) )
   {

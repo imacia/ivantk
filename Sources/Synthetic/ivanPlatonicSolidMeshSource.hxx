@@ -47,8 +47,8 @@ PlatonicSolidMeshSource<TPixel>
    * Create the output
    */
   typename OutputMeshType::Pointer output = OutputMeshType::New();
-  this->ProcessObject::SetNumberOfRequiredOutputs(1);
-  this->ProcessObject::SetNthOutput(0, output.GetPointer());
+  this->itk::ProcessObject::SetNumberOfRequiredOutputs(1);
+  this->itk::ProcessObject::SetNthOutput(0, output.GetPointer());
 
   m_Center.Fill(0);
 }
@@ -69,7 +69,7 @@ PlatonicSolidMeshSource<TPixel>
     
   // Point data
   
-  OutputMeshType::PointType point;
+  typename OutputMeshType::PointType point;
   unsigned int i;
   const double *pptr;
     

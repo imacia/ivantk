@@ -30,6 +30,7 @@ SUCH DAMAGE.
 #ifndef __ivanGaussianDerivativeOperator_h
 #define __ivanGaussianDerivativeOperator_h
 
+#include "itkNeighborhoodOperator.h"
 #include "itkGaussianOperator.h"
 #include "itkDerivativeOperator.h"
 

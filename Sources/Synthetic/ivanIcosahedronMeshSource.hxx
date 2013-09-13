@@ -70,7 +70,9 @@ void
 IcosahedronMeshSource<TPixel>
 ::GenerateData()
 {
-  this->GenerateMesh<TriangleCellType>( IcosaScale, IcosaPoints, IcosaVerts );
+  //this->GenerateMesh< TriangleCellType > ( IcosaScale, IcosaPoints, IcosaVerts );
+  // GCC requires this strange syntax to call a function template
+  this->template GenerateMesh< TriangleCellType > ( IcosaScale, IcosaPoints, IcosaVerts );
 }
 
 

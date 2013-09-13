@@ -60,7 +60,8 @@ public:
   typedef TInputImage		InputImageType;
   typedef TOutputImage  OutputImageType;
   
-  typedef typename InputImageType::PixelType   InputImagePixelType;
+  typedef typename InputImageType::PixelType     InputImagePixelType;
+  typedef typename OutputImageType::RegionType   OutputImageRegionType;
   
   /** Image dimension = 3. */
   itkStaticConstMacro( ImageDimension, unsigned int, ITKImageDimensionMacro( InputImageType ) );
@@ -100,8 +101,7 @@ protected:
   ~ImageFunctionBasedImageFilter() {};
   
   /** Compute image function in each thread. */
-  virtual void ThreadedGenerateData( const OutputImageRegionType& outputRegionForThread,
-    int threadId );
+  virtual void ThreadedGenerateData( const OutputImageRegionType& outputRegionForThread, int threadId );
 
 
   /** Compute image function for each of the threads. */

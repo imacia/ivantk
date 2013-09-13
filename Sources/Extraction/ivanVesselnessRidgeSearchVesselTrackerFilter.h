@@ -54,32 +54,32 @@ public:
 	
   /** Standard class typedefs. */
   typedef VesselnessRidgeSearchVesselTrackerFilter
-    <TInputImage,TOutputVessel,TVesselnessFunction>  Self;
+    <TInputImage,TOutputVessel,TVesselnessFunction>      Self;
   typedef VesselnessBasedSearchVesselTrackerFilter
-    <TInputImage,TOutputVessel,TVesselnessFunction>  Superclass;
-  typedef itk::SmartPointer<Self>                    Pointer;
-  typedef itk::SmartPointer<const Self>              ConstPointer;
+    <TInputImage,TOutputVessel,TVesselnessFunction>      Superclass;
+  typedef itk::SmartPointer<Self>                        Pointer;
+  typedef itk::SmartPointer<const Self>                  ConstPointer;
   
   /** Some convenient typedefs. */
-  typedef TInputImage                               ImageType;
-  typedef typename Superclass::ImagePointer         ImagePointer;
-  typedef typename Superclass::ImageConstPointer    ImageConstPointer;
-  typedef typename Superclass::ImageRegionType      ImageRegionType; 
-  typedef typename Superclass::ImagePixelType       ImagePixelType;
-  typedef typename Superclass::ImagePointType       ImagePointType;
-  typedef typename Superclass::ImageIndexType       ImageIndexType; 
+  typedef TInputImage                                    InputImageType;
+  typedef typename Superclass::InputImagePointer         InputImagePointer;
+  typedef typename Superclass::InputImageConstPointer    InputImageConstPointer;
+  typedef typename Superclass::InputImageRegionType      InputImageRegionType; 
+  typedef typename Superclass::InputImagePixelType       InputImagePixelType;
+  typedef typename Superclass::InputImagePointType       InputImagePointType;
+  typedef typename Superclass::InputImageIndexType       InputImageIndexType; 
   	
   /** Some convenient typedefs. */
-  typedef TOutputVessel                             OutputVesselType;
-  typedef typename OutputVesselType::Pointer        OutputVesselPointer;
+  typedef TOutputVessel                                  OutputVesselType;
+  typedef typename OutputVesselType::Pointer             OutputVesselPointer;
   
-  typedef typename Superclass::CenterlineType       CenterlineType;
-  typedef typename Superclass::SectionType          SectionType;
+  typedef typename Superclass::CenterlineType            CenterlineType;
+  typedef typename Superclass::SectionType               SectionType;
 
   typedef itk::Image<typename TVesselnessFunction::OutputType, 
-    ImageType::ImageDimension>                                    VesselnessImageType;
+    InputImageType::ImageDimension>                      VesselnessImageType;
       
-  typedef typename TVesselnessFunction                   VesselnessFunctionType;
+  typedef TVesselnessFunction                            VesselnessFunctionType;
   typedef typename VesselnessFunctionType::Pointer       VesselnessFunctionPointer;
   typedef typename VesselnessFunctionType::OutputType    VesselnessValueType;
 

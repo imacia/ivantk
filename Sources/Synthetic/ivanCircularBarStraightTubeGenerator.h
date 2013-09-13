@@ -42,13 +42,13 @@ class CircularBarStraightTubeGenerator : public CircularBarTubeGenerator<TPixel>
 {
 public:
 
-  typedef CircularBarStraightTubeGenerator<TPixel>    Self;
-  typedef CircularBarTubeGenerator<TPixel>            Superclass;
+  typedef CircularBarStraightTubeGenerator<TPixel>      Self;
+  typedef CircularBarTubeGenerator<TPixel>              Superclass;
 
-  typedef TPixel                        PixelType;
-  typedef itk::Image<PixelType,3>       ImageType;
-  typedef typename ImageType::Pointer   ImagePointer;
-  typedef typename ImageType::PointType PointType;
+  typedef TPixel                                        PixelType;
+  typedef itk::Image<PixelType,3>                       ImageType;
+  typedef typename ImageType::Pointer                   ImagePointer;
+  typedef typename ImageType::PointType                 PointType;
   typedef typename itk::Image<PixelType,2>::PointType   SectionPointType;
 
   typedef itk::VectorContainer<unsigned int,PointType>  CenterlineType;
@@ -68,6 +68,7 @@ public:
   virtual ImagePointer Create();
 
 private:
+
   CenterlinePointer                   m_CenterlinePointer;
   SectionPointType                    m_Center;
   
@@ -151,7 +152,7 @@ CircularBarStraightTubeGenerator<TPixel>::Create()
   
   int i = 0;
 
-  ImageType::PointType centerlinePoint;
+  typename ImageType::PointType centerlinePoint;
   centerlinePoint[0] = this->m_Center[0];
   centerlinePoint[1] = this->m_Center[1];
 

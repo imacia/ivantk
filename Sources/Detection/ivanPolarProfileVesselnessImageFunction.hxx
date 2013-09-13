@@ -48,9 +48,9 @@ PolarProfileVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
   m_Tau( 1.0 ),
   m_Gamma( 3.0 ) // 0.5
 {
-  m_RadialResolution = 5; // for this filter only
+  this->m_RadialResolution = 5; // for this filter only
   
-  m_Interpolator = InterpolatorType::New();
+  this->m_Interpolator = InterpolatorType::New();
 }
 
 
@@ -62,11 +62,11 @@ PolarProfileVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
 {
   Superclass::PrintSelf( os, indent );
     
-  os << indent << "SpatialWeightingType: " << m_SpatialWeightingType << std::endl;
-  os << indent << "Beta: " << m_Beta << std::endl;
-  os << indent << "Sigma: " << m_Sigma << std::endl;
-  os << indent << "Tau: " << m_Tau << std::endl;
-  os << indent << "Gamma: " << m_Gamma << std::endl;
+  os << indent << "SpatialWeightingType: " << this->m_SpatialWeightingType << std::endl;
+  os << indent << "Beta: " << this->m_Beta << std::endl;
+  os << indent << "Sigma: " << this->m_Sigma << std::endl;
+  os << indent << "Tau: " << this->m_Tau << std::endl;
+  os << indent << "Gamma: " << this->m_Gamma << std::endl;
 }
 
 
@@ -78,7 +78,7 @@ PolarProfileVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
 {
   Superclass::SetInputImage( ptr );
   
-  m_Interpolator->SetInputImage( ptr );
+  this->m_Interpolator->SetInputImage( ptr );
 }
 
 

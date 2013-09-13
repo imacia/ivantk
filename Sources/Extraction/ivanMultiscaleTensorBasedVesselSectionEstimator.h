@@ -90,8 +90,8 @@ public:
   
   typedef typename Superclass::ScaleVectorType  ScaleVectorType;
     
-  typedef TScaledImageFunction                  ScaledImageFunctionType;
-  typedef typename ScaledImageFunctionType      ScaledImageFunctionPointer;
+  typedef TScaledImageFunction                                    ScaledImageFunctionType;
+  typedef typename ScaledImageFunctionType::Pointer               ScaledImageFunctionPointer;
   
   typedef typename Superclass::ScaledImageFunctionContainerType   ScaledImageFunctionContainerType;
   

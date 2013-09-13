@@ -33,6 +33,7 @@ SUCH DAMAGE.
 
 #include "ivanVesselNode.h"
 #include "ivanVesselCenterline.h"
+#include "ivanVesselBranchNode.h"
 
 
 namespace ivan
@@ -45,8 +46,8 @@ namespace ivan
  * \ingroup 
  */
  
-template <class TCenterline>
-class VesselBranchNode;
+//template <class TCenterline>
+//class VesselBranchNode;
  
 template <class TCenterline>
 class ITK_EXPORT VesselBifurcationNode : public VesselNode
@@ -55,12 +56,12 @@ class ITK_EXPORT VesselBifurcationNode : public VesselNode
 public:
 
   /** Standard class typedefs. */
-  typedef VesselBifurcationNode    Self;
-  typedef VesselNode               Superclass;
-  typedef itk::SmartPointer<Self>       Pointer;
-  typedef itk::SmartPointer<const Self> ConstPointer;
+  typedef VesselBifurcationNode<TCenterline>    Self;
+  typedef VesselNode                            Superclass;
+  typedef itk::SmartPointer<Self>               Pointer;
+  typedef itk::SmartPointer<const Self>         ConstPointer;
 
-  typedef VesselBranchNode<TCenterline>  BranchNodeType;
+  typedef VesselBranchNode<TCenterline>         BranchNodeType;
   
   //itkStaticConstMacro( Dimension, unsigned int, VDimension );
        
@@ -73,10 +74,8 @@ public:
   itkNodeTypeMacro( VesselBifurcationNode, VesselNode );
   
   /** Get the parent branch. */
-  BranchNodeType * GetParentBranch()
-    { return dynamic_cast<VesselBranchNode*>( this->GetParent() ); }
-  const BranchNodeType * GetParentBranch() const
-    { return dynamic_cast<VesselBranchNode*>( this->GetParent() ); }
+  BranchNodeType * GetParentBranch();
+  const BranchNodeType * GetParentBranch() const;
   
   /** Get child branches. */
   std::vector<BranchNodeType*> GetChildBranches();
@@ -109,3 +108,4 @@ protected:
 #endif
 
 #endif
+

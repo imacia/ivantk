@@ -51,8 +51,8 @@ public:
   typedef CircularHelixCenterlineGenerator<TCoordRep,VDimension>  Self;
   typedef CircularCenterlineGenerator<TCoordRep,VDimension>       Superclass;
 
-  typedef TCoordRep                        CoordRepType;
-  typedef typename Superclass::PointType   PointType;
+  typedef TCoordRep                               CoordRepType;
+  typedef typename Superclass::PointType          PointType;
     
   typedef typename Superclass::CenterlineType     CenterlineType;
   typedef typename Superclass::CenterlinePointer  CenterlinePointer;
@@ -96,7 +96,7 @@ CircularHelixCenterlineGenerator<TComponent,VDimension>::Create()
   CenterlinePointer centerline = CenterlineType::New();
   
   double angle = this->m_StartAngle;
-  double angleInc = ( this->m_EndAngle - this->m_StartAngle ) / (double)m_NumberOfPoints;
+  double angleInc = ( this->m_EndAngle - this->m_StartAngle ) / (double)this->m_NumberOfPoints;
   
   PointType currentPoint;
   

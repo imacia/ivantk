@@ -1,10 +1,10 @@
-// File : itkMultiscaleMedialnessImageFilter.txx
+// File : itkMultiscaleMedialnessImageFilter.hxx
 // Author : Iván Macía (imacia@vicomtech.org)
 // Description : Calculates the multiscale medialness response of the given dataset.
 
 
-#ifndef _itkMultiscaleMedialnessImageFilter_txx
-#define _itkMultiscaleMedialnessImageFilter_txx
+#ifndef _itkMultiscaleMedialnessImageFilter_hxx
+#define _itkMultiscaleMedialnessImageFilter_hxx
 
 
 #include "itkNumericTraits.h"
@@ -27,8 +27,8 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 {
   this->m_DoNotComputeZeroPixels = true; // this filter is computationally quite expensive
   
-  m_OutputThreshold = NumericTraits<OutputImagePixelType>::Zero;
-  m_SymmetryCoefficient = NumericTraits<double>::One;
+  this->m_OutputThreshold = itk::NumericTraits<OutputImagePixelType>::Zero;
+  this->m_SymmetryCoefficient = itk::NumericTraits<double>::One;
   
   
   // Allocate here the scale filter we need to use
@@ -43,17 +43,17 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   // See a detailed description of the problem here
   // http://public.kitware.com/pipermail/insight-users/2006-May/017900.html
     
-  m_EigenAnalysis.SetOrderEigenValues(true);
-  m_EigenAnalysis.SetDimension(ImageDimension); 
+  this->m_EigenAnalysis.SetOrderEigenValues(true);
+  this->m_EigenAnalysis.SetDimension(ImageDimension); 
   
-  m_GradientInterpolator = InterpolatorType::New();
+  this->m_GradientInterpolator = InterpolatorType::New();
   
   // This filter has 3 outputs instead of 2
-  this->ProcessObject::SetNumberOfRequiredOutputs(3);
+  this->itk::ProcessObject::SetNumberOfRequiredOutputs(3);
   
   // Create the vector image that will be used as output for the estimated normals 
   typename  VectorImageType::Pointer normalsImage = VectorImageType::New();
-  this->ProcessObject::SetNthOutput(2, normalsImage.GetPointer());  
+  this->itk::ProcessObject::SetNthOutput( 2, normalsImage.GetPointer() );  
     
 }
 
@@ -66,7 +66,7 @@ void
 MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 ::SetFilterByEigenValues( bool filterByEigenValues )
 {
-  m_FilterByEigenValues = filterByEigenValues;
+  this->m_FilterByEigenValues = filterByEigenValues;
   this->Modified();
 }
 
@@ -82,16 +82,16 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   Superclass::PrintSelf( os, indent );
   
   os << indent << "OutputThreshold: "
-     << static_cast<typename NumericTraits<OutputImagePixelType>::PrintType>(m_OutputThreshold)
+     << static_cast<typename itk::NumericTraits<OutputImagePixelType>::PrintType>( this->m_OutputThreshold )
      << std::endl;
   os << indent << "SymmetryCoefficient: "
-     << static_cast<typename NumericTraits<double>::PrintType>(m_SymmetryCoefficient)
+     << static_cast<typename itk::NumericTraits<double>::PrintType>( this->m_SymmetryCoefficient )
      << std::endl;
   os << indent << "RadiusFactor: "
-     << static_cast<typename NumericTraits<double>::PrintType>(m_RadiusFactor)
+     << static_cast<typename itk::NumericTraits<double>::PrintType>( this->m_RadiusFactor )
      << std::endl; 
   os << indent << "FilterByEigenValues: "
-     << static_cast<typename NumericTraits<bool>::PrintType>(m_FilterByEigenValues)
+     << static_cast<typename itk::NumericTraits<bool>::PrintType>( this->m_FilterByEigenValues )
      << std::endl;
  
 }
@@ -129,7 +129,7 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   Superclass::PrepareData();
   
   typename VectorImageType::Pointer normalsPtr = dynamic_cast< VectorImageType * >
-    ( this->ProcessObject::GetOutput(2) );
+    ( this->itk::ProcessObject::GetOutput(2) );
   normalsPtr->SetBufferedRegion(normalsPtr->GetRequestedRegion());
   normalsPtr->Allocate();
   normalsPtr->FillBuffer( itk::NumericTraits<ScalePixelType>::Zero ); 
@@ -152,11 +152,11 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   typename InputImageType::ConstPointer inputPtr  = this->GetInput();
   typename OutputImageType::Pointer outputPtr = this->GetOutput(0);
   typename ScaleImageType::Pointer scalesPtr = dynamic_cast< ScaleImageType * >
-    ( this->ProcessObject::GetOutput(1) );
+    ( this->itk::ProcessObject::GetOutput(1) );
   typename VectorImageType::Pointer normalsPtr = dynamic_cast< VectorImageType * >
-    ( this->ProcessObject::GetOutput(2) );
+    ( this->itk::ProcessObject::GetOutput(2) );
   
-  m_GradientInterpolator->SetInputImage( this->m_GradientMagnitudeGaussian->GetOutput() );    
+  this->m_GradientInterpolator->SetInputImage( this->m_GradientMagnitudeGaussian->GetOutput() );    
   
   // Current eigenvalues, eigenvectors and related variables
   typename TensorScalePixelType::EigenVectorsMatrixType   eigenVectors; // current eigenvalues
@@ -236,7 +236,7 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   
   // Create a list of boundary faces. This is to avoid bounds checking in the inner region
     
-  typedef typename NeighborhoodIterator<TInputImage>::RadiusType  RadiusType;
+  typedef typename itk::NeighborhoodIterator<TInputImage>::RadiusType  RadiusType;
   RadiusType faceListRadius;
   typename RadiusType::SizeValueType faceListRadiusSize = 
     static_cast<typename RadiusType::SizeValueType>( ceil( radius / minSpacing ) ) ;
@@ -247,8 +247,8 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
     ImageBoundaryFacesCalculator<TInputImage>   FaceCalculatorType;
   
   FaceCalculatorType faceCalculator;
-  typename FaceCalculatorType::FaceListType faceList;
-  typename FaceCalculatorType::FaceListType::iterator fit;
+  typename FaceCalculatorType::FaceListType            faceList;
+  typename FaceCalculatorType::FaceListType::iterator  fit;
   bool checkBounds;
       
   faceList = faceCalculator( inputPtr, outputPtr->GetRequestedRegion(), faceListRadius );
@@ -429,9 +429,9 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   typename OutputImageType::Pointer outputPtr = this->GetOutput(0);
   typename MaskImageType::ConstPointer maskPtr = this->GetMaskImage();
   typename ScaleImageType::Pointer scalesPtr = dynamic_cast< ScaleImageType * >
-    ( this->ProcessObject::GetOutput(1) );
+    ( this->itk::ProcessObject::GetOutput(1) );
   typename VectorImageType::Pointer normalsPtr = dynamic_cast< VectorImageType * >
-    ( this->ProcessObject::GetOutput(2) );
+    ( this->itk::ProcessObject::GetOutput(2) );
 
   m_GradientInterpolator->SetInputImage( this->m_GradientMagnitudeGaussian->GetOutput() );    
   
@@ -513,7 +513,7 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
   
   // Create a list of boundary faces. This is to avoid bounds checking in the inner region
     
-  typedef typename NeighborhoodIterator<TInputImage>::RadiusType  RadiusType;
+  typedef typename itk::NeighborhoodIterator<TInputImage>::RadiusType  RadiusType;
   RadiusType faceListRadius;
   typename RadiusType::SizeValueType faceListRadiusSize = 
     static_cast<typename RadiusType::SizeValueType>( ceil( radius / minSpacing ) ) ;
@@ -698,3 +698,4 @@ MultiscaleMedialnessImageFilter<TInputImage,TOutputImage,TScalePixel,TMaskImage>
 } // end namespace ivan
 
 #endif
+

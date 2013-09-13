@@ -150,6 +150,8 @@ typename HessianBasedVesselnessImageFunction<TInputImage,TOutput,TCoordRep>::Hes
 HessianBasedVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
 ::EvaluateHessianAtContinuousIndex( const ContinuousIndexType & cindex ) const
 {
+  // TODO: we should think on resuing code latest code of itk::LinearInterpolateImageFunction for this
+
   if( m_HessianFunction->GetInterpolationMode() == 
     HessianFunctionType::NearestNeighbourInterpolation )
     {
@@ -165,7 +167,7 @@ HessianBasedVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
     // Compute base index = closet index below point
     // Compute distance from point to base index
     signed long baseIndex[ImageDimension];
-    double distance[ImageDimension];
+    double dist[ImageDimension];
     long tIndex;
 
     for( dim = 0; dim < ImageDimension; dim++ )
@@ -186,7 +188,7 @@ HessianBasedVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
           }
         baseIndex[dim] = tIndex;
         }
-      distance[dim] = cindex[dim] - double( baseIndex[dim] );
+      dist[dim] = cindex[dim] - double( baseIndex[dim] );
       }
 
     // Interpolated value is the weighted sum of each of the surrounding
@@ -207,12 +209,12 @@ HessianBasedVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
         if ( upper & 1 )
           {
           neighIndex[dim] = baseIndex[dim] + 1;
-          overlap *= distance[dim];
+          overlap *= dist[dim];
           }
         else
           {
           neighIndex[dim] = baseIndex[dim];
-          overlap *= 1.0 - distance[dim];
+          overlap *= 1.0 - dist[dim];
           }
         upper >>= 1;
         }

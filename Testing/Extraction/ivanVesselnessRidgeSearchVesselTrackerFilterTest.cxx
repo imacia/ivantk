@@ -309,7 +309,7 @@ int main( int argc, const char *argv[] )
 
   ImageType::IndexType index;
   ImageType::PointType point;
-  VesselTrackerType::ImagePointType startingPoint;
+  VesselTrackerType::InputImagePointType startingPoint;
 
   ImageType::Pointer image = reader->GetOutput();
   

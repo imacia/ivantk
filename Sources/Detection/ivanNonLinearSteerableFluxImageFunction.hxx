@@ -41,8 +41,7 @@ template <class TInputImage, class TOutput>
 NonLinearSteerableFluxImageFunction<TInputImage,TOutput>
 ::NonLinearSteerableFluxImageFunction()
 {
-  m_RadiusFactor = 1.0; // default for this filter
-
+  this->m_RadiusFactor = 1.0; // default for this filter
 }
 
 

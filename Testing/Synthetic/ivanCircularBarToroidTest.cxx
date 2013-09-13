@@ -23,7 +23,7 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanCircularBarToroidTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Iván Macía (imacia@vicomtech.org)
 // Description: creates a toroid with Gaussian section
 // Date: 2010/06/16
 
@@ -31,6 +31,8 @@ SUCH DAMAGE.
 #include "ivanCircularBarToroidGenerator.h"
 
 #include "itkImageFileWriter.h"
+
+#include <fstream>
 
 
 int main( int argc, char *argv[] )

@@ -68,9 +68,9 @@ OptimizedVesselSectionEstimator<TCostFunction,TOptimizer,TCenterline,TMetricsCal
   
   this->m_Optimizer->SetCostFunction( this->m_CostFunction );
   
-  OptimizerType::ParametersType initialPosition = OptimizerType::ParametersType
+  typename OptimizerType::ParametersType initialPosition = typename OptimizerType::ParametersType
     ( this->m_CostFunction->GetNumberOfParameters() );
-  OptimizerType::ParametersType  finalParameters;
+  typename OptimizerType::ParametersType  finalParameters;
   
   SectionPointer                          currentSection;
   typename SectionType::CenterPointType   currentCenter;
@@ -82,7 +82,7 @@ OptimizedVesselSectionEstimator<TCostFunction,TOptimizer,TCenterline,TMetricsCal
   if( this->m_SectionRange[0] == 0 && this->m_SectionRange[1] == 0 )
     this->m_SectionRange[1] = this->GetCenterline()->size() - 1;
       
-  for( unsigned int i = this->m_SectionRange[0]; i <= m_SectionRange[1]; ++i )
+  for( unsigned int i = this->m_SectionRange[0]; i <= this->m_SectionRange[1]; ++i )
   {
     currentSection = this->GetCenterline()->at(i);
     

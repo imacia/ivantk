@@ -55,7 +55,7 @@ ImageToVesselDataObjectFilter<TInputImage,TOutputVessel>
 ::SetInput(const InputImageType *image)
 {
   // Process object is not const-correct so the const_cast is required here
-  this->ProcessObject::SetNthInput( 0, const_cast< InputImageType * >( image ) );
+  this->itk::ProcessObject::SetNthInput( 0, const_cast< InputImageType * >( image ) );
 }
 
 
@@ -68,7 +68,7 @@ ImageToVesselDataObjectFilter<TInputImage,TOutputVessel>
 ::SetInput( unsigned int index, const TInputImage * image ) 
 {
   // Process object is not const-correct so the const_cast is required here
-  this->ProcessObject::SetNthInput( index, const_cast< TInputImage *>( image ) );
+  this->itk::ProcessObject::SetNthInput( index, const_cast< TInputImage *>( image ) );
 }
 
 
@@ -86,7 +86,7 @@ ImageToVesselDataObjectFilter<TInputImage,TOutputVessel>
     }
   
   return static_cast<const TInputImage * >
-    ( this->ProcessObject::GetInput(0) );
+    ( this->itk::ProcessObject::GetInput(0) );
 }
   
 /**
@@ -97,7 +97,7 @@ const typename ImageToVesselDataObjectFilter<TInputImage,TOutputVessel>::InputIm
 ImageToVesselDataObjectFilter<TInputImage,TOutputVessel>
 ::GetInput(unsigned int idx)
 {
-  return static_cast< const TInputImage * >( this->ProcessObject::GetInput(idx) );
+  return static_cast< const TInputImage * >( this->itk::ProcessObject::GetInput(idx) );
 }
 
 

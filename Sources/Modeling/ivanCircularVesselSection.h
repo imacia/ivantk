@@ -60,10 +60,13 @@ class ITK_EXPORT CircularVesselSection : public VesselSection< itk::Point<double
 public:
 
   /** Standard class typedefs. */
-  typedef CircularVesselSection       Self;
-  typedef VesselSection            Superclass;
-  typedef itk::SmartPointer<Self>       Pointer;
-  typedef itk::SmartPointer<const Self> ConstPointer;
+  typedef CircularVesselSection
+    <VDimension,TCurveMetrics,TSectionMetrics>      Self;
+  typedef VesselSection
+    < itk::Point<double,VDimension>,
+    TCurveMetrics, TSectionMetrics>                 Superclass;
+  typedef itk::SmartPointer<Self>                   Pointer;
+  typedef itk::SmartPointer<const Self>             ConstPointer;
   
   typedef TCurveMetrics            CurveMetricsType;
   typedef TSectionMetrics          SectionMetricsType;

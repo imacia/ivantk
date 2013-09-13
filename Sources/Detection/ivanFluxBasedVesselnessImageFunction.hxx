@@ -77,8 +77,6 @@ FluxBasedVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
   if( this->m_Sigma == sigma )
     return;
     
-  m_Sigma = sigma;
-
   Superclass::SetSigma( sigma );
     
   this->m_GradientFunction->SetSigma( sigma );

@@ -138,7 +138,7 @@ VesselnessRidgeSearchVesselTrackerFilter<TInputImage,TOutputVessel,TVesselnessFu
   // Initialize vesselness function taking into account current scale as calculated for the section.
   // Do this only if the scale changed from the previous point and it is not the first point
   
-  InputImageType *inputImage = static_cast<InputImageType*>( this->ProcessObject::GetInput(0) );
+  InputImageType *inputImage = static_cast<InputImageType*>( this->itk::ProcessObject::GetInput(0) );
 
   if( !this->m_BranchPointIndex )
   {

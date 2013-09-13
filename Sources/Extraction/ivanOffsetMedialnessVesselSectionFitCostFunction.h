@@ -76,19 +76,19 @@ public:
   itkStaticConstMacro( ImageDimension, unsigned int, ImageType::ImageDimension );
   
   /** Parameters type for optimizer. */
-  typedef Superclass::ParametersType                  ParametersType ;
+  typedef typename Superclass::ParametersType         ParametersType;
   
   /** Type used for representing point components  */
-  typedef Superclass::ParametersValueType             CoordinateRepresentationType;
+  typedef typename Superclass::ParametersValueType    CoordinateRepresentationType;
   
     /** Not used, but expected by SingleValuedNonLinearOptimizer class. */
-  typedef Superclass::DerivativeType                  DerivativeType;
+  typedef typename Superclass::DerivativeType         DerivativeType;
 
   /** The cost value type. */
-  typedef Superclass::MeasureType                     MeasureType;
+  typedef typename Superclass::MeasureType            MeasureType;
   
   /** Offset medialness function adapted as a cost function. */
-	typedef ivan::OffsetMedialnessImageFunction
+	typedef OffsetMedialnessImageFunction
 		<ImageType, MeasureType>                          MedialnessFunctionType;
 	typedef typename MedialnessFunctionType::Pointer    MedialnessFunctionPointer;
 	  

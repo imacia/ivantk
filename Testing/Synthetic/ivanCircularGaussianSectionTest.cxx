@@ -23,7 +23,7 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanCircularGaussianSectionTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Iván Macía (imacia@vicomtech.org)
 // Description: creates a Gaussian section of the specified size
 // Date: 2010/09/17
 

@@ -73,7 +73,7 @@ VesselTrackerFilter<TInputImage,TOutputVessel>
 {
   // Make sure we have at least a BranchNode already created
   
-  typename OutputVesselPointer      vesselGraph = this->GetOutput(0);
+  OutputVesselPointer               vesselGraph = this->GetOutput(0);
   typename CenterlineType::Pointer  centerline;
   
   // Create the first VesselBranchNode if necessary
@@ -167,7 +167,7 @@ VesselTrackerFilter<TInputImage,TOutputVessel>
     stepSize = -stepSize;  
   
   // By default use regular step size
-  for( unsigned int dim = 0; dim < ImageType::GetImageDimension(); ++dim )
+  for( unsigned int dim = 0; dim < InputImageType::GetImageDimension(); ++dim )
   {
     this->m_PreviousPoint[dim] = this->m_CurrentPoint[dim];
     this->m_CurrentPoint[dim]  = this->m_PreviousPoint[dim] + stepSize * section->GetNormal()[dim];

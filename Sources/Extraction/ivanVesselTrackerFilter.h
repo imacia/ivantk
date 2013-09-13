@@ -66,13 +66,13 @@ public:
   typedef itk::SmartPointer<const Self>   ConstPointer;
   
   /** Image-related typedefs. */
-  typedef TInputImage                             ImageType;
-  typedef typename InputImageType::Pointer        ImagePointer;
-  typedef typename InputImageType::ConstPointer   ImageConstPointer;
-  typedef typename InputImageType::RegionType     ImageRegionType; 
-  typedef typename InputImageType::PixelType      ImagePixelType;
-  typedef typename InputImageType::PointType      ImagePointType;
-  typedef typename InputImageType::IndexType      ImageIndexType; 
+  typedef TInputImage                             InputImageType;
+  typedef typename InputImageType::Pointer        InputImagePointer;
+  typedef typename InputImageType::ConstPointer   InputImageConstPointer;
+  typedef typename InputImageType::RegionType     InputImageRegionType; 
+  typedef typename InputImageType::PixelType      InputImagePixelType;
+  typedef typename InputImageType::PointType      InputImagePointType;
+  typedef typename InputImageType::IndexType      InputImageIndexType; 
   	
   /** Vessel-related typedefs. */
   typedef TOutputVessel                              OutputVesselType;
@@ -122,11 +122,11 @@ public:
 
   itkGetConstMacro( BranchPointIndex, unsigned int );
 
-  virtual void SetStartingPoint( const ImagePointType & point )
+  virtual void SetStartingPoint( const InputImagePointType & point )
     { m_PreviousPoint = m_CurrentPoint = point; }
-  const ImagePointType & GetPreviousPoint() const
+  const InputImagePointType & GetPreviousPoint() const
     { return m_PreviousPoint; }
-  const ImagePointType & GetCurrentPoint() const
+  const InputImagePointType & GetCurrentPoint() const
     { return m_CurrentPoint; }
     
   /** Set/Get the SectionEstimator. Properties for this object must be set
@@ -188,10 +188,10 @@ protected:
   double                   m_InitialStepSize;
   
   /** This represents the vessel point in the last iteration. */
-  ImagePointType           m_PreviousPoint;
+  InputImagePointType      m_PreviousPoint;
   
   /** This represents the vessel point in the current iteration. It is updated in the Search step. */
-  ImagePointType           m_CurrentPoint;
+  InputImagePointType      m_CurrentPoint;
   
   SectionEstimatorPointer  m_SectionEstimator;
     

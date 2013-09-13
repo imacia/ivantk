@@ -58,7 +58,7 @@ GaussianDerivativeOperator< TPixel, VDimension, TAllocator >
 template< class TPixel, unsigned int VDimension, class TAllocator >
 GaussianDerivativeOperator< TPixel, VDimension, TAllocator >
 ::GaussianDerivativeOperator(const Self & other)
-  : NeighborhoodOperator< TPixel, VDimension, TAllocator >(other)
+  : itk::NeighborhoodOperator< TPixel, VDimension, TAllocator >(other)
 {
   m_NormalizeAcrossScale = other.m_NormalizeAcrossScale;
   m_Gamma = other.m_Gamma;

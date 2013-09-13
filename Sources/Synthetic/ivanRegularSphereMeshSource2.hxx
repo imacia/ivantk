@@ -55,8 +55,8 @@ RegularSphereMeshSource2<TPixel>
    * Create the output
    */
   typename OutputMeshType::Pointer output = OutputMeshType::New();
-  this->ProcessObject::SetNumberOfRequiredOutputs(1);
-  this->ProcessObject::SetNthOutput(0, output.GetPointer());
+  this->itk::ProcessObject::SetNumberOfRequiredOutputs(1);
+  this->itk::ProcessObject::SetNthOutput(0, output.GetPointer());
 
   m_Center.Fill(0);
 }
@@ -75,13 +75,13 @@ RegularSphereMeshSource2<TPixel>
   outputMesh->SetCellsAllocationMethod( OutputMeshType::CellsAllocatedAsStaticArray );
     
   typedef ivan::IcosahedronMeshSource<TPixel>      IcosahedronSourceType;
-  IcosahedronSourceType::Pointer icosahedronSource = IcosahedronSourceType::New();
+  typename IcosahedronSourceType::Pointer icosahedronSource = IcosahedronSourceType::New();
   icosahedronSource->SetCenter( this->m_Center );
   icosahedronSource->SetRadius( this->m_Radius );
   icosahedronSource->Update();
   
   typedef typename IcosahedronSourceType::OutputMeshType  IcosahedronMeshType;
-  IcosahedronMeshType::Pointer icosahedronMesh = icosahedronSource->GetOutput();
+  typename IcosahedronMeshType::Pointer icosahedronMesh = icosahedronSource->GetOutput();
   typename IcosahedronMeshType::PointsContainer *oldPoints = icosahedronMesh->GetPoints();
     
   unsigned long numberOfPoints = oldPoints->Size();
@@ -108,7 +108,7 @@ RegularSphereMeshSource2<TPixel>
     // Copy old points
     
     oldPoints = sourceMesh->GetPoints();     
-    PointsContainer::Pointer newPoints = PointsContainer::New();
+    typename PointsContainer::Pointer newPoints = PointsContainer::New();
     newPoints->Reserve( oldPoints->Size() );
     
     targetMesh->SetPoints( newPoints.GetPointer() );
@@ -130,8 +130,8 @@ RegularSphereMeshSource2<TPixel>
     // to the center will be adjusted by normalization, so it does not lie exactly in the middle
     // but in the unit sphere
       
-    typedef std::list<EdgeStruct>         EdgeListType;
-    typedef EdgeListType::const_iterator  EdgeListConstIterator;
+    typedef std::list<EdgeStruct>                  EdgeListType;
+    typedef typename EdgeListType::const_iterator  EdgeListConstIterator;
      
     EdgeListType    edgeList;
     unsigned long   edgeId = numberOfPoints;
@@ -142,8 +142,8 @@ RegularSphereMeshSource2<TPixel>
   	// Traverse the cells and record edges while inserting midpoints if the edge 
   	// does not exist in the edge list
   	
-  	typedef OutputMeshType::CellsContainer::ConstIterator  OutputCellIterator;
-  	typedef OutputMeshType::CellType                       OutputCellInterfaceType;
+  	typedef typename OutputMeshType::CellsContainer::ConstIterator  OutputCellIterator;
+  	typedef typename OutputMeshType::CellType                       OutputCellInterfaceType;
   	  
   	OutputCellIterator cellIterator = sourceMesh->GetCells()->Begin();
         

@@ -66,10 +66,10 @@ public:
   typedef typename CenterlineType::SectionType    SectionType;
   typedef typename SectionType::Pointer           SectionPointer;
   
-  typedef typename TCostFunction                  CostFunctionType;
+  typedef TCostFunction                           CostFunctionType;
   typedef typename CostFunctionType::Pointer      CostFunctionPointer;
   
-  typedef typename TOptimizer                     OptimizerType;
+  typedef TOptimizer                              OptimizerType;
   typedef typename OptimizerType::Pointer         OptimizerPointer;
     
   typedef typename OptimizerType::ParametersType  ParametersType;

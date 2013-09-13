@@ -106,7 +106,7 @@ FixedScaleHessianBasedVesselSectionEstimator<TImage,TCenterline, TMetricsCalcula
   if( this->m_SectionRange[0] == 0 && this->m_SectionRange[1] == 0 )
     this->m_SectionRange[1] = this->GetCenterline()->size() - 1;
   
-  for( unsigned int i = this->m_SectionRange[0]; i <= m_SectionRange[1]; ++i )
+  for( unsigned int i = this->m_SectionRange[0]; i <= this->m_SectionRange[1]; ++i )
   {
     currentSection = this->GetCenterline()->at(i);
     

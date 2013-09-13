@@ -32,7 +32,7 @@ SUCH DAMAGE.
 
 #include "ivanImageFunctionBasedImageFilter.h"
 
-#include "itkImageRegionIterator.h"
+#include "itkImageRegionIteratorWithIndex.h"
 #include "itkNumericTraits.h"
 
 

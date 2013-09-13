@@ -31,8 +31,9 @@ SUCH DAMAGE.
 #include "ivanCircularBarHelixGenerator.h"
 
 #include "itkImageRegionIteratorWithIndex.h"
-
 #include "itkImageFileWriter.h"
+
+#include <fstream>
 
 
 int main( int argc, char *argv[] )
