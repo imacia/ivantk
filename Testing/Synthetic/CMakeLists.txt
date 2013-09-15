@@ -109,6 +109,18 @@ TARGET_LINK_LIBRARIES( TestCircularGaussianHelix
   ${ITK_LIBRARIES}
 )
 
+
+#------------------------------------------------------------------------------------------------
+
+ADD_EXECUTABLE( TestCircularGaussianNStraightTubes
+  ivanCircularGaussianNStraightTubesTest.cxx
+)
+
+TARGET_LINK_LIBRARIES( TestCircularGaussianNStraightTubes
+  ${ITK_LIBRARIES}
+)
+
+
 #------------------------------------------------------------------------------------------------
 
 ADD_EXECUTABLE( TestCircularBarToroid 
