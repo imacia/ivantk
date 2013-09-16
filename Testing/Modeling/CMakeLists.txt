@@ -37,7 +37,8 @@ TARGET_LINK_LIBRARIES( TestVesselNodeVisitor
   ${IVAN_TEST_LINK_LIBRARIES}
 )
 
-ADD_TEST( TestVesselNodeVisitor ${EXECUTABLE_OUTPUT_PATH}/TestVesselNodeVisitor )
+# About to be deprecated
+#ADD_TEST( TestVesselNodeVisitor ${EXECUTABLE_OUTPUT_PATH}/TestVesselNodeVisitor )
 
 
 #------------------------------------------------------------------------------------------------
@@ -51,4 +52,5 @@ TARGET_LINK_LIBRARIES( TestVesselNodeVisitorSpeed
   ${IVAN_TEST_LINK_LIBRARIES}
 )
 
-ADD_TEST( TestVesselNodeVisitorSpeed ${EXECUTABLE_OUTPUT_PATH}/TestVesselNodeVisitorSpeed )
+# About to be deprecated
+#ADD_TEST( TestVesselNodeVisitorSpeed ${EXECUTABLE_OUTPUT_PATH}/TestVesselNodeVisitorSpeed )
