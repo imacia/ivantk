@@ -132,6 +132,7 @@ int SparseComputeVesselness( TImage *input, TVesselnessImageFunction *vesselness
   
   TestImageType::SpacingType testSpacing;
   testSpacing[0] = input->GetSpacing()[0];
+  testSpacing[1] = input->GetSpacing()[1];
   
   output->SetSpacing( testSpacing );
   
