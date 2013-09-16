@@ -105,7 +105,7 @@ FrangiVesselnessImageFunction<TInputImage,TOutput,TCoordRep>
   if( vnl_math_abs( eigenValues[2] ) < 1e-3 )
     return 0.0;
     
-  double lineMeasure = 0.0;
+  double lineMeasure = 1.0;
   
   // Term that filters plate-like structures
   lineMeasure *= 1.0 - vcl_exp( - 0.5 * vnl_math_sqr( vnl_math_abs( eigenValues[1] ) / 
