@@ -22,7 +22,7 @@ TARGET_LINK_LIBRARIES( TestFrangiVesselnessImageFunction
 )
 
 ADD_TEST( TestFrangiVesselnessImageFunction ${EXECUTABLE_OUTPUT_PATH}/TestFrangiVesselnessImageFunction 
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
 
 
 #------------------------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ TARGET_LINK_LIBRARIES( TestSatoVesselnessImageFunction
 )
 
 ADD_TEST( TestSatoVesselnessImageFunction ${EXECUTABLE_OUTPUT_PATH}/TestSatoVesselnessImageFunction 
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
 
 
 #------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ TARGET_LINK_LIBRARIES( TestOffsetMedialnessImageFunction
 )
 
 ADD_TEST( TestOffsetMedialnessImageFunction ${EXECUTABLE_OUTPUT_PATH}/TestOffsetMedialnessImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
 
   
 #------------------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ TARGET_LINK_LIBRARIES( TestOffsetMedialnessImageFunction2
 )
 
 ADD_TEST( TestOffsetMedialnessImageFunction ${EXECUTABLE_OUTPUT_PATH}/TestOffsetMedialnessImageFunction2
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
   
   
 #------------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ TARGET_LINK_LIBRARIES( TestFilterByEigenValuesVesselnessImageFunction
 
 ADD_TEST( TestFilterByEigenValuesVesselnessImageFunction 
   ${EXECUTABLE_OUTPUT_PATH}/TestFilterByEigenValuesVesselnessImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
 
 
 #------------------------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ TARGET_LINK_LIBRARIES( TestPolarProfileVesselnessImageFunction
 
 ADD_TEST( ITKPolarProfileVesselnessImageFunctionTest
   ${EXECUTABLE_OUTPUT_PATH}/TestPolarProfileVesselnessImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
   
 
 #------------------------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ TARGET_LINK_LIBRARIES( TestMultiscaleOffsetMedialnessImageFunction
 
 ADD_TEST( TestMultiscaleOffsetMedialnessImageFunction
   ${EXECUTABLE_OUTPUT_PATH}/TestMultiscaleOffsetMedialnessImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd 
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd 
   ${IVAN_DATA_ROOT}/Testing/Input/MultiscaleOffsetMedialness.mhd 
   5 1.0 5.0 1 1 0.5
 )
@@ -134,7 +134,7 @@ TARGET_LINK_LIBRARIES( TestMultiscaleOOFVesselnessImageFunction
 
 ADD_TEST( TestMultiscaleOOFVesselnessImageFunction
   ${EXECUTABLE_OUTPUT_PATH}/TestMultiscaleOOFVesselnessImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd 
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd 
   ${IVAN_DATA_ROOT}/Testing/Input/MultiscaleOOFVesselnessImageFunction.mhd 
   5 1.0 5.0
 )
@@ -153,7 +153,7 @@ TARGET_LINK_LIBRARIES( TestMultiscalePolarProfileVesselnessImageFunction
 
 ADD_TEST( TestMultiscalePolarProfileVesselnessImageFunction
   ${EXECUTABLE_OUTPUT_PATH}/TestMultiscalePolarProfileVesselnessImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
   
   
 #------------------------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ TARGET_LINK_LIBRARIES( TestNonLinearSteerableFluxImageFunction
 
 ADD_TEST( TestNonLinearSteerableFluxImageFunction
   ${EXECUTABLE_OUTPUT_PATH}/TestNonLinearSteerableFluxImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
   
   
 #------------------------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ TARGET_LINK_LIBRARIES( TestCircularSectionFluxImageFunction
 
 ADD_TEST( TestCircularSectionFluxImageFunction
   ${EXECUTABLE_OUTPUT_PATH}/TestCircularSectionFluxImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
   
 
 #------------------------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ TARGET_LINK_LIBRARIES( TestHessianEigenValuesImageFunction
 
 ADD_TEST( TestHessianEigenValuesImageFunction
   ${EXECUTABLE_OUTPUT_PATH}/TestHessianEigenValuesImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd )
 
 
 
@@ -218,5 +218,5 @@ TARGET_LINK_LIBRARIES( TestOptimallyOrientedFluxVesselnessImageFunction
 
 ADD_TEST( TestOptimallyOrientedFluxVesselnessImageFunction
   ${EXECUTABLE_OUTPUT_PATH}/TestOptimallyOrientedFluxVesselnessImageFunction
-  ${IVAN_DATA_ROOT}/Testing/Input/cylinders.mhd 2.5 )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussian4Tubes1-4.mhd 2.5 )
   
