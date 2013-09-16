@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,7 +23,7 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanMultiscaleAdaptiveOOFBasedVesselSectionEstimatorTest2.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Ivan Macia (imacia@vicomtech.org)
 // Description: tests the MultiscaleAdaptiveOOFBasedVesselSectionEstimator class with a tracker filter.
 //   From an initial seed, a tracking procedure is started. At each point, a vesselness metric
 //   is estimated for a range of discrete scales. The scale which gives a maximum is the one 
@@ -53,8 +53,8 @@ int main( int argc, const char *argv[] )
 {
   if( argc < 5 )
   {
-    std::cerr << "Usage: " << argv[0] << "inputImage outputTextFile numberOfScales minScale maxScale scaleStepMethod=0"
-      " seedCoord_x seedCoord_y seedCoord_z [seedCoordIsPhysical=0] [invertDirection=0] [maxIterations] [powerFactor (for scaleStepMethod = 2)]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "InputImage OutputTextFile NumberOfScales MinScale MaxScale ScaleStepMethod=0"
+      " SeedCoord_x SeedCoord_y SeedCoord_z [SeedCoordIsPhysical=0] [InvertDirection=0] [MaxIterations] [PowerFactor (for scaleStepMethod = 2)]" << std::endl;
     return EXIT_FAILURE;
   }
 

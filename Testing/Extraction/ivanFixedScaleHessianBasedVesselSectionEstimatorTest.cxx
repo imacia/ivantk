@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,9 +23,10 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanFixedScaleHessianBasedVesselSectionEstimatorTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Ivan Macia (imacia@vicomtech.org)
 // Description: tests the FixedScaleHessianBasedEstimator class with a tracker filter.
 // Date: 2010/01/21
+
 
 #include "ivanVesselGraph.h"
 #include "ivanCircularVesselSection.h"
@@ -46,7 +47,8 @@ int main( int argc, const char *argv[] )
 {
   if( argc < 5 )
   {
-    std::cerr << "Usage: " << argv[0] << " inputImage outputTextFile scale seedCoord_x seedCoord_y seedCoord_z [seedCoordIsPhysical=0] [invertDirection=0] [maxIterations]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "InputImage OutputTextFile Scale SeedCoord_x SeedCoord_y SeedCoord_z "
+      "[SeedCoordIsPhysical=0] [InvertDirection=0] [MaxIterations]" << std::endl;
     return EXIT_FAILURE;
   }
 

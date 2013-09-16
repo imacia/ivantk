@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,7 +23,7 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanVesselnessBasedVesselTrackerFilterTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Ivan Macia (imacia@vicomtech.org)
 // Description: test the OptimizedVesselnessBasedSearchVesselTrackerFilter class. This tracks a 
 //   vessel along its centerline from a starting point and optimizes the section center and normal
 //   after each step of the tracking algorithm.
@@ -54,7 +54,7 @@ int main( int argc, const char *argv[] )
 {
   if( argc < 5 )
   {
-    std::cerr << "Usage: " << argv[0] << "inputImage seedCoord_x seedCoord_y seedCoord_z "
+    std::cerr << "Usage: " << argv[0] << "InputImage SeedCoord_x SeedCoord_y SeedCoord_z "
       "[inputVesselNessImage]" << std::endl;
     return EXIT_FAILURE;
   }

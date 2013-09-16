@@ -10,7 +10,7 @@ TARGET_LINK_LIBRARIES( TestFixedScaleHessianBasedVesselSectionEstimator
 )
 
 ADD_TEST( TestFixedScaleHessianBasedVesselSectionEstimator ${EXECUTABLE_OUTPUT_PATH}/TestFixedScaleHessianBasedVesselSectionEstimator
-  ${IVAN_TEST_DATA_DIR}/GaussianTube_1_0.mhd 5 5 20 0 20 )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussianTube_1_0.mhd FixedScaleHessianSectionEstimator.txt 2.0 5 5 20 0 0 20 )
 
 
 #------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ TARGET_LINK_LIBRARIES( TestFixedScaleOOFBasedVesselSectionEstimator
 )
 
 ADD_TEST( TestFixedScaleOOFBasedVesselSectionEstimator ${EXECUTABLE_OUTPUT_PATH}/TestFixedScaleOOFBasedVesselSectionEstimator
-  ${IVAN_TEST_DATA_DIR}/GaussianTube_1_0.mhd 5 5 20 0 20 )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussianTube_1_0.mhd FixedScaleOOFSectionEstimator.txt 2.0 5 5 20 0 0 20 )
 
 
 #------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ TARGET_LINK_LIBRARIES( TestMultiscaleAdaptiveHessianBasedVesselSectionEstimator
 )
 
 ADD_TEST( TestMultiscaleAdaptiveHessianBasedVesselSectionEstimator ${EXECUTABLE_OUTPUT_PATH}/TestMultiscaleAdaptiveHessianBasedVesselSectionEstimator
-  ${IVAN_TEST_DATA_DIR}/GaussianTube_3_0.mhd 5 1.0 5.0 0 5 5 20 0 20 )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussianTube_3_37.mhd MultiscaleHessianSectionEstimator.txt 5 1.0 5.0 0 5 5 20 0 0 20 )
   
   
 #------------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ TARGET_LINK_LIBRARIES( TestMultiscaleAdaptiveHessianBasedVesselSectionEstimator2
 )
 
 ADD_TEST( TestMultiscaleAdaptiveHessianBasedVesselSectionEstimator2 ${EXECUTABLE_OUTPUT_PATH}/TestMultiscaleAdaptiveHessianBasedVesselSectionEstimator2
-  ${IVAN_TEST_DATA_DIR}/GaussianTube_3_0.mhd 5 1.0 5.0 0 5 5 20 0 20 )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussianTube_3_37.mhd MultiscaleHessianSectionEstimator.txt 5 1.0 5.0 0 5 5 20 0 0 20 )
   
   
 #------------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ TARGET_LINK_LIBRARIES( TestMultiscaleAdaptiveOOFBasedVesselSectionEstimator
 )
 
 ADD_TEST( TestMultiscaleAdaptiveHessianBasedVesselSectionEstimator ${EXECUTABLE_OUTPUT_PATH}/TestMultiscaleAdaptiveOOFBasedVesselSectionEstimator
-  ${IVAN_TEST_DATA_DIR}/GaussianTube_3_0.mhd 5 1.0 5.0 0 5 5 20 0 20 )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussianTube_3_37.mhd MultiscaleOOFSectionEstimator.txt  5 1.0 5.0 0 5 5 20 0 0 20 )
 
 
 #------------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ TARGET_LINK_LIBRARIES( TestMultiscaleAdaptiveOOFBasedVesselSectionEstimator2
 )
 
 ADD_TEST( TestMultiscaleAdaptiveHessianBasedVesselSectionEstimator2 ${EXECUTABLE_OUTPUT_PATH}/TestMultiscaleAdaptiveOOFBasedVesselSectionEstimator2
-  ${IVAN_TEST_DATA_DIR}/GaussianTube_3_0.mhd 5 1.0 5.0 0 5 5 20 0 20 )
+  ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussianTube_3_37.mhd MultiscaleOOFSectionEstimator.txt 5 1.0 5.0 0 5 5 20 0 0 20 )
   
 
 #------------------------------------------------------------------------------------------------
@@ -99,7 +99,9 @@ TARGET_LINK_LIBRARIES( TestOptimizedVesselnessBasedSearchVesselTrackerFilter
   ${IVAN_TEST_LINK_LIBRARIES}
 )
 
-ADD_TEST( TestOptimizedVesselnessBasedSearchVesselTrackerFilter ${EXECUTABLE_OUTPUT_PATH}/TestOptimizedVesselnessBasedSearchVesselTrackerFilter )
+# Needs review
+#ADD_TEST( TestOptimizedVesselnessBasedSearchVesselTrackerFilter ${EXECUTABLE_OUTPUT_PATH}/TestOptimizedVesselnessBasedSearchVesselTrackerFilter 
+ # ${IVAN_DATA_ROOT}/Testing/Input/CircularGaussianTube_3_37.mhd 5 5 20 )
 
 
 #------------------------------------------------------------------------------------------------
