@@ -128,6 +128,13 @@ ENABLE_TESTING()
 
 
 #-----------------------------------------------------------------------------
+# Create the file mistConfigure.h in the binary tree with the chosen options
+
+CONFIGURE_FILE(${IVAN_SOURCE_DIR}/ivanConfigure.h.in
+               ${IVAN_BINARY_DIR}/ivanConfigure.h )
+
+
+#-----------------------------------------------------------------------------
 # Create the list of include directories needed for MIST header files.
 
 INCLUDE( ${IVAN_SOURCE_DIR}/IVANIncludeDirectories.cmake )
