@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,11 +23,12 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanFilterByEigenValuesImageFunctionTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
-// Description: tests Frangi's vesselness measure in the form of an image function.
+// Author: Ivan Macia (imacia@vicomtech.org)
+// Description: tests vesselness function that filters by eigenvalues
 // Date: 2010/08/16
 
 #include "ivanFilterByEigenValuesVesselnessImageFunction.h"
+#include "ivanDetectionTestingHelper.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"
@@ -41,11 +42,11 @@ int main( int argc, const char *argv[] )
 {
   if( argc < 2 )
   {
-    std::cerr << "Usage: " << argv[0] << "inputImage " << std::endl;
+    std::cerr << "Usage: " << argv[0] << "InputImage Testmode(0-1) [OutputImage] [Sigma] [OutputValue]" << std::endl;
     return EXIT_FAILURE;
   }
 
-  typedef short       PixelType;
+  typedef unsigned char    PixelType;
   const unsigned int Dimension = 3;
   typedef itk::Image<PixelType,Dimension>       ImageType;
   
@@ -62,61 +63,54 @@ int main( int argc, const char *argv[] )
     std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
     return EXIT_FAILURE;
   }
-
-  // Create an output image
   
-  ImageType::Pointer output = ImageType::New();
-    
-  output->SetRegions( reader->GetOutput()->GetLargestPossibleRegion() );
-  output->SetSpacing( reader->GetOutput()->GetSpacing() );
-  output->SetOrigin( reader->GetOutput()->GetOrigin() );
-  output->SetDirection( reader->GetOutput()->GetDirection() );
-  output->Allocate();
-  output->FillBuffer( itk::NumericTraits<PixelType>::Zero );
-    
+  
   // Create the image function
   
   typedef ivan::FilterByEigenValuesVesselnessImageFunction<ImageType,short>   VesselnessFunctionType;
   
   VesselnessFunctionType::Pointer vesselness = VesselnessFunctionType::New();
   vesselness->SetInputImage( reader->GetOutput() );
-  vesselness->SetSigma( 2.0 );
-  vesselness->SetOutputValue( 255.0 );
-  vesselness->Initialize();
+  
+  double sigma = 2.0;
+  
+  if( argc > 4 )
+    sigma = atof( argv[4] );
     
-  typedef itk::ImageRegionConstIterator<ImageType>       ConstIteratorType;
-  typedef itk::ImageRegionIteratorWithIndex<ImageType>   IteratorType;
+  bool outputValue = 255.0;
+  
+  if( argc > 5 )
+    outputValue = atof( argv[5] );
+  
+  vesselness->SetSigma( sigma );
+  vesselness->SetOutputValue( outputValue );
+  vesselness->Initialize();
+  
+  bool testMode = atoi( argv[2] );
+    
 
-  ConstIteratorType it ( reader->GetOutput(), reader->GetOutput()->GetRequestedRegion() );
-  IteratorType      oit( output, reader->GetOutput()->GetRequestedRegion() );
-
-  it.GoToBegin();
-  oit.GoToBegin();
-
-  while( !it.IsAtEnd() )
-  { 
-    oit.Set( vesselness->EvaluateAtIndex( it.GetIndex() ) );
-
-    ++it;
-    ++oit;
-  }
-
-  // Write result
-
-  typedef itk::ImageFileWriter<ImageType>  WriterType;
-  WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( output );
-  writer->SetFileName( "FilterByEigenValuesVesselness.mhd" );
-
-  try
+  // While in test mode only iterate through a row
+  
+  if( !testMode )
   {
-    writer->Update();
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "FilterByEigenvaluesVesselness.mhd";
+    
+    return DenseComputeVesselness( reader->GetOutput(), vesselness.GetPointer(), fileName.c_str(), false );
   }
-  catch( itk::ExceptionObject & excpt )
+  else
   {
-    std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
-    return EXIT_FAILURE;
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "FilterByEigenvaluesVesselness.png";
+    
+    return SparseComputeVesselness( reader->GetOutput(), vesselness.GetPointer(), fileName.c_str(), false );
   }
-
-  return EXIT_SUCCESS; 
 }

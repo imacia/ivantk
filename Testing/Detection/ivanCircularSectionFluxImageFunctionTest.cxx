@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,11 +23,12 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanCircularSectionFluxImageFunctionTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Ivan Macia (imacia@vicomtech.org)
 // Description: tests flux image function from Lesage et al.
 // Date: 2010/09/10
 
 #include "ivanCircularSectionFluxImageFunction.h"
+#include "ivanDetectionTestingHelper.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"
@@ -42,7 +43,7 @@ int main( int argc, const char *argv[] )
 {
   if( argc < 2 )
   {
-    std::cerr << "Usage: " << argv[0] << "InputFileName [OutputFileName] [Sigma] [Threshold]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "InputFileName TestMode(0-1) [OutputFileName] [Sigma] [Rescale]" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -66,17 +67,7 @@ int main( int argc, const char *argv[] )
     return EXIT_FAILURE;
   }
 
-  // Create an output image
-  
-  ImageType::Pointer output = ImageType::New();
-    
-  output->SetRegions( reader->GetOutput()->GetLargestPossibleRegion() );
-  output->SetSpacing( reader->GetOutput()->GetSpacing() );
-  output->SetOrigin( reader->GetOutput()->GetOrigin() );
-  output->SetDirection( reader->GetOutput()->GetDirection() );
-  output->Allocate();
-  output->FillBuffer( itk::NumericTraits<PixelType>::Zero );
-    
+   
   // Create the image function
   
   typedef ivan::CircularSectionFluxImageFunction<ImageType,double>   VesselnessFunctionType;
@@ -84,84 +75,42 @@ int main( int argc, const char *argv[] )
   VesselnessFunctionType::Pointer vesselness = VesselnessFunctionType::New();
   vesselness->SetInputImage( reader->GetOutput() );
 
-  if( argc > 3 )
-    vesselness->SetSigma( atof( argv[3] ) );
+  if( argc > 4 )
+    vesselness->SetSigma( atof( argv[4] ) );
   else
     vesselness->SetSigma( 2.0 );
 
   vesselness->Initialize();
     
-  typedef itk::ImageRegionConstIterator<ImageType>       ConstIteratorType;
-  typedef itk::ImageRegionIteratorWithIndex<ImageType>   IteratorType;
-
-  ConstIteratorType it ( reader->GetOutput(), reader->GetOutput()->GetRequestedRegion() );
-  IteratorType      oit( output, reader->GetOutput()->GetRequestedRegion() );
-
-  it.GoToBegin();
-  oit.GoToBegin();
-
-  ImageType::IndexType currentIndex;
-
-  double threshold = itk::NumericTraits<double>::min();
-
-  if( argc > 4 )
-    threshold = atof( argv[4] );
-
-  unsigned long z = 0;
-
-  while( !it.IsAtEnd() )
-  { 
-    currentIndex = it.GetIndex();
-
-    if( currentIndex[0] == 20 && currentIndex[1] == 7 && currentIndex[2] == 5 ) // for cylinders
-    //if( currentIndex[0] == 82 && currentIndex[1] == 131 && currentIndex[2] == 13 ) // for liver MRI
-    {
-      std::cout << "Value: " << it.Get() << std::endl;
-    }
-
-    if( currentIndex[2] != z )
-    {
-      z = currentIndex[2];
-      std::cout << "Z = " << z << std::endl;
-    }
-
-    if( it.Get() > threshold )
-      oit.Set( vesselness->EvaluateAtIndex( it.GetIndex() ) );
-    else
-      oit.Set(0);
-
-    ++it;
-    ++oit;
-  }
-
-  typedef itk::RescaleIntensityImageFilter<ImageType,OutputImageType>
-    RescalerType;
-
-  RescalerType::Pointer rescaler = RescalerType::New();
-  rescaler->SetInput( output );
-  rescaler->SetOutputMinimum(0);
-  rescaler->SetOutputMaximum(4096);
-
-  // Write result
-
-  typedef itk::ImageFileWriter<OutputImageType>  WriterType;
-  WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( rescaler->GetOutput() );
+  bool testMode = atoi( argv[2] );
   
-  if( argc > 2 )
-    writer->SetFileName( argv[2] );
+  bool rescale = true;
+  
+  if( argc > 5 )
+    rescale = atoi( argv[5] );
+    
+  // While in test mode only iterate through a row
+  
+  if( !testMode )
+  {
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "CircularSectionFluxVesselness.mhd";
+    
+    return DenseComputeVesselness( reader->GetOutput(), vesselness.GetPointer(), fileName.c_str(), rescale );
+  }
   else
-    writer->SetFileName( "CircularSectionFluxVesselness.mhd" );
-
-  try
   {
-    writer->Update();
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "CircularSectionFluxVesselness.png";
+    
+    return SparseComputeVesselness( reader->GetOutput(), vesselness.GetPointer(), fileName.c_str(), true );
   }
-  catch( itk::ExceptionObject & excpt )
-  {
-    std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
-    return EXIT_FAILURE;
-  }
-
-  return EXIT_SUCCESS; 
 }

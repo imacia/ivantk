@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,11 +23,13 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanOffsetMedialnessImageFunctionTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
-// Description: tests Frangi's vesselness measure in the form of an image function.
+// Author: Ivan Macia (imacia@vicomtech.org)
+// Description: tests modified Krissian offset medialness measure in the form of an image function.
 // Date: 2010/07/17
 
+
 #include "ivanOffsetMedialnessImageFunction.h"
+#include "ivanDetectionTestingHelper.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"
@@ -37,54 +39,13 @@ SUCH DAMAGE.
 #include <fstream>
 
 
-template <class TImage, class TMedialnessFunction>
-void ComputeMedialness( const TImage *input, TImage *output, TMedialnessFunction *medialness, double threshold )
-{
-  typedef itk::ImageRegionConstIterator<TImage>       ConstIteratorType;
-  typedef itk::ImageRegionIteratorWithIndex<TImage>   IteratorType;
-
-  ConstIteratorType it ( input,  input->GetRequestedRegion() );
-  IteratorType      oit( output, input->GetRequestedRegion() );
-
-  it.GoToBegin();
-  oit.GoToBegin();
-
-  typename TImage::IndexType currentIndex;
-  unsigned long z = 0;
-
-  while( !it.IsAtEnd() )
-  { 
-    currentIndex = it.GetIndex();
-
-    //if( currentIndex[0] == 20 && currentIndex[1] == 7 && currentIndex[2] == 5 ) // for cylinders
-    if( currentIndex[0] == 82 && currentIndex[1] == 131 && currentIndex[2] == 13 ) // for liver MRI
-    {
-      std::cout << "Value: " << it.Get() << std::endl;
-    }
-
-    if( currentIndex[2] != z )
-    {
-      z = currentIndex[2];
-      std::cout << "Z = " << z << std::endl;
-    }
-
-    if( it.Get() > threshold )
-      oit.Set( medialness->EvaluateAtIndex( it.GetIndex() ) );
-    else
-      oit.Set(0);
-
-    ++it;
-    ++oit;
-  } 
-}
-
 
 int main( int argc, const char *argv[] )
 {
   if( argc < 2 )
   {
-    std::cerr << "Usage (maria): " << argv[0] << "InputImage [OutputImage] [Radius] [Sigma] [RadialResolution(0=adaptative)]"
-      "[SymmetryCoefficient(0.0-1.0)] [Threshold]" << std::endl;
+    std::cerr << "Usage (maria): " << argv[0] << "InputImage Testmode(0-1) [OutputImage] [Radius] [Sigma] [RadialResolution(0=adaptative)]"
+      "[SymmetryCoefficient(0.0-1.0)] [Rescale=1]" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -110,17 +71,7 @@ int main( int argc, const char *argv[] )
 
   std::cout << "Finished reading." << std::endl;
 
-  // Create an output image
-  
-  ImageType::Pointer output = ImageType::New();
-    
-  output->SetRegions( reader->GetOutput()->GetLargestPossibleRegion() );
-  output->SetSpacing( reader->GetOutput()->GetSpacing() );
-  output->SetOrigin( reader->GetOutput()->GetOrigin() );
-  output->SetDirection( reader->GetOutput()->GetDirection() );
-  output->Allocate();
-  output->FillBuffer( itk::NumericTraits<PixelType>::Zero );
-    
+     
   // Create the image function
   
   typedef ivan::OffsetMedialnessImageFunction<ImageType,double>   MedialnessFunctionType;
@@ -130,31 +81,31 @@ int main( int argc, const char *argv[] )
 
   double sigma = 2.0;
 
-  if( argc > 4 )
-    sigma = atof( argv[4] );
+  if( argc > 5 )
+    sigma = atof( argv[5] );
 
   medialness->SetSigma( sigma );
 
   double radius = vcl_sqrt( 3.0 ) * medialness->GetSigma();
     
-  if( argc > 3 )
-    radius = atof( argv[3] );
+  if( argc > 4 )
+    radius = atof( argv[4] );
 
   medialness->SetRadius( radius );
 
-  if( argc > 5 )
+  if( argc > 6 )
   {
-    if( atoi( argv[5] ) == 0 )
+    if( atoi( argv[6] ) == 0 )
       medialness->AdaptativeSamplingOn();
     else
-      medialness->SetRadialResolution( atoi( argv[5] ) );
+      medialness->SetRadialResolution( atoi( argv[6] ) );
   }
   else
     medialness->AdaptativeSamplingOn();    
 
-  if( argc > 6 )
+  if( argc > 7 )
   {
-    double symmetryCoeff = atof( argv[6] );
+    double symmetryCoeff = atof( argv[7] );
     
     if( symmetryCoeff < 0.0 )
       symmetryCoeff = 0.0;
@@ -167,10 +118,12 @@ int main( int argc, const char *argv[] )
   medialness->SetGradientSigma( 1.0 );
   medialness->Initialize();
   
-  double threshold = itk::NumericTraits<double>::min();
-
-  if( argc > 7 )
-    threshold = atof( argv[7] );
+  bool testMode = atoi( argv[2] );
+  
+  bool rescale = true;
+  
+  if( argc > 8 )
+    rescale = atoi( argv[8] );
 
   
   /////////////////////////////////////////
@@ -179,54 +132,103 @@ int main( int argc, const char *argv[] )
   std::cout << "Computing offset medialness..." << std::endl;
   
   medialness->SetGradientImageFunctionType( MedialnessFunctionType::GradientNormalProjectionFunctionHyperIntense );
-  ComputeMedialness( reader->GetOutput(), output.GetPointer(), medialness.GetPointer(), threshold );
-
-  // Write result
-
-  typedef itk::ImageFileWriter<ImageType>  WriterType;
-  WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( output );
+    
   
-  if( argc > 2 )
-    writer->SetFileName( argv[2] );
+  // While in test mode only iterate through a row
+  
+  if( !testMode )
+  {
+    std::string fileName;
+    
+    if( argc > 3 )
+    {
+      fileName = argv[3];
+      
+      size_t pos = fileName.find_last_of( '.' );
+      
+      std::string extension = fileName.substr( pos+1, 3 );
+      
+      fileName = fileName.substr( 0, pos );
+      fileName += "_GradientProj.";
+      fileName += extension;
+    }
+    else
+      fileName = "OffsetMedialnessGradientProj.mhd";
+    
+    if( DenseComputeVesselness( reader->GetOutput(), medialness.GetPointer(), fileName.c_str(), rescale ) == EXIT_FAILURE )
+      return EXIT_FAILURE;
+  }
   else
-    writer->SetFileName( "OffsetMedialness.mhd" );
-
-  try
   {
-    writer->Update();
-  }
-  catch( itk::ExceptionObject & excpt )
-  {
-    std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
-    return EXIT_FAILURE;
-  }
+    std::string fileName;
+    
+    if( argc > 3 )
+    {
+      fileName = argv[3];
+      
+      size_t pos = fileName.find_last_of( '.' );
+      
+      std::string extension = fileName.substr( pos+1, 3 );
+      
+      fileName = fileName.substr( 0, pos );
+      fileName += "_GradientProj.";
+      fileName += extension;
+    }
+    else
+      fileName = "OffsetMedialnessGradientProj.png";
+    
+    if( SparseComputeVesselness( reader->GetOutput(), medialness.GetPointer(), fileName.c_str(), true )  == EXIT_FAILURE )
+      return EXIT_FAILURE;
+  }  
   
   
   //////////////////////////////////
   // Now with the gradient magnitude
   
   medialness->SetGradientImageFunctionType( MedialnessFunctionType::GradientMagnitudeFunction );
-  ComputeMedialness( reader->GetOutput(), output.GetPointer(), medialness.GetPointer(), threshold );
-
-  // Write result
-
-  writer->SetInput( output );
   
-  if( argc > 2 )
-    writer->SetFileName( argv[2] );
-  else
-    writer->SetFileName( "OffsetMedialness.mhd" );
-
-  try
+  if( !testMode )
   {
-    writer->Update();
+    std::string fileName;
+    
+    if( argc > 3 )
+    {
+      fileName = argv[3];
+      
+      size_t pos = fileName.find_last_of( '.' );
+      
+      std::string extension = fileName.substr( pos+1, 3 );
+      
+      fileName = fileName.substr( 0, pos );
+      fileName += "_GradientMag.";
+      fileName += extension;
+    }
+    else
+      fileName = "OffsetMedialnessGradientMag.mhd";
+    
+    if( DenseComputeVesselness( reader->GetOutput(), medialness.GetPointer(), fileName.c_str(), rescale ) == EXIT_FAILURE )
+      return EXIT_FAILURE;
   }
-  catch( itk::ExceptionObject & excpt )
+  else
   {
-    std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
-    return EXIT_FAILURE;
-  }  
-
-  return EXIT_SUCCESS; 
+    std::string fileName;
+    
+    if( argc > 3 )
+    {
+      fileName = argv[3];
+      
+      size_t pos = fileName.find_last_of( '.' );
+      
+      std::string extension = fileName.substr( pos+1, 3 );
+      
+      fileName = fileName.substr( 0, pos );
+      fileName += "_GradientMag.";
+      fileName += extension;
+    }
+    else
+      fileName = "OffsetMedialnessGradientMag.png";
+    
+    if( SparseComputeVesselness( reader->GetOutput(), medialness.GetPointer(), fileName.c_str(), true )  == EXIT_FAILURE )
+      return EXIT_FAILURE;
+  }   
 }

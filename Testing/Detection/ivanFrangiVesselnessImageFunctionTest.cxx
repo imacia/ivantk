@@ -28,12 +28,12 @@ SUCH DAMAGE.
 // Date: 2010/07/17
 
 #include "ivanFrangiVesselnessImageFunction.h"
+#include "ivanDetectionTestingHelper.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
-#include "itkImageRegionIteratorWithIndex.h"
-#include "itkRescaleIntensityImageFilter.h"
+
 
 #include <fstream>
 
@@ -42,7 +42,7 @@ int main( int argc, const char *argv[] )
 {
   if( argc < 4 )
   {
-    std::cerr << "Usage: " << argv[0] << "InputFileName [OutputFileName] [Alpha] [Beta] [Sigma] [Rescale=1]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "InputFileName Testmode(0-1) [OutputFileName] [Alpha] [Beta] [Sigma] [Rescale=1]" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -64,17 +64,6 @@ int main( int argc, const char *argv[] )
     return EXIT_FAILURE;
   }
 
-  // Create an output image
-  
-  ImageType::Pointer output = ImageType::New();
-    
-  output->SetRegions( reader->GetOutput()->GetLargestPossibleRegion() );
-  output->SetSpacing( reader->GetOutput()->GetSpacing() );
-  output->SetOrigin( reader->GetOutput()->GetOrigin() );
-  output->SetDirection( reader->GetOutput()->GetDirection() );
-  output->Allocate();
-  output->FillBuffer( itk::NumericTraits<PixelType>::Zero );
-    
   // Create the image function
   
   typedef ivan::FrangiVesselnessImageFunction<ImageType,double>   VesselnessFunctionType;
@@ -82,81 +71,52 @@ int main( int argc, const char *argv[] )
   VesselnessFunctionType::Pointer vesselness = VesselnessFunctionType::New();
   vesselness->SetInputImage( reader->GetOutput() );
   
-  if( argc > 3 )
-    vesselness->SetAlpha( atof( argv[3] ) );
+  if( argc > 4 )
+    vesselness->SetAlpha( atof( argv[4] ) );
   else
     vesselness->SetAlpha( 0.5 );
     
-  if( argc > 4 )
-    vesselness->SetBeta( atof( argv[4] ) );
+  if( argc > 5 )
+    vesselness->SetBeta( atof( argv[5] ) );
   else
     vesselness->SetBeta( 2.0 );
 
-  if( argc > 5 )
-    vesselness->SetSigma( atof( argv[5] ) );
+  if( argc > 6 )
+    vesselness->SetSigma( atof( argv[6] ) );
   else
    vesselness->SetSigma( 2.0 );
     
   vesselness->Initialize();
     
-  typedef itk::ImageRegionConstIterator<ImageType>       ConstIteratorType;
-  typedef itk::ImageRegionIteratorWithIndex<ImageType>   IteratorType;
-
-  ConstIteratorType it ( reader->GetOutput(), reader->GetOutput()->GetRequestedRegion() );
-  IteratorType      oit( output, reader->GetOutput()->GetRequestedRegion() );
-
-  it.GoToBegin();
-  oit.GoToBegin();
-
-  while( !it.IsAtEnd() )
-  { 
-    oit.Set( vesselness->EvaluateAtIndex( it.GetIndex() ) );
-
-    if( it.GetIndex()[0] == 10 && it.GetIndex()[1] == 10 && it.GetIndex()[2] == 20 )
-      std::cout << "Index " << it.GetIndex()[0] << " " << it.GetIndex()[1] << " " << it.GetIndex()[2] << std::endl;
-
-    ++it;
-    ++oit;
-  }
-
-   bool rescale = true; // default
-
-  if( argc > 6 )
-    rescale = (bool)atoi( argv[6] );
-
-  // Rescale output so we can see the result clearly
+  bool testMode = atoi( argv[2] );
   
-  typedef itk::RescaleIntensityImageFilter<ImageType>  RescalerType;
-  RescalerType::Pointer rescaler = RescalerType::New();
-  rescaler->SetOutputMinimum( 0.0 );
-  rescaler->SetOutputMaximum( 255.0 );
-  rescaler->SetInput( output );
+  bool rescale = true;
   
-  // Write result
-
-  typedef itk::ImageFileWriter<ImageType>  WriterType;
-  WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( output );
+  if( argc > 7 )
+    rescale = atoi( argv[7] );
   
-  if( argc > 2 )
-    writer->SetFileName( argv[2] );
-  else
-    writer->SetFileName( "FrangiVesselness.mhd" );
-
-  if( rescale )
-    writer->SetInput( rescaler->GetOutput() );
-  else
-    writer->SetInput( output );
-
-  try
+  // While in test mode only iterate through a row
+  
+  if( !testMode )
   {
-    writer->Update();
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "FrangiVesselness.mhd";
+    
+    return DenseComputeVesselness( reader->GetOutput(), vesselness.GetPointer(), fileName.c_str(), rescale );
   }
-  catch( itk::ExceptionObject & excpt )
+  else
   {
-    std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
-    return EXIT_FAILURE;
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "FrangiVesselness.png";
+    
+    return SparseComputeVesselness( reader->GetOutput(), vesselness.GetPointer(), fileName.c_str(), true );
   }
-
-  return EXIT_SUCCESS; 
 }

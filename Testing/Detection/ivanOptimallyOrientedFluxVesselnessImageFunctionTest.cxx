@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,12 +23,14 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanOptimallyOrientedFluxVesselnessImageFunctionTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Ivan Macia (imacia@vicomtech.org)
 // Description: tests optimally oriented flux measure (Law & Chung 2008) in the form of an image function.
 // Date: 2010/01/18
 
+
 #include "ivanOptimallyOrientedFluxVesselnessImageFunction.h"
 #include "ivanDiscreteGradientGaussianImageFunction.h"
+#include "ivanDetectionTestingHelper.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"
@@ -43,7 +45,7 @@ int main( int argc, const char *argv[] )
 {
   if( argc < 3 )
   {
-    std::cerr << "Usage: " << argv[0] << "InputFileName Radius [OutputFileName] [Rescale=1]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "InputImage TestMode(0-1) OutputFileName Radius [Rescale=1]" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -64,17 +66,6 @@ int main( int argc, const char *argv[] )
     std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
     return EXIT_FAILURE;
   }
-
-  // Create an output image
-  
-  ImageType::Pointer output = ImageType::New();
-    
-  output->SetRegions( reader->GetOutput()->GetLargestPossibleRegion() );
-  output->SetSpacing( reader->GetOutput()->GetSpacing() );
-  output->SetOrigin( reader->GetOutput()->GetOrigin() );
-  output->SetDirection( reader->GetOutput()->GetDirection() );
-  output->Allocate();
-  output->FillBuffer( itk::NumericTraits<PixelType>::Zero );
     
   // Create the image function
   
@@ -93,81 +84,40 @@ int main( int argc, const char *argv[] )
   gradientFunction->UseImageSpacingOn();
   gradientFunction->Initialize();
   
-  double radius = atof( argv[2] );
+  double radius = atof( argv[4] );
   vesselness->SetRadius( radius );
   vesselness->SetInputImage( reader->GetOutput() );
   vesselness->Initialize(); // this computes the sphere grid
       
-  typedef itk::ImageRegionConstIterator<ImageType>       ConstIteratorType;
-  typedef itk::ImageRegionIteratorWithIndex<ImageType>   IteratorType;
-
-  ConstIteratorType it ( reader->GetOutput(), reader->GetOutput()->GetRequestedRegion() );
-  IteratorType      oit( output, reader->GetOutput()->GetRequestedRegion() );
-
-  it.GoToBegin();
-  oit.GoToBegin();
-
-  unsigned int z = 0;
-  std::cout << "Z = " << z << std::endl;
-
-  while( !it.IsAtEnd() )
-  { 
-    if( !it.Get() )
-      oit.Set(0);
-    else
-      oit.Set( vesselness->EvaluateAtIndex( it.GetIndex() ) );
-
-    if( it.GetIndex()[2] != z )
-    {
-      z = it.GetIndex()[2];
-      std::cout << "Z = " << z << std::endl;
-    }
+  bool testMode = atoi( argv[2] );
+  
+  bool rescale = true;
+  
+  if( argc > 5 )
+    rescale = atoi( argv[5] );
     
-    //if( it.GetIndex()[0] == 10 && it.GetIndex()[1] == 10 && it.GetIndex()[2] == 20 )
-      //std::cout << "Index " << it.GetIndex()[0] << " " << it.GetIndex()[1] << " " << it.GetIndex()[2] << std::endl;
-
-    ++it;
-    ++oit;
-  }
-
-  bool rescale = false; // default
-
-  if( argc > 4 )
-    rescale = (bool)atoi( argv[4] );
-
-  // Rescale output so we can see the result clearly
+  // While in test mode only iterate through a row
   
-  typedef itk::RescaleIntensityImageFilter<ImageType>  RescalerType;
-  RescalerType::Pointer rescaler = RescalerType::New();
-  rescaler->SetOutputMinimum( 0.0 );
-  rescaler->SetOutputMaximum( 255.0 );
-  rescaler->SetInput( output );
-  
-  // Write result
-
-  typedef itk::ImageFileWriter<ImageType>  WriterType;
-  WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( output );
-  
-  if( argc > 3 )
-    writer->SetFileName( argv[3] );
-  else
-    writer->SetFileName( "OptimallyOrientedFlux.mhd" );
-
-  if( rescale )
-    writer->SetInput( rescaler->GetOutput() );
-  else
-    writer->SetInput( output );
-
-  try
+  if( !testMode )
   {
-    writer->Update();
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "OOFVesselness.mhd";
+    
+    return DenseComputeVesselness( reader->GetOutput(), vesselness.GetPointer(), fileName.c_str(), rescale );
   }
-  catch( itk::ExceptionObject & excpt )
+  else
   {
-    std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
-    return EXIT_FAILURE;
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "OOFVesselness.png";
+    
+    return SparseComputeVesselness( reader->GetOutput(), vesselness.GetPointer(), fileName.c_str(), true );
   }
-
-  return EXIT_SUCCESS; 
 }

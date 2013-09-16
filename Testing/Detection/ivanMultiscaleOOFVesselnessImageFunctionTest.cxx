@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,14 +23,16 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanMultiscaleOOFVesselnessImageFunctionTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
-// Description: tests MultiscaleImageFunction with the OptimallyOrientedFluxVesselnessImageFunction at multiple scales
+// Author: Ivan Macia (imacia@vicomtech.org)
+// Description: tests MultiscaleImageFunction with Law & Chung's Optimally Oriented Flux (OOF) at multiple scales
 // Date: 2012/02/23
+
 
 #include "ivanMultiscaleImageFunction.h"
 #include "ivanDiscreteGradientGaussianImageFunction.h"
 #include "ivanOptimallyOrientedFluxVesselnessImageFunction.h"
 #include "ivanOptimallyOrientedFluxVesselnessImageFunctionInitializer.h"
+#include "ivanDetectionTestingHelper.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"
@@ -40,56 +42,13 @@ SUCH DAMAGE.
 #include <fstream>
 
 
-template <class TImage, class TVesselnessFunction>
-void ComputeVesselness( const TImage *input, TImage *output, TVesselnessFunction *vesselness, double threshold = 0.0 )
-{
-  typedef itk::ImageRegionConstIterator<TImage>       ConstIteratorType;
-  typedef itk::ImageRegionIteratorWithIndex<TImage>   IteratorType;
-
-  ConstIteratorType it ( input,  input->GetRequestedRegion() );
-  IteratorType      oit( output, input->GetRequestedRegion() );
-
-  it.GoToBegin();
-  oit.GoToBegin();
-
-  typename TImage::IndexType currentIndex;
-  unsigned long y = 0, z = 0;
-
-  while( !it.IsAtEnd() )
-  { 
-    currentIndex = it.GetIndex();
-
-    if( currentIndex[1] > y + 10 )
-    {
-      y += 10;
-      std::cout << "Y = " << y << std::endl;
-    }
-
-    if( currentIndex[2] != z )
-    {
-      z = currentIndex[2];
-      y = 0;
-      std::cout << std::endl;
-      std::cout << "Z = " << z << std::endl;
-      std::cout << std::endl;
-    }
-
-    if( it.Get() < threshold )
-      oit.Set( 0.0 );
-    else    
-      oit.Set( vesselness->EvaluateAtIndex( it.GetIndex() ) );
-
-    ++it;
-    ++oit;
-  } 
-}
-
 
 int main( int argc, const char *argv[] )
 {
   if( argc < 6 )
   {
-    std::cerr << "Usage: " << argv[0] << "inputImage outputImage numScales minScale maxScale [threshold]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "InputImage TestMode(0-1) OutputImage NumScales MinScale MaxScale [Rescale=1]" 
+      << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -142,37 +101,41 @@ int main( int argc, const char *argv[] )
   VesselnessFunctionInitializerType::Pointer initializer = VesselnessFunctionInitializerType::New();
   multiscaleVesselness->SetScaledImageFunctionInitializer( initializer );
    
-  multiscaleVesselness->SetNumberOfScales( atoi( argv[3] ) );
-  multiscaleVesselness->SetMinimumScale( atoi( argv[4] ) );
-  multiscaleVesselness->SetMaximumScale( atoi( argv[5] ) );
+  multiscaleVesselness->SetNumberOfScales( atoi( argv[4] ) );
+  multiscaleVesselness->SetMinimumScale( atoi( argv[5] ) );
+  multiscaleVesselness->SetMaximumScale( atoi( argv[6] ) );
   multiscaleVesselness->Initialize();
 
-  double threshold = 0.0;
-
-  if( argc > 6 )
-    threshold = atof( argv[6] );
   
-  ComputeVesselness( reader->GetOutput(), output.GetPointer(), multiscaleVesselness.GetPointer(), threshold );
-
-
-  // Write result
-
-  typedef itk::ImageFileWriter<ImageType>  WriterType;
-  WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( output );
+  bool testMode = atoi( argv[2] );
   
-  writer->SetFileName( argv[2] );
-  writer->UseCompressionOn();
+  bool rescale = true;
   
-  try
+  if( argc > 7 )
+    rescale = atoi( argv[7] );
+    
+  // While in test mode only iterate through a row
+  
+  if( !testMode )
   {
-    writer->Update();
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "MultiscaleOOFVesselness.mhd";
+    
+    return DenseComputeVesselness( reader->GetOutput(), multiscaleVesselness.GetPointer(), fileName.c_str(), rescale );
   }
-  catch( itk::ExceptionObject & excpt )
+  else
   {
-    std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
-    return EXIT_FAILURE;
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "MultiscaleOOFVesselness.png";
+    
+    return SparseComputeVesselness( reader->GetOutput(), multiscaleVesselness.GetPointer(), fileName.c_str(), true );
   }
-  
-  return EXIT_SUCCESS; 
 }

@@ -2,9 +2,9 @@
 
 Image-based Vascular Analysis Toolkit (IVAN)
 
-Copyright (c) 2012, Iván Macía Oliver
-Vicomtech Foundation, San Sebastián - Donostia (Spain)
-University of the Basque Country, San Sebastián - Donostia (Spain)
+Copyright (c) 2012, Ivan Macia Oliver
+Vicomtech Foundation, San Sebastian - Donostia (Spain)
+University of the Basque Country, San Sebastian - Donostia (Spain)
 
 All rights reserved
 
@@ -23,13 +23,15 @@ SUCH DAMAGE.
 
 ==========================================================================*/
 // File: ivanMultiscaleOffsetMedialnessImageFunctionTest.cxx
-// Author: Iv�n Mac�a (imacia@vicomtech.org)
+// Author: Ivan Macia (imacia@vicomtech.org)
 // Description: tests MultiscaleImageFunction with the OffsetMedialnessImageFunction at multiple scales
 // Date: 2012/02/23
+
 
 #include "ivanMultiscaleImageFunction.h"
 #include "ivanOffsetMedialnessImageFunction.h"
 #include "ivanOffsetMedialnessImageFunctionInitializer.h"
+#include "ivanDetectionTestingHelper.h"
 
 #include "itkImage.h"
 #include "itkImageFileReader.h"
@@ -39,57 +41,13 @@ SUCH DAMAGE.
 #include <fstream>
 
 
-template <class TImage, class TMedialnessFunction>
-void ComputeMedialness( const TImage *input, TImage *output, TMedialnessFunction *medialness, double threshold = 0.0 )
-{
-  typedef itk::ImageRegionConstIterator<TImage>       ConstIteratorType;
-  typedef itk::ImageRegionIteratorWithIndex<TImage>   IteratorType;
-
-  ConstIteratorType it ( input,  input->GetRequestedRegion() );
-  IteratorType      oit( output, input->GetRequestedRegion() );
-
-  it.GoToBegin();
-  oit.GoToBegin();
-
-  typename TImage::IndexType currentIndex;
-  unsigned long y = 0, z = 0;
-
-  while( !it.IsAtEnd() )
-  { 
-    currentIndex = it.GetIndex();
-
-    if( currentIndex[1] > y + 10 )
-    {
-      y += 10;
-      std::cout << "Y = " << y << std::endl;
-    }
-
-    if( currentIndex[2] != z )
-    {
-      z = currentIndex[2];
-      y = 0;
-      std::cout << std::endl;
-      std::cout << "Z = " << z << std::endl;
-      std::cout << std::endl;
-    }
-
-    if( it.Get() < threshold )
-      oit.Set( 0.0 );
-    else    
-      oit.Set( medialness->EvaluateAtIndex( it.GetIndex() ) );
-
-    ++it;
-    ++oit;
-  } 
-}
-
 
 int main( int argc, const char *argv[] )
 {
   if( argc < 6 )
   {
-    std::cerr << "Usage: " << argv[0] << "inputImage outputImage numScales minScale maxScale [scaleIsRadius] [fixedRadiusOrSigma] [gradientSigma=1.0]"
-      "[SymmetryCoefficient(0.0-1.0)=0.5] [threshold=0.0]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "InputImage TestMode(0-1) OutputImage NumScales MinScale MaxScale [ScaleIsRadius] [FixedRadiusOrSigma] [GradientSigma=1.0]"
+      "[SymmetryCoefficient(0.0-1.0)=0.5] [Rescale=1]" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -111,16 +69,6 @@ int main( int argc, const char *argv[] )
     return EXIT_FAILURE;
   }
 
-  // Create an output image
-  
-  ImageType::Pointer output = ImageType::New();
-    
-  output->SetRegions( reader->GetOutput()->GetLargestPossibleRegion() );
-  output->SetSpacing( reader->GetOutput()->GetSpacing() );
-  output->SetOrigin( reader->GetOutput()->GetOrigin() );
-  output->SetDirection( reader->GetOutput()->GetDirection() );
-  output->Allocate();
-  output->FillBuffer( itk::NumericTraits<PixelType>::Zero );
     
   // Create the base and multiscale image function
   
@@ -139,9 +87,9 @@ int main( int argc, const char *argv[] )
  
   bool useRadiusAsScale = true;
  
-  if( argc > 6 )
+  if( argc > 7 )
   {
-    useRadiusAsScale = atoi( argv[6] );
+    useRadiusAsScale = atoi( argv[7] );
 		if( useRadiusAsScale )
 			initializer->SetScaleSelectionMethod( MedialnessFunctionInitializerType::UseScaleAsRadius );
 		else
@@ -150,59 +98,62 @@ int main( int argc, const char *argv[] )
   else
     initializer->SetScaleSelectionMethod( MedialnessFunctionInitializerType::UseScaleAsRadius );
  
-  if( argc > 7 )
+  if( argc > 8 )
   {
     if( useRadiusAsScale )
-      initializer->SetHessianSigma( atof( argv[7] ) );
+      initializer->SetHessianSigma( atof( argv[8] ) );
     else
-      initializer->SetRadius( atof( argv[7] ) );
+      initializer->SetRadius( atof( argv[8] ) );
   }
   else
     initializer->SetHessianSigma( 1.0 );
     
-  if( argc > 8 )
-    initializer->SetGradientSigma( atof( argv[8] ) );
+  if( argc > 9 )
+    initializer->SetGradientSigma( atof( argv[9] ) );
   else
     initializer->SetGradientSigma( 1.0 );
  
-  if( argc > 9 )
-    initializer->SetSymmetryCoefficient( atof( argv[9] ) );
+  if( argc > 10 )
+    initializer->SetSymmetryCoefficient( atof( argv[10] ) );
   else
     initializer->SetSymmetryCoefficient( 0.5 );
  
   multiscaleMedialness->SetScaledImageFunctionInitializer( initializer );
    
-  multiscaleMedialness->SetNumberOfScales( atoi( argv[3] ) );
-  multiscaleMedialness->SetMinimumScale( atoi( argv[4] ) );
-  multiscaleMedialness->SetMaximumScale( atoi( argv[5] ) );
+  multiscaleMedialness->SetNumberOfScales( atoi( argv[4] ) );
+  multiscaleMedialness->SetMinimumScale( atoi( argv[5] ) );
+  multiscaleMedialness->SetMaximumScale( atoi( argv[6] ) );
   multiscaleMedialness->Initialize();
 
-  double threshold = 0.0;
-
-  if( argc > 10 )
-    threshold = atof( argv[10] );
+  bool testMode = atoi( argv[2] );
   
-  ComputeMedialness( reader->GetOutput(), output.GetPointer(), multiscaleMedialness.GetPointer(), threshold );
-
-
-  // Write result
-
-  typedef itk::ImageFileWriter<ImageType>  WriterType;
-  WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( output );
+  bool rescale = true;
   
-  writer->SetFileName( argv[2] );
-  writer->UseCompressionOn();
+  if( argc > 11 )
+    rescale = atoi( argv[11] );
+    
+  // While in test mode only iterate through a row
   
-  try
+  if( !testMode )
   {
-    writer->Update();
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "MultiscaleOffsetMedialness.mhd";
+    
+    return DenseComputeVesselness( reader->GetOutput(), multiscaleMedialness.GetPointer(), fileName.c_str(), rescale );
   }
-  catch( itk::ExceptionObject & excpt )
+  else
   {
-    std::cerr << "EXCEPTION CAUGHT!!! " << excpt.GetDescription();
-    return EXIT_FAILURE;
+    std::string fileName;
+    
+    if( argc > 3 )
+      fileName = argv[3];
+    else
+      fileName = "MultiscaleOffsetMedialness.png";
+    
+    return SparseComputeVesselness( reader->GetOutput(), multiscaleMedialness.GetPointer(), fileName.c_str(), true );
   }
-  
-  return EXIT_SUCCESS; 
 }
