@@ -210,7 +210,11 @@ int main( int argc, char *argv[] )
       PLANE_HALF_WIDTH * secondBaseVector[1], centers[i][2] + PLANE_HALF_WIDTH * secondBaseVector[2] );
 		plane->SetCenter( centers[i][0], centers[i][1], centers[i][2] ); // performs a translation
 			
-		appendPolyData->AddInput( plane->GetOutput() );
+#if VTK_MAJOR_VERSION < 6
+    appendPolyData->AddInput( plane->GetOutput() );
+#else // VTK_MAJOR_VERSION < 6
+    appendPolyData->AddInputData( plane->GetOutput() );
+#endif // VTK_MAJOR_VERSION < 6
 					
 		plane->Delete(); // this deletes just this reference, otherwise we have a memory leak each loop cycle
   }
@@ -264,7 +268,11 @@ int main( int argc, char *argv[] )
 	}
 	
 	vtkFixedPointVolumeRayCastMapper *rayCastMapper = vtkFixedPointVolumeRayCastMapper::New();
+#if VTK_MAJOR_VERSION < 6
 	rayCastMapper->SetInput( adapter->GetOutput() );
+#else // VTK_MAJOR_VERSION < 6
+  rayCastMapper->SetInputData( adapter->GetOutput() );
+#endif // VTK_MAJOR_VERSION < 6
 
 	//vtkVolumeRayCastIsosurfaceFunction *isoFunction = vtkVolumeRayCastIsosurfaceFunction::New();
 	//isoFunction->SetIsoValue( ( max - min ) / 3.0f );
@@ -300,7 +308,11 @@ int main( int argc, char *argv[] )
 	volume->SetProperty( volumeProperty );
 					
 	vtkPolyDataMapper *planeMapper = vtkPolyDataMapper::New();
+#if VTK_MAJOR_VERSION < 6
 	planeMapper->SetInput( appendPolyData->GetOutput() );
+#else // VTK_MAJOR_VERSION < 6
+  planeMapper->SetInputData( appendPolyData->GetOutput() );
+#endif // VTK_MAJOR_VERSION < 6
   	
 	vtkActor *planeActor = vtkActor::New();
 	planeActor->SetMapper( planeMapper );
@@ -368,7 +380,11 @@ int main( int argc, char *argv[] )
 
 	// Write the vtk data to file
 	vtkDataObjectWriter *planesWriter = vtkDataObjectWriter::New();
+#if VTK_MAJOR_VERSION < 6
 	planesWriter->SetInput( appendPolyData->GetOutput() );
+#else // VTK_MAJOR_VERSION < 6
+  planesWriter->SetInputData( appendPolyData->GetOutput() );
+#endif // VTK_MAJOR_VERSION < 6
 	planesWriter->SetFileName( "SectionPlanes.vtk" );
 	planesWriter->SetFileTypeToASCII();
 	planesWriter->Update();

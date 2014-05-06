@@ -62,7 +62,11 @@ ENDIF ()
 #
 FIND_PACKAGE( ITK REQUIRED )
 IF ( ITK_FOUND )
-  INCLUDE ( ${USE_ITK_FILE} )
+  IF(USE_ITK_FILE)
+    INCLUDE ( ${USE_ITK_FILE} ) #Backward compatibility
+  ELSE()
+    INCLUDE ( ${ITK_USE_FILE} )
+  ENDIF()
 ELSE ()
   MESSAGE( FATAL_ERROR "This application requires ITK. One of these components is missing. Please verify configuration")
 ENDIF ()

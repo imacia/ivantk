@@ -1,3 +1,12 @@
+#-----------------------------------------------------------------------------
+# Set additional include directories in the project configuration.
+# Directories in binary tree are needed for generated ui and resource headers.
+#
+INCLUDE_DIRECTORIES(
+  ${ITK_INCLUDE_DIR}
+  ${ITK_INCLUDE_DIRS}
+)
+
 #------------------------------------------------------------------------------------------------
 
 ADD_EXECUTABLE( TestFixedScaleHessianBasedVesselSectionEstimator
