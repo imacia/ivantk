@@ -42,6 +42,13 @@ MESSAGE(STATUS "Configuring IVAN Version " ${IVAN_VERSION_STRING})
 
 
 #-----------------------------------------------------------------------------
+# Build configuration
+
+OPTION( IVAN_BUILD_SHARED_LIBS "Build ivantk with shared libraries." OFF )
+
+
+
+#-----------------------------------------------------------------------------
 # Find and use VTK libraries 
 #
 FIND_PACKAGE( VTK )
