@@ -42,6 +42,13 @@ MESSAGE(STATUS "Configuring IVAN Version " ${IVAN_VERSION_STRING})
 
 
 #-----------------------------------------------------------------------------
+# Build configuration
+
+OPTION( IVAN_BUILD_SHARED_LIBS "Build ivantk with shared libraries." OFF )
+
+
+
+#-----------------------------------------------------------------------------
 # Find and use VTK libraries 
 #
 FIND_PACKAGE( VTK )
@@ -55,7 +62,11 @@ ENDIF ()
 #
 FIND_PACKAGE( ITK REQUIRED )
 IF ( ITK_FOUND )
-  INCLUDE ( ${USE_ITK_FILE} )
+  IF(USE_ITK_FILE)
+    INCLUDE ( ${USE_ITK_FILE} ) #Backward compatibility
+  ELSE()
+    INCLUDE ( ${ITK_USE_FILE} )
+  ENDIF()
 ELSE ()
   MESSAGE( FATAL_ERROR "This application requires ITK. One of these components is missing. Please verify configuration")
 ENDIF ()
